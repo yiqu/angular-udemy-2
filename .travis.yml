@@ -24,7 +24,7 @@ deploy:
   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep-history: true
   on:
-    branch: master
+    branch: main
   local_dir: dist/angular-udemy-again/  # Only copy the /dist/siling1k contents (Angular > 6)
 
 after_deploy:

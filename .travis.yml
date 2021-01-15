@@ -13,7 +13,7 @@ before_script:
 
 script:
   - echo "Building for PROD"
-  - ng build --prod --base-href=/angular-udemy-again/
+  - ng build --prod --base-href=/angular-udemy-2/
 
 after_success:
   - echo "Build SUCCESS!!!"
@@ -25,7 +25,7 @@ deploy:
   keep-history: true
   on:
     branch: main
-  local_dir: dist/angular-udemy-again/  # Only copy the /dist/siling1k contents (Angular > 6)
+  local_dir: dist/angular-udemy-2/  # Only copy the /dist/siling1k contents (Angular > 6)
 
 after_deploy:
   - echo "Deployed to GH Pages!!!"

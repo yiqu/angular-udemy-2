@@ -1,28 +1,38 @@
-<div class="row my-5">
-  <div class="col-12">
-    Signup for a new account!
+<div fxLayout="column" fxLayoutAlign="center center">
+
+  <div fxFlexOffset="15px" class="title">
+    Sign up for a new account.
   </div>
+
+  <section fxFlexOffset="15px" class="signup-form" *ngIf="signupFg">
+    <form fxLayout="column" fxLayoutAlign="start" [formGroup]="signupFg">
+
+      <mat-form-field class="" fxFlexOffset="15px">
+        <input type="text" matInput placeholder="User name" [errorStateMatcher]="matcher" formControlName="name">
+        <mat-error *ngIf="signupFg.get('name').hasError('required')">
+          User name is <strong>required</strong>
+        </mat-error>
+        <mat-hint align="end">Required</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="" fxFlexOffset="15px">
+        <input type="password" matInput placeholder="Password" [errorStateMatcher]="matcher" formControlName="password">
+        <mat-error *ngIf="signupFg.get('password').hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-hint align="start">Password has to be least 4 characters long</mat-hint>
+        <mat-hint align="end" *ngIf="signupFg.get('password').hasError('fieldTooShort')">
+          {{passwordCtrlValue ? passwordCtrlValue.split("").length : 0}}/4
+        </mat-hint>
+      </mat-form-field>
+
+    </form>
+  </section>
+
+  <section fxFlexOffset="35px" class="actions" fxLayout="row" fxLayoutAlign="space-between">
+    <button mat-flat-button color="primary" (click)="onRegister()">Register</button>
+    <button mat-flat-button color="accent" (click)="onReset()">Reset</button>
+  </section>
 </div>
 
-<section class="">
-  <form>
-    <mat-form-field class="">
-      <input type="email" matInput placeholder="Ex. kevin@example.com">
-      <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-    <mat-form-field class="">
-      <input type="password" matInput placeholder="A password">
-      <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-  </form>
-</section>
+

@@ -1,0 +1,15 @@
+.signup-form mat-form-field{
+  width: 300px;
+}
+
+.signup-form {
+  /* height: 500px; */
+}
+
+.actions {
+  width: 300px;
+}
+
+.title {
+  font-size: 20px;
+}

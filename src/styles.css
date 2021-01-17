@@ -1,10 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 html, body {
   height: 100%;
+  font-family: 'Lato', sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Lato', sans-serif !important;
+}
+
+.mfont {
+  font-family: 'Lato', sans-serif;
 }

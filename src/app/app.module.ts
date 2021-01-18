@@ -9,6 +9,8 @@ import { NotFoundComponentModule } from './404/404.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NotFoundComponentModule,
     CoreModule,
     FlexLayoutModule,
+    MatMomentDateModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,8 @@ import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS, MatMomentDateModule } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    MatMomentDateModule,
     FlexLayoutModule
   ],
 
@@ -26,6 +29,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     LoginComponent
   ],
 
-  providers: [],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class AuthModule { }

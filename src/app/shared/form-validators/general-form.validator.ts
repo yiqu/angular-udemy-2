@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 export function customRequiredValidator(control: FormControl): {[s: string]: boolean} | undefined {
   const val: any = control.value;
@@ -59,4 +60,34 @@ export function alphaNumericValidator(control: FormControl): {[s: string]: boole
     return undefined;
   }
   return {"alphanumericOnly": true};
+}
+
+/**
+ * Check if the value (moment) is greater than date and less than a date
+ * @param control
+ */
+export function validBirthdayInMoment(control: FormControl): {[s: string]: boolean} | undefined {
+  // convert to string first
+  if (!control.value) {
+    return {"required": true};
+  }
+  const val: moment.Moment = control.value;
+  const years18Before = moment().subtract(18, "years");
+  if (val.valueOf() > years18Before.valueOf()) {
+    return {"invalidBirthday": true};
+  }
+  return undefined;
+}
+
+
+/**
+ * Value has to be true
+ * @param control
+ */
+export function valueIsTrue(control: FormControl): {[s: string]: boolean} | undefined {
+  const val = control.value;
+  if (!!control.value) {
+    return undefined;
+  }
+  return {"valueIsNotTrue": true};
 }

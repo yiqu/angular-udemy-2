@@ -26,6 +26,7 @@
     "@ngrx/entity": "^10.1.2",
     "@ngrx/router-store": "^10.1.2",
     "@ngrx/store": "^10.1.2",
+    "@angular/material-moment-adapter": "^11.0.4",
     "bootstrap": "~4.5.3",
     "firebase": "~8.2.1",
     "immutable": "~3.8.2",

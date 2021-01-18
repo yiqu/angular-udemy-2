@@ -1,9 +1,5 @@
-.signup-form mat-form-field{
-  width: 300px;
-}
-
 .signup-form {
-  /* height: 500px; */
+  width: 300px;
 }
 
 .actions {

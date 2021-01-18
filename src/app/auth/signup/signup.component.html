@@ -1,21 +1,21 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
 
-  <div fxFlexOffset="15px" class="title">
+  <section class="title">
     Sign up for a new account.
-  </div>
+  </section>
 
-  <section fxFlexOffset="15px" class="signup-form" *ngIf="signupFg">
-    <form fxLayout="column" fxLayoutAlign="start" [formGroup]="signupFg">
+  <section class="signup-form" *ngIf="signupFg">
+    <form fxLayout="column" fxLayoutAlign="start" [formGroup]="signupFg" fxLayoutGap="20px">
 
-      <mat-form-field class="" fxFlexOffset="15px">
+      <mat-form-field class="">
         <input type="text" matInput placeholder="User name" [errorStateMatcher]="matcher" formControlName="name">
         <mat-error *ngIf="signupFg.get('name').hasError('required')">
           User name is <strong>required</strong>
         </mat-error>
-        <mat-hint align="end">Required</mat-hint>
+        <mat-hint align="start">Required</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="" fxFlexOffset="15px">
+      <mat-form-field class="">
         <input type="password" matInput placeholder="Password" [errorStateMatcher]="matcher" formControlName="password">
         <mat-error *ngIf="signupFg.get('password').hasError('required')">
           Password is <strong>required</strong>
@@ -26,11 +26,28 @@
         </mat-hint>
       </mat-form-field>
 
+      <mat-form-field>
+        <mat-label>Birthday</mat-label>
+        <input matInput [matDatepicker]="dp" formControlName="birthday" [max]="maxDate" [errorStateMatcher]="matcher">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+        <mat-hint align="start">You have to be at least 18 years old</mat-hint>
+        <mat-error *ngIf="signupFg.get('birthday').hasError('required')">
+          Birthday is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="signupFg.get('birthday').hasError('invalidBirthday')">
+          You have to be born at least before <strong>{{minBirthday}}</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox labelPosition="after" formControlName="agree">
+        Agree to Terms and Conditions
+      </mat-checkbox>
     </form>
   </section>
 
-  <section fxFlexOffset="35px" class="actions" fxLayout="row" fxLayoutAlign="space-between">
-    <button mat-flat-button color="primary" (click)="onRegister()">Register</button>
+  <section class="actions" fxLayout="row" fxLayoutAlign="space-between">
+    <button mat-flat-button color="primary" (click)="onRegister()" [disabled]="signupFg.invalid">Register</button>
     <button mat-flat-button color="accent" (click)="onReset()">Reset</button>
   </section>
 </div>

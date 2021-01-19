@@ -11,6 +11,9 @@ import { CoreModule } from './core/core.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { FooterModule } from './footer/footer.module';
+import { SideNavModule } from './side-nav/side-nav.module';
+import { TopNavModule } from './top-nav/top-nav.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     CoreModule,
     FlexLayoutModule,
     MatMomentDateModule,
+    TopNavModule,
+    SideNavModule,
+    FooterModule,
     AppRoutingModule
   ],
   providers: [

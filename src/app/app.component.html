@@ -1,9 +1,22 @@
-<mat-sidenav-container>
-  <mat-sidenav opened>
-    Sidenav content
-  </mat-sidenav>
-  <mat-sidenav-content>
-    Hello
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="app-container">
+  <app-top-nav (navToggle)="onTopNavMenuClick()" (logoClick)="onTopNavLogoClick()"></app-top-nav>
+
+  <mat-sidenav-container class="app-sidenav-container">
+
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" fixedBottomGap="0"
+      autoFocus="false">
+      <app-side-nav (navClose)="onNavClose()"></app-side-nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="app-core">
+        <router-outlet></router-outlet>
+      </div>
+
+      <app-footer></app-footer>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>

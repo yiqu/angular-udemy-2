@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  appTitle: "Health Manager",
+  logoUrl: "assets/banner/logo.png"
 };

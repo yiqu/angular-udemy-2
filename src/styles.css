@@ -15,3 +15,39 @@ body {
 .mfont {
   font-family: 'Lato', sans-serif;
 }
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+mat-sidenav {
+  width: 300px;
+}
+
+mat-list-item mat-icon {
+  cursor: default;
+}
+
+.round-corners {
+  border-radius: 50%;
+}
+
+.img-h-100 {
+  height: 100%;
+}
+
+.full-w {
+  width: 100%;
+}

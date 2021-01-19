@@ -1,0 +1,38 @@
+.footer-img {
+  height: 35px;
+}
+
+.app-footer2 a {
+  color: #bbb;
+}
+
+.app-footer2 {
+  font-size: 12px;
+  background-color: #022144;
+  padding: 80px 0 80px;
+  color: #ccc;
+  height: auto;
+}
+
+.logo-txt {
+  font-size: 15px;
+  color: #ccc;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li:first-child {
+  color: #fff;
+  font-size: 16px;
+}
+
+li {
+  line-height: 20px;
+}
+
+.footer-section {
+  width: 300px;
+}

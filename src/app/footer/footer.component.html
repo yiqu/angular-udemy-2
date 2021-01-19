@@ -1,0 +1,30 @@
+<mat-toolbar class="app-footer2">
+  <div class="container" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between"
+    fxLayoutAlign.lt-sm="center" fxLayoutGap="15px">
+
+    <div ngClass.lt-sm="footer-section" fxLayout="column">
+      <div class="">
+        <img src="assets/banner/logo.png"
+        class="footer-img d-inline-block" alt="logo">
+      </div>
+      <div class="logo-txt">Health Manager</div>
+      <div class="">
+        <span class="">{{footerTitle}} </span>
+        <a [href]="myUrl" target="_blank">Come visit me</a>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-sm="column" ngClass.lt-sm="footer-section"
+      fxLayoutGap="60px" fxLayoutGap.lt-sm="15px">
+      <ng-container *ngFor="let sec of footerUrls">
+        <ul>
+          <li ngClass.gt-sm="mb-2">{{sec.display}}</li>
+          <li *ngFor="let url of sec.list">
+            {{url.display}}
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+
+  </div>
+</mat-toolbar>

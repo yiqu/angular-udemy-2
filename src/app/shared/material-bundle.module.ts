@@ -41,6 +41,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   exports: [
@@ -87,6 +88,7 @@ import {MatTreeModule} from '@angular/material/tree';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    FlexLayoutModule
   ]
 })
 export class MaterialModuleBundle {}

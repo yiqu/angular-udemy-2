@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "ngrx-qu"
+  },
+  "targets": {
+    "ngrx-qu": {
+      "hosting": {
+        "angular-udemy-2": [
+          "my-health"
+        ]
+      }
+    }
+  }
+}

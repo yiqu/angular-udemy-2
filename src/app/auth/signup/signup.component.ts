@@ -7,6 +7,7 @@ import * as valids from '../../shared/form-validators/general-form.validator';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     return moment().subtract(18, "years").format("MM/DD/YYYY");
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.signupFg = this.fb.group({
       name: utils.createFormControl2(null, false, [Validators.required]),
       password: utils.createFormControl2(null, false, [Validators.required, valids.custom4CountValidator]),
@@ -79,8 +80,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     return value;
   }
 
-  onReset() {
-    this.signupFg.reset();
+  onLogin() {
+    this.router.navigate(['../', 'signin'], {relativeTo: this.route});
   }
 
   ngOnDestroy() {

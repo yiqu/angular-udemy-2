@@ -1,1 +1,35 @@
-Login
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+
+  <div fxLayout="row" ngClass.xs="full-w">
+    <div class="alert alert-danger" role="alert" fxFlex.gt-xs="500px" fxFlex.xs="100%">
+      Error
+    </div>
+  </div>
+
+  <form [formGroup]="loginFg" ngClass.xs="full-w">
+    <section fxLayout="row">
+      <mat-form-field appearance="outline" fxFlex.gt-xs="500px">
+        <mat-label>Login name</mat-label>
+        <input type="text" matInput placeholder="Login name" formControlName="name">
+      </mat-form-field>
+    </section>
+
+    <section fxLayout="row">
+      <mat-form-field appearance="outline" fxFlex.gt-xs="500px">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Password" formControlName="password">
+      </mat-form-field>
+    </section>
+
+  </form>
+
+  <section ngClass.xs="full-w">
+    <div fxLayout="row">
+      <div ngClass.xs="full-w" fxFlex.gt-xs="500px" fxLayoutAlign="space-between">
+        <button mat-flat-button color="accent" (click)="goToRegister()">Go Register</button>
+        <button mat-flat-button color="primary">Login</button>
+      </div>
+    </div>
+  </section>
+
+</div>

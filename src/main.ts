@@ -6,9 +6,13 @@ import { environment } from './environments/environment';
 
 import 'hammerjs';
 
+import firebase from 'firebase/app';
+
 if (environment.production) {
   enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+
+firebase.initializeApp(environment.firebaseConfig);

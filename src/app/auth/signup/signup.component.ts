@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     return moment().subtract(18, "years").format("MM/DD/YYYY");
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private as: AuthService) {
     this.signupFg = this.fb.group({
       name: utils.createFormControl2(null, false, [Validators.required]),
       password: utils.createFormControl2(null, false, [Validators.required, valids.custom4CountValidator]),
@@ -42,11 +43,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.signupFg.get("password").valueChanges.pipe(
+    this.signupFg.get("password")?.valueChanges.pipe(
       takeUntil(this.compDest$)
     ).subscribe(
       (res) => {
-        let valueArr = this.signupFg.get("password").value ? (this.signupFg.get("password").value as string).split("") : [];
+        let valueArr = this.signupFg.get("password")?.value ? (this.signupFg.get("password")?.value as string).split("") : [];
         if (valueArr && valueArr.length > 0) {
           if (valueArr[valueArr.length-1] === " ") {
             (this.signupFg.get("password") as FormControl).setValue(valueArr.slice(0, -1).join(""), {emitEvent: false});
@@ -59,15 +60,15 @@ export class SignupComponent implements OnInit, OnDestroy {
       takeUntil(this.compDest$)
     ).subscribe(
       (res) => {
-        console.log(this.getAllValues());
       }
     )
   }
 
   onRegister() {
     if (this.signupFg.valid) {
-      console.log("submitting")
       console.log(this.getAllValues());
+      const val = this.getAllValues();
+      this.as.onSignUp(val.name, val.password);
     }
   }
 

@@ -6,6 +6,7 @@ import { MenuItem } from '../shared/models/nav-item.model';
 import { FormControl } from '@angular/forms';
 import { IsMobileService } from '../shared/services/is-mobile.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../shared/services/auth.service';
 
 const defaultProfileImg: string = "assets/user/default-user5.png";
 
@@ -29,10 +30,11 @@ export class TopNavComponent implements OnInit, OnDestroy, AfterViewInit {
   logoClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public router: Router, public route: ActivatedRoute,
-    public ims: IsMobileService) {
+    public ims: IsMobileService, public as: AuthService) {
 
     this.userMenuItems.push(
-      new MenuItem("record_voice_over", "Sign in", "signin")
+      new MenuItem("record_voice_over", "Sign in", "signin"),
+      new MenuItem("exit_to_app", "Sign out", "signout")
     )
   }
 
@@ -66,6 +68,7 @@ export class TopNavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSignoutClick() {
+    this.as.onSignout();
   }
 
 

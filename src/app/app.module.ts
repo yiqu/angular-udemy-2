@@ -14,6 +14,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { FooterModule } from './footer/footer.module';
 import { SideNavModule } from './side-nav/side-nav.module';
 import { TopNavModule } from './top-nav/top-nav.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import * as  fromAppReducers  from './store/global/app.reducer';
+import { appEffects } from './store/global/app.effects';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +29,12 @@ import { TopNavModule } from './top-nav/top-nav.module';
   imports: [
     BrowserModule,
     HttpClientModule,
+    StoreModule.forRoot(fromAppReducers.appReducers),
+    EffectsModule.forRoot(appEffects),
+    StoreDevtoolsModule.instrument({
+      maxAge: 45,
+      logOnly: environment.production
+    }),
     BrowserAnimationsModule,
     MaterialModuleBundle,
     NotFoundComponentModule,

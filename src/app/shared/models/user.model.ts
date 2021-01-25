@@ -18,25 +18,24 @@ export class AuthInfoFromUser implements IAuthInfo{
   }
 }
 
-// export class VerifiedUser {
-//   constructor(
-//     public createdAt: number,
-//     public displayName: string | undefined | null,
-//     public email: string | undefined | null,
-//     public emailVerified: boolean | undefined,
-//     public isAnonymous: boolean | undefined,
-//     public lastLoginAt: string | undefined | null,
-//     public photoURL: string | undefined | null,
-//     public providerData: (firebase.default.UserInfo | null)[] | undefined,
-//     public stsTokenManager: any,
-//     public tenantId: string | undefined | null,
-//     public uid: string | undefined | null,
-//     public phoneNumber: string | undefined | null,
-//     public logins: number[]
-//   ) {
-//   }
-
-// }
+export class VerifiedUser {
+  constructor(
+    public createdAt: number,
+    public displayName: string | undefined | null,
+    public email: string | undefined | null,
+    public emailVerified: boolean | undefined,
+    public isAnonymous: boolean | undefined,
+    public lastLoginAt: string | undefined | null,
+    public photoURL: string | undefined | null,
+    public providerData: (firebase.default.UserInfo | null)[] | undefined,
+    public stsTokenManager: any,
+    public tenantId: string | undefined | null,
+    public uid: string | undefined | null,
+    public phoneNumber: string | undefined | null,
+    public logins: number[]
+  ) {
+  }
+}
 
 export class InAppAlias {
   constructor(public alias: User) {

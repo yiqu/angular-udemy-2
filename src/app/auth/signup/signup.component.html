@@ -11,7 +11,7 @@
 
       <mat-form-field class="" appearance="outline">
         <input type="text" matInput placeholder="User name" [errorStateMatcher]="matcher" formControlName="name">
-        <mat-error *ngIf="signupFg.get('name').hasError('required')">
+        <mat-error *ngIf="signupFg.get('name')?.hasError('required')">
           User name is <strong>required</strong>
         </mat-error>
         <mat-hint align="start">Required</mat-hint>
@@ -19,11 +19,11 @@
 
       <mat-form-field class="" appearance="outline">
         <input type="password" matInput placeholder="Password" [errorStateMatcher]="matcher" formControlName="password">
-        <mat-error *ngIf="signupFg.get('password').hasError('required')">
+        <mat-error *ngIf="signupFg.get('password')?.hasError('required')">
           Password is <strong>required</strong>
         </mat-error>
         <mat-hint align="start">Password has to be least 4 characters long</mat-hint>
-        <mat-hint align="end" *ngIf="signupFg.get('password').hasError('fieldTooShort')">
+        <mat-hint align="end" *ngIf="signupFg.get('password')?.hasError('fieldTooShort')">
           {{passwordCtrlValue ? passwordCtrlValue.split("").length : 0}}/4
         </mat-hint>
       </mat-form-field>
@@ -34,10 +34,10 @@
         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
         <mat-datepicker #dp></mat-datepicker>
         <mat-hint align="start">You have to be at least 18 years old</mat-hint>
-        <mat-error *ngIf="signupFg.get('birthday').hasError('required')">
+        <mat-error *ngIf="signupFg.get('birthday')?.hasError('required')">
           Birthday is <strong>required</strong>
         </mat-error>
-        <mat-error *ngIf="signupFg.get('birthday').hasError('invalidBirthday')">
+        <mat-error *ngIf="signupFg.get('birthday')?.hasError('invalidBirthday')">
           You have to be born at least before <strong>{{minBirthday}}</strong>
         </mat-error>
       </mat-form-field>

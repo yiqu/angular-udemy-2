@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { VerifiedUser } from 'src/app/shared/models/user.model';
 
 const USER_LOGIN_START: string = "[Auth/Login] Login start";
 const USER_LOGIN_SUCCESS: string = "[Auth/Login] Login successful";
@@ -19,7 +20,7 @@ export const userLoginStart = createAction(
 
 export const userLoginSuccess = createAction(
   USER_LOGIN_SUCCESS,
-  props<{user: any}>()
+  props<{user: VerifiedUser}>()
 );
 
 export const userLoginFailed = createAction(
@@ -34,7 +35,7 @@ export const userRegisterStart = createAction(
 
 export const userRegisterSuccess = createAction(
   USER_REGISTER_SUCCESS,
-  props<{user: any}>()
+  props<{user: VerifiedUser}>()
 );
 
 export const userRegisterFailed = createAction(

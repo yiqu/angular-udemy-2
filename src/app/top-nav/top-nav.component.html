@@ -26,7 +26,7 @@
 
     <button mat-button [matMenuTriggerFor]="menu" class="">
       <div class="profile-img-parent">
-        <img [src]="avartarImgSrc" class="img-h-100 round-corners" alt="avartar">
+        <img [src]="(this.as.currentUserLogo$ | async)" class="img-h-100 round-corners" alt="avartar">
       </div>
     </button>
 

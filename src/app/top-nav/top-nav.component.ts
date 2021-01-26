@@ -8,7 +8,6 @@ import { IsMobileService } from '../shared/services/is-mobile.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../shared/services/auth.service';
 
-const defaultProfileImg: string = "assets/user/default-user5.png";
 
 @Component({
   selector: 'app-top-nav',
@@ -21,7 +20,6 @@ export class TopNavComponent implements OnInit, OnDestroy, AfterViewInit {
   compDest$: Subject<any> = new Subject<any>();
   leftNavMenuState: boolean = false;
   userMenuItems: MenuItem[] = [];
-  avartarImgSrc: string = defaultProfileImg;
 
   @Output()
   navToggle: EventEmitter<any> = new EventEmitter<any>();
@@ -31,14 +29,21 @@ export class TopNavComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(public router: Router, public route: ActivatedRoute,
     public ims: IsMobileService, public as: AuthService) {
-
-    this.userMenuItems.push(
-      new MenuItem("record_voice_over", "Sign in", "signin"),
-      new MenuItem("exit_to_app", "Sign out", "signout")
-    )
   }
 
   ngOnInit() {
+    this.as.currentUser$.pipe(
+      takeUntil(this.compDest$)
+    ).subscribe(
+      (res) => {
+        this.userMenuItems = [];
+        if (res) {
+          this.userMenuItems.push(new MenuItem("exit_to_app", "Sign out", "signout"))
+        } else {
+          this.userMenuItems.push(new MenuItem("record_voice_over", "Sign in", "signin"));
+        }
+      }
+    )
   }
 
   ngAfterViewInit() {

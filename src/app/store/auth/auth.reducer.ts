@@ -68,6 +68,7 @@ export const authStateReducer = createReducer(
   on(userActions.userLogoutSuccess, (state) => {
     return {
       ...state,
+      currentUser: undefined,
       authLoading: false
     }
   }),

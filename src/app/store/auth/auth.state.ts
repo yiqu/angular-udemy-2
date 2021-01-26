@@ -1,5 +1,7 @@
+import { VerifiedUser } from "src/app/shared/models/user.model";
+
 export interface AuthState {
-  currentUser: any;
+  currentUser: VerifiedUser | undefined;
   loading: boolean;
   registerUserName?: string | undefined;
   loginUserName?: string | undefined;

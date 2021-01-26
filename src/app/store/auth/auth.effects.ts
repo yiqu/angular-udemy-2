@@ -2,11 +2,26 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { exhaustMap, filter, map } from "rxjs/operators";
+import { catchError, exhaustMap, filter, map } from "rxjs/operators";
 import { VerifiedUser } from "src/app/shared/models/user.model";
 import * as fromAuthActions from './auth.actions';
 import * as fromFirebaseUtils from '../../shared/firebase.utils';
-import { from } from "rxjs";
+import { from, Observable, Observer, of } from "rxjs";
+
+/**
+ * Convert Firebase's Auth to an Observable
+ * @param auth
+ */
+export function makeAuthstateObservable(auth: firebase.auth.Auth): Observable<firebase.User | null> {
+  const authState = new Observable((observer: Observer<firebase.User | null | undefined>) => {
+    auth.onAuthStateChanged(
+      (user?: firebase.User | null) => observer.next(user),
+      (error: firebase.auth.Error) => observer.error(error),
+      () => observer.complete()
+    );
+  });
+  return authState;
+}
 
 
 @Injectable()
@@ -14,6 +29,25 @@ export class AuthEffects {
 
   constructor(public actions$: Actions) {
   }
+
+  userFromFirebaseAuthState$ = createEffect(() => {
+    return makeAuthstateObservable(firebase.auth()).pipe(
+      map((user: firebase.User | null) => {
+        console.log("current user: ", user);
+        if (user) {
+        const verified = new VerifiedUser(new Date().getTime(), user?.displayName, user?.email, user?.emailVerified,
+            user?.isAnonymous, null, user?.photoURL, user?.providerData, user?.metadata, user?.tenantId,
+            user?.uid, user?.phoneNumber, []);
+          return fromAuthActions.userLoginSuccess({user: verified});
+        }
+        return fromAuthActions.userLogoutSuccess();
+      }),
+      catchError((e) => {
+        console.log(e);
+        return of(fromAuthActions.userLoginFailed({name:"", errorMsg: e}));
+      })
+    )
+  });
 
   registerNewUserEmailPassword$ = createEffect(() => {
     return this.actions$.pipe(
@@ -35,7 +69,7 @@ export class AuthEffects {
               user.user?.isAnonymous, null, user.user?.photoURL, user.user?.providerData, user.user?.metadata, user.user?.tenantId,
               user.user?.uid, user.user?.phoneNumber, []);
 
-            return fromAuthActions.userRegisterSuccess({user: verified});
+            return fromAuthActions.userRegisterSuccess({user: {...verified}});
           },
           (rej) => {
             console.log("err: ",rej);
@@ -44,6 +78,37 @@ export class AuthEffects {
           }
         );
 
+      })
+    );
+  });
+
+  userLoginEmailPassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.userLoginStart),
+      exhaustMap((res) => {
+        const email: string = res.name;
+        const password: string = res.password;
+        const sessionType: string = false ?
+          firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION;
+
+        return firebase.auth().setPersistence(sessionType).then(
+          () => {
+            return firebase.auth().signInWithEmailAndPassword(email, password);
+          }
+        ).then(
+          (user: firebase.auth.UserCredential) => {
+            const verified = new VerifiedUser(new Date().getTime(), user.user?.displayName, user.user?.email, user.user?.emailVerified,
+              user.user?.isAnonymous, null, user.user?.photoURL, user.user?.providerData, user.user?.metadata, user.user?.tenantId,
+              user.user?.uid, user.user?.phoneNumber, []);
+
+            return fromAuthActions.userLoginSuccess({user: {...verified}});
+          },
+          (rej) => {
+            console.log("err: ",rej);
+            const authErrMsg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
+            return fromAuthActions.userLoginFailed({name: email, errorMsg: authErrMsg});
+          }
+        );
       })
     );
   });

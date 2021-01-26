@@ -3,6 +3,9 @@
   <div fxLayout="row" ngClass.xs="full-w">
     <div class="alert alert-success" role="alert" fxFlex.gt-xs="500px" fxFlex.xs="100%">
       Sign up for a new account.
+      <div class="mt-1 login">
+        <a [routerLink]="['/', 'auth', 'signin']">Already have an account?</a>
+      </div>
     </div>
   </div>
 
@@ -48,8 +51,7 @@
     </form>
   </section>
 
-  <section ngClass.gt-xs="actions" ngClass.xs="full-w" fxLayout="row" fxLayoutAlign="space-between">
-    <button mat-flat-button color="accent" (click)="onLogin()">Login instead</button>
+  <section ngClass.gt-xs="actions" ngClass.xs="full-w" fxLayout="row" fxLayoutAlign="end">
     <button mat-flat-button color="primary" (click)="onRegister()" [disabled]="signupFg.invalid">Register</button>
   </section>
 </div>

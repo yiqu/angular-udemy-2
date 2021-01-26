@@ -9,3 +9,8 @@
 .title {
   font-size: 20px;
 }
+
+.alert .login {
+  font-size: 12px;
+  font-weight: 700;
+}

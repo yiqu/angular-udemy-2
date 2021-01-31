@@ -9,44 +9,88 @@ describe('Auth Service', () => {
   let store: MockStore;
   const initialState = { auth: {currentUser: undefined, loading: true} };
 
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({ initialState }),
       ]
     });
+
+    service = TestBed.inject(AuthService);
     store = TestBed.inject(MockStore);
   });
 
-  it('should use store', () => {
-    service = TestBed.inject(AuthService);
+  it('service is created', () => {
     expect(service).toBeTruthy();
-    //expect(service.getValue()).toBe('real value');
   });
 
-  it('type should be Store', () => {
+  it('store type should be Store', () => {
     expect(store).toBeInstanceOf(Store);
   });
 
-  it('type should be MockStore', () => {
+  it('store type should be MockStore', () => {
     expect(store).toBeInstanceOf(MockStore);
   });
 
-  // it('#getValue should return faked value from a fake object', () => {
-  //   const fake =  { getValue: () => 'fake value' };
-  //   service = new AuthService(fake as Store);
-  //   expect(masterService.getValue()).toBe('fake value');
-  // });
+  it('currentUser should return undefined from observable',
+  (done: DoneFn) => {
+    service.currentUser$.subscribe(value => {
+    expect(value).toBe(undefined);
+    done();
+  });
+  });
 
 
   it('current user should be undefined',
     (done: DoneFn) => {
-      service = TestBed.inject(AuthService);
       service.currentUser$.subscribe(value => {
       expect(value).toBe(undefined);
       done();
     });
+  });
+
+  it('currentUser should return value', () => {
+    const authSvcSpy = jasmine.createSpyObj('AuthService', ['getValue']);
+
+    const stubValue = 'stub value';
+
+    authSvcSpy.getValue.and.returnValue(stubValue);
+
+    expect(authSvcSpy.getValue())
+      .toBe(stubValue, 'service returned stub value');
+    expect(authSvcSpy.getValue.calls.count())
+      .toBe(1, 'spy method was called once');
+    expect(authSvcSpy.getValue.calls.mostRecent().returnValue)
+      .toBe(stubValue);
+
+  });
+
+  it('onSignin will trigger a dispatch call', () => {
+    const storeSpy = jasmine.createSpyObj('Store', ['dispatch', 'select']);
+
+    const stubValue = 'stub value';
+
+    storeSpy.dispatch.and.returnValue(stubValue);
+
+    service = new AuthService(storeSpy);
+
+    service.onSignin('','');
+
+    expect(storeSpy.dispatch.calls.count())
+      .toBe(1, 'spy method was called once');
+
+    expect(storeSpy.dispatch())
+      .toBe(stubValue, 'service returned stub value');
+
+  });
+
+  it('getUser will trigger number of calls', () => {
+
+    const authSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+    authSpy.getUser();
+    authSpy.getUser();
+    expect(authSpy.getUser.calls.count()).toBe(2);
+
   });
 
 });

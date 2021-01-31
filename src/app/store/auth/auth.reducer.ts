@@ -2,7 +2,7 @@ import { AuthState } from "./auth.state";
 import { Action, createReducer, on } from '@ngrx/store';
 import * as userActions from './auth.actions';
 
-const inititalState: AuthState = {
+export const inititalState: AuthState = {
   currentUser: undefined,
   loading: false
 }

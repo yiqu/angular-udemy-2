@@ -13,14 +13,21 @@ const USER_LOGOUT_START: string = "[Auth] User logout start";
 const USER_LOGOUT_SUCCESS: string = "[Auth] User logout successful";
 const USER_LOGOUT_FAILED: string = "[Auth] User logout failed";
 
+const USER_LOGIN_START2: string = "[Auth/Login] Login start2";
+
 export const userLoginStart = createAction(
   USER_LOGIN_START,
   props<{name: string, password: string}>()
 );
 
+export const userLoginStart2 = createAction(
+  USER_LOGIN_START2,
+  props<{name: string, password: string}>()
+);
+
 export const userLoginSuccess = createAction(
   USER_LOGIN_SUCCESS,
-  props<{user: VerifiedUser}>()
+  props<{user: VerifiedUser | undefined}>()
 );
 
 export const userLoginFailed = createAction(

@@ -2,11 +2,12 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { catchError, exhaustMap, filter, map } from "rxjs/operators";
+import { catchError, exhaustMap, filter, map, switchMap, take } from "rxjs/operators";
 import { VerifiedUser } from "src/app/shared/models/user.model";
 import * as fromAuthActions from './auth.actions';
 import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { from, Observable, Observer, of } from "rxjs";
+import { AuthService } from "src/app/shared/services/auth.service";
 
 /**
  * Convert Firebase's Auth to an Observable
@@ -27,7 +28,7 @@ export function makeAuthstateObservable(auth: firebase.auth.Auth): Observable<fi
 @Injectable()
 export class AuthEffects {
 
-  constructor(public actions$: Actions) {
+  constructor(public actions$: Actions, public as: AuthService) {
   }
 
   userFromFirebaseAuthState$ = createEffect(() => {
@@ -125,6 +126,20 @@ export class AuthEffects {
             const authErrMsg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
             return fromAuthActions.userLogoutFailed({errorMsg: authErrMsg});
           }
+        )
+      })
+    );
+  });
+
+  loginUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.userLoginStart2),
+      switchMap(() => {
+        return (this.as.loginUser()).pipe(
+          take(1),
+          map((res) => {
+            return fromAuthActions.userLoginSuccess({user: res});
+          })
         )
       })
     );

@@ -34,7 +34,7 @@ export class AuthEffects {
   userFromFirebaseAuthState$ = createEffect(() => {
     return makeAuthstateObservable(firebase.auth()).pipe(
       map((user: firebase.User | null) => {
-        console.log("current user: ", user);
+        console.log("current user: ", user?.email);
         if (user) {
         const verified = new VerifiedUser(new Date().getTime(), user?.displayName, user?.email, user?.emailVerified,
             user?.isAnonymous, null, user?.photoURL, user?.providerData, user?.metadata, user?.tenantId,

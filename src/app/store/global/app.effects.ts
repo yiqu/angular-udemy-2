@@ -20,29 +20,29 @@ export class AppGlobalEffects {
   constructor(public actions$: Actions, private store: Store<AppState>) {
   }
 
-  userActivity$ = createEffect(() => {
-    return fromEvent(document, 'click').pipe(
-      tap(() => {
-        this.timeInactive = 0; // reset inactive to 0
-        console.log("clicked")
-      }),
-      switchMap((res) => {
-        return interval(1000);
-      }),
-      filter((res) => {
-        this.timeInactive++;
-        console.log(this.timeInactive);
-        return this.timeInactive > 5;
-      }),
-      withLatestFrom(this.store.select(fromAuthSelectors.getCurrentUser)),
-      filter(([res, user]) => {
-        return !!user; // inactive is higher than threshold AND user is logged in, fire action
-      }),
-      map(([res, user]) => {
-        return fromAppActions.userHasBeenInActive({inactiveTimeInMilli: res});
-      })
-    );
-  });
+  // userActivity$ = createEffect(() => {
+  //   return fromEvent(document, 'click').pipe(
+  //     tap(() => {
+  //       this.timeInactive = 0; // reset inactive to 0
+  //       console.log("clicked")
+  //     }),
+  //     switchMap((res) => {
+  //       return interval(1000);
+  //     }),
+  //     filter((res) => {
+  //       this.timeInactive++;
+  //       console.log(this.timeInactive);
+  //       return this.timeInactive > 5;
+  //     }),
+  //     withLatestFrom(this.store.select(fromAuthSelectors.getCurrentUser)),
+  //     filter(([res, user]) => {
+  //       return !!user; // inactive is higher than threshold AND user is logged in, fire action
+  //     }),
+  //     map(([res, user]) => {
+  //       return fromAppActions.userHasBeenInActive({inactiveTimeInMilli: res});
+  //     })
+  //   );
+  // });
 
 
   alertUserOfInactive$ = createEffect(() => {

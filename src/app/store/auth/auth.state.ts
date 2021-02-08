@@ -1,7 +1,10 @@
 import { VerifiedUser } from "src/app/shared/models/user.model";
+import firebase from 'firebase/app';
+
+export const NO_USER: string = 'NO_USER';
 
 export interface AuthState {
-  currentUser: VerifiedUser | null;
+  currentUser: AppUser;
   loading: boolean;
   registerUserName?: string | undefined;
   loginUserName?: string | undefined;
@@ -11,3 +14,6 @@ export interface AuthState {
   loginErrorMsg?: string | undefined;
   redirectPathAfterLogin?: string;
 }
+
+export type AppUser = VerifiedUser | null | undefined;
+export type FirebaseAppUser = firebase.User | undefined;

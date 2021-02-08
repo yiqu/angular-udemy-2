@@ -6,13 +6,14 @@ import * as fromAuthActions from '../../store/auth/auth.actions';
 import { VerifiedUser } from '../models/user.model';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
 import { Router } from '@angular/router';
+import { AppUser } from 'src/app/store/auth/auth.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  currentUser$: Observable<VerifiedUser | null> = this.store.select(fromAuthSelectors.getCurrentUser);
+  currentUser$: Observable<AppUser> = this.store.select(fromAuthSelectors.getCurrentUser);
   currentUserLogo$ : Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
 
   constructor(private store: Store<AppState>, private router: Router) {

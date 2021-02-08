@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { VerifiedUser } from 'src/app/shared/models/user.model';
+import { AppUser } from './auth.state';
 
 const USER_LOGIN_START: string = "[Auth/Login] Login start";
 const USER_LOGIN_SUCCESS: string = "[Auth/Login] Login successful";
@@ -66,7 +67,7 @@ export const userLogoutFailed = createAction(
 
 export const userStateChanged = createAction(
   USER_STATE_CHANGED,
-  props<{user: VerifiedUser | null}>()
+  props<{user: AppUser}>()
 );
 
 

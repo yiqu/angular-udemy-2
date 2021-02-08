@@ -2,21 +2,27 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { catchError, exhaustMap, filter, map, switchMap, take, tap } from "rxjs/operators";
+import { catchError, delay, exhaustMap, filter, map, switchMap, take, tap } from "rxjs/operators";
 import { VerifiedUser } from "src/app/shared/models/user.model";
 import * as fromAuthActions from './auth.actions';
 import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { from, Observable, Observer, of } from "rxjs";
 import { AuthService } from "src/app/shared/services/auth.service";
+import { AppUser, FirebaseAppUser } from "./auth.state";
 
 /**
  * Convert Firebase's Auth to an Observable
  * @param auth
  */
-export function makeAuthstateObservable(auth: firebase.auth.Auth): Observable<firebase.User | null> {
-  const authState = new Observable((observer: Observer<firebase.User | null | undefined>) => {
+export function makeAuthstateObservable(auth: firebase.auth.Auth): Observable<FirebaseAppUser> {
+  const authState = new Observable((observer: Observer<FirebaseAppUser>) => {
     auth.onAuthStateChanged(
-      (user?: firebase.User | null) => observer.next(user),
+      (user?: firebase.User | null) => {
+        if (user) {
+          return observer.next(user);
+        }
+        return observer.next(undefined);
+      },
       (error: firebase.auth.Error) => observer.error(error),
       () => observer.complete()
     );
@@ -33,10 +39,11 @@ export class AuthEffects {
 
   userFromFirebaseAuthState$ = createEffect(() => {
     return makeAuthstateObservable(firebase.auth()).pipe(
-      map((user: firebase.User | null) => {
-        console.log("current user: ", user?.email);
-        let newUserState: VerifiedUser | null = null;
-        if (user) {
+      delay(2000),
+      map((user: FirebaseAppUser) => {
+        console.log("current user: ", user?.email ?? "NO USER");
+        let newUserState = undefined;
+        if (user?.email) {
           newUserState = new VerifiedUser(new Date().getTime(), user?.displayName, user?.email, user?.emailVerified,
             user?.isAnonymous, null, user?.photoURL, user?.providerData, user?.metadata, user?.tenantId,
             user?.uid, user?.phoneNumber, []);

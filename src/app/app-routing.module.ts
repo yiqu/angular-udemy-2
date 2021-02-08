@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './404/404.component';
 import { CoreComponent } from './core/core.component';
 import { NetworkAwarePreloadStrategy } from './preload-strat';
+import { UserPresentGuard } from './shared/guards/auth/user.guard';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },

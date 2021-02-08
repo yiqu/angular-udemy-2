@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { catchError, exhaustMap, filter, map, switchMap, take } from "rxjs/operators";
+import { catchError, exhaustMap, filter, map, switchMap, take, tap } from "rxjs/operators";
 import { VerifiedUser } from "src/app/shared/models/user.model";
 import * as fromAuthActions from './auth.actions';
 import * as fromFirebaseUtils from '../../shared/firebase.utils';
@@ -35,13 +35,13 @@ export class AuthEffects {
     return makeAuthstateObservable(firebase.auth()).pipe(
       map((user: firebase.User | null) => {
         console.log("current user: ", user?.email);
+        let newUserState: VerifiedUser | null = null;
         if (user) {
-        const verified = new VerifiedUser(new Date().getTime(), user?.displayName, user?.email, user?.emailVerified,
+          newUserState = new VerifiedUser(new Date().getTime(), user?.displayName, user?.email, user?.emailVerified,
             user?.isAnonymous, null, user?.photoURL, user?.providerData, user?.metadata, user?.tenantId,
             user?.uid, user?.phoneNumber, []);
-          return fromAuthActions.userLoginSuccess({user: verified});
         }
-        return fromAuthActions.userLogoutSuccess();
+        return fromAuthActions.userStateChanged({user: newUserState})
       }),
       catchError((e) => {
         console.log(e);
@@ -70,7 +70,7 @@ export class AuthEffects {
               user.user?.isAnonymous, null, user.user?.photoURL, user.user?.providerData, user.user?.metadata, user.user?.tenantId,
               user.user?.uid, user.user?.phoneNumber, []);
 
-            return fromAuthActions.userRegisterSuccess({user: {...verified}});
+            return fromAuthActions.userRegisterSuccess({redirectPath: "home"});
           },
           (rej) => {
             console.log("err: ",rej);
@@ -102,7 +102,7 @@ export class AuthEffects {
               user.user?.isAnonymous, null, user.user?.photoURL, user.user?.providerData, user.user?.metadata, user.user?.tenantId,
               user.user?.uid, user.user?.phoneNumber, []);
 
-            return fromAuthActions.userLoginSuccess({user: {...verified}});
+            return fromAuthActions.userLoginSuccess({redirectPath: "home"});
           },
           (rej) => {
             console.log("err: ",rej);
@@ -131,18 +131,25 @@ export class AuthEffects {
     );
   });
 
-  loginUser$ = createEffect(() => {
+  loginSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromAuthActions.userLoginStart2),
-      switchMap(() => {
-        return (this.as.loginUser()).pipe(
-          take(1),
-          map((res) => {
-            return fromAuthActions.userLoginSuccess({user: res});
-          })
-        )
+      ofType(...[fromAuthActions.userLoginSuccess, fromAuthActions.userRegisterSuccess]),
+      map((res) => {
+        return fromAuthActions.redirectAfterLogin({ path: res.redirectPath });
       })
     );
   });
+
+  redirectPath$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.redirectAfterLogin),
+      tap((res) => {
+        const path = res.path;
+        if (path) {
+          this.as.navigateToPath(path);
+        }
+      })
+    );
+  }, {dispatch: false});
 }
 

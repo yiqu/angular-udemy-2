@@ -5,16 +5,17 @@ import { AppState } from 'src/app/store/global/app.reducer';
 import * as fromAuthActions from '../../store/auth/auth.actions';
 import { VerifiedUser } from '../models/user.model';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  currentUser$: Observable<VerifiedUser | undefined> = this.store.select(fromAuthSelectors.getCurrentUser);
+  currentUser$: Observable<VerifiedUser | null> = this.store.select(fromAuthSelectors.getCurrentUser);
   currentUserLogo$ : Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
 
   }
 
@@ -38,6 +39,11 @@ export class AuthService {
 
   loginUser(): Observable<any> {
     return of(undefined);
+  }
+
+  navigateToPath(path: string) {
+    const pathToNav = path.split("/");
+    this.router.navigate(['/', ...pathToNav]);
   }
 
 }

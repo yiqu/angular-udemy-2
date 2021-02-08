@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as userActions from './auth.actions';
 
 export const inititalState: AuthState = {
-  currentUser: undefined,
+  currentUser: null,
   loading: false
 }
 
@@ -18,12 +18,13 @@ export const authStateReducer = createReducer(
     }
   }),
 
-  on(userActions.userRegisterSuccess, (state, {user}) => {
+  on(userActions.userRegisterSuccess, (state, {redirectPath}) => {
     return {
       ...state,
       authLoading: false,
       registerError: false,
-      registerErrMsg: undefined
+      registerErrMsg: undefined,
+      redirectPathAfterLogin: redirectPath
     }
   }),
 
@@ -55,20 +56,26 @@ export const authStateReducer = createReducer(
     }
   }),
 
-  on(userActions.userLoginSuccess, (state, {user}) => {
+  on(userActions.userLoginSuccess, (state, {redirectPath}) => {
     return {
       ...state,
-      currentUser: user,
       authLoading: false,
       loginError: false,
-      loginErrorMsg: undefined
+      loginErrorMsg: undefined,
+      redirectPathAfterLogin: redirectPath
+    }
+  }),
+
+  on(userActions.redirectAfterLogin, (state, {path}) => {
+    return {
+      ...state,
+      redirectPathAfterLogin: path
     }
   }),
 
   on(userActions.userLogoutSuccess, (state) => {
     return {
       ...state,
-      currentUser: undefined,
       authLoading: false
     }
   }),
@@ -84,6 +91,13 @@ export const authStateReducer = createReducer(
     return {
       ...state,
       authLoading: false
+    }
+  }),
+
+  on(userActions.userStateChanged, (state, {user}) => {
+    return {
+      ...state,
+      currentUser: user
     }
   })
 

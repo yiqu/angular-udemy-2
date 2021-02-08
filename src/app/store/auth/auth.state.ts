@@ -1,7 +1,7 @@
 import { VerifiedUser } from "src/app/shared/models/user.model";
 
 export interface AuthState {
-  currentUser: VerifiedUser | undefined;
+  currentUser: VerifiedUser | null;
   loading: boolean;
   registerUserName?: string | undefined;
   loginUserName?: string | undefined;
@@ -9,4 +9,5 @@ export interface AuthState {
   registerErrMsg?: string | undefined;
   loginError?: boolean;
   loginErrorMsg?: string | undefined;
+  redirectPathAfterLogin?: string;
 }

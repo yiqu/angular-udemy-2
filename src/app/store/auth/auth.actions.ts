@@ -13,26 +13,27 @@ const USER_LOGOUT_START: string = "[Auth] User logout start";
 const USER_LOGOUT_SUCCESS: string = "[Auth] User logout successful";
 const USER_LOGOUT_FAILED: string = "[Auth] User logout failed";
 
-const USER_LOGIN_START2: string = "[Auth/Login] Login start2";
+const REDIRECT_AFTER_LOGIN: string = "[Auth/Redirect] Redirect to new path after login";
+const USER_STATE_CHANGED: string = "[Auth/User State] User state changed";
 
 export const userLoginStart = createAction(
   USER_LOGIN_START,
   props<{name: string, password: string}>()
 );
 
-export const userLoginStart2 = createAction(
-  USER_LOGIN_START2,
-  props<{name: string, password: string}>()
-);
-
 export const userLoginSuccess = createAction(
   USER_LOGIN_SUCCESS,
-  props<{user: VerifiedUser | undefined}>()
+  props<{redirectPath?: string}>()
 );
 
 export const userLoginFailed = createAction(
   USER_LOGIN_FAILED,
   props<{name: string, errorMsg: string}>()
+);
+
+export const redirectAfterLogin = createAction(
+  REDIRECT_AFTER_LOGIN,
+  props<{path?: string}>()
 );
 
 export const userRegisterStart = createAction(
@@ -42,7 +43,7 @@ export const userRegisterStart = createAction(
 
 export const userRegisterSuccess = createAction(
   USER_REGISTER_SUCCESS,
-  props<{user: VerifiedUser}>()
+  props<{redirectPath?: string}>()
 );
 
 export const userRegisterFailed = createAction(
@@ -63,5 +64,9 @@ export const userLogoutFailed = createAction(
   props<{errorMsg: string}>()
 )
 
+export const userStateChanged = createAction(
+  USER_STATE_CHANGED,
+  props<{user: VerifiedUser | null}>()
+);
 
 

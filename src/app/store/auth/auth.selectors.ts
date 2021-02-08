@@ -9,7 +9,7 @@ export const selectAuthState = createFeatureSelector<AuthState>("auth");
 
 export const getCurrentUser = createSelector(
   selectAuthState,
-  (state: AuthState): VerifiedUser | undefined => {
+  (state: AuthState): VerifiedUser | null => {
     return state.currentUser;
   }
 );

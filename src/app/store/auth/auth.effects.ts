@@ -39,7 +39,6 @@ export class AuthEffects {
 
   userFromFirebaseAuthState$ = createEffect(() => {
     return makeAuthstateObservable(firebase.auth()).pipe(
-      delay(2000),
       map((user: FirebaseAppUser) => {
         console.log("current user: ", user?.email ?? "NO USER");
         let newUserState = undefined;

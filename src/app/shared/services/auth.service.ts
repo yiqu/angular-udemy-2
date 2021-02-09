@@ -6,7 +6,7 @@ import * as fromAuthActions from '../../store/auth/auth.actions';
 import { VerifiedUser } from '../models/user.model';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
 import { Router } from '@angular/router';
-import { AppUser } from 'src/app/store/auth/auth.state';
+import { AppUser, ErrorInfo } from 'src/app/store/auth/auth.state';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,8 @@ import { AppUser } from 'src/app/store/auth/auth.state';
 export class AuthService {
 
   currentUser$: Observable<AppUser> = this.store.select(fromAuthSelectors.getCurrentUser);
-  currentUserLogo$ : Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
+  currentUserLogo$: Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
+  authError$: Observable<ErrorInfo> = this.store.select(fromAuthSelectors.getError);
 
   constructor(private store: Store<AppState>, private router: Router) {
 
@@ -42,9 +43,16 @@ export class AuthService {
     return of(undefined);
   }
 
-  navigateToPath(path: string) {
-    const pathToNav = path.split("/");
-    this.router.navigate(['/', ...pathToNav]);
+  navigateToPath(path?: string) {
+    let result: string[] = [];
+    if (path) {
+      result = path.split("/");
+    }
+    this.router.navigate(['/', ...result]);
+  }
+
+  resetAuthErrorState() {
+    this.store.dispatch(fromAuthActions.resetAuthError());
   }
 
 }

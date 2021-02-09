@@ -1,12 +1,15 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
 
   <div fxLayout="row" ngClass.xs="full-w">
-    <div class="alert alert-success" role="alert" fxFlex.gt-xs="500px" fxFlex.xs="100%">
-      Sign up for a new account.
-      <div class="mt-1 login">
-        <a [routerLink]="['/', 'auth', 'signin']">Already have an account?</a>
+    <ng-container *ngIf="(this.as.authError$ | async) as errObj">
+      <div [class]="'alert '+ (errObj.regError ? 'alert-danger':'alert-success')"
+        role="alert" fxFlex.gt-xs="500px" fxFlex.xs="100%">
+          {{errObj.regError ? (errObj.regErrMsg) : ('Sign up for a new account.')}}
+          <div class="mt-1 login">
+            <a [routerLink]="['/', 'auth', 'signin']">Already have an account?</a>
+          </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <section ngClass.gt-xs="signup-form" ngClass.xs="full-w" *ngIf="signupFg">

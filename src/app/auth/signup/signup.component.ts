@@ -33,10 +33,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     return moment().subtract(18, "years").format("MM/DD/YYYY");
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private as: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, public as: AuthService) {
     this.signupFg = this.fb.group({
-      name: utils.createFormControl2(null, false, [Validators.required]),
-      password: utils.createFormControl2(null, false, [Validators.required, valids.custom4CountValidator]),
+      name: utils.createFormControl2('test1@aol.com', false, [Validators.required]),
+      password: utils.createFormControl2('123456', false, [Validators.required, valids.custom4CountValidator]),
       birthday: utils.createFormControl2(null, false, [valids.validBirthdayInMoment]),
       agree: utils.createFormControl2(false, false, [valids.valueIsTrue]),
     })
@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     ).subscribe(
       (res) => {
       }
-    )
+    );
   }
 
   onRegister() {
@@ -86,6 +86,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.as.resetAuthErrorState();
     this.compDest$.next();
     this.compDest$.complete();
   }

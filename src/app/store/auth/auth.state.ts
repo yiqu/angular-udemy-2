@@ -17,3 +17,10 @@ export interface AuthState {
 
 export type AppUser = VerifiedUser | null | undefined;
 export type FirebaseAppUser = firebase.User | undefined;
+
+export interface ErrorInfo {
+  error?: boolean;
+  errorMsg?: string;
+  regError?: boolean;
+  regErrMsg?: string;
+}

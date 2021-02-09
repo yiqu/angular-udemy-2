@@ -1,12 +1,15 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
 
   <div fxLayout="row" ngClass.xs="full-w">
-    <div class="alert alert-success" role="alert" fxFlex.gt-xs="500px" fxFlex.xs="100%">
-      Sign in using your Health Manager account.
-      <div class="mt-1 register">
-        <a [routerLink]="['/', 'auth', 'signup']">I don't have an account.</a>
+    <ng-container *ngIf="(this.as.authError$ | async) as errObj">
+      <div [class]="'alert '+ (errObj.error ? 'alert-danger':'alert-success')" role="alert"
+        fxFlex.gt-xs="500px" fxFlex.xs="100%">
+          {{errObj.error ? (errObj.errorMsg) : ('Sign in using your Health Manager account.')}}
+          <div class="mt-1 register">
+            <a [routerLink]="['/', 'auth', 'signup']">I don't have an account.</a>
+          </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <form [formGroup]="loginFg" ngClass.xs="full-w">

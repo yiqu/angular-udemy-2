@@ -99,7 +99,17 @@ export const authStateReducer = createReducer(
       ...state,
       currentUser: user
     }
-  })
+  }),
+
+  on(userActions.resetAuthError, (state) => {
+    return {
+      ...state,
+      registerError: false,
+      registerErrMsg: undefined,
+      loginError: false,
+      loginErrorMsg: undefined
+    }
+  }),
 
 )
 

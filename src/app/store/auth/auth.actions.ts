@@ -17,6 +17,8 @@ const USER_LOGOUT_FAILED: string = "[Auth] User logout failed";
 const REDIRECT_AFTER_LOGIN: string = "[Auth/Redirect] Redirect to new path after login";
 const USER_STATE_CHANGED: string = "[Auth/User State] User state changed";
 
+const RESET_AUTH_ERR: string = "[Auth/Reset Error] Reset Errors to null";
+
 export const userLoginStart = createAction(
   USER_LOGIN_START,
   props<{name: string, password: string}>()
@@ -69,5 +71,9 @@ export const userStateChanged = createAction(
   USER_STATE_CHANGED,
   props<{user: AppUser}>()
 );
+
+export const resetAuthError = createAction(
+  RESET_AUTH_ERR
+)
 
 

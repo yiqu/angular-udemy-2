@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as utils from '../../shared/general.utils';
 import * as em from '../../shared/error-matchers/error-state.matcher';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginFg: FormGroup;
 
@@ -33,5 +33,9 @@ export class LoginComponent implements OnInit {
         this.as.onSignin(name, password);
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.as.resetAuthErrorState();
   }
 }

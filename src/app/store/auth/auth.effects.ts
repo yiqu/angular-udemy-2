@@ -126,6 +126,7 @@ export class AuthEffects {
       exhaustMap(() => {
         return firebase.auth().signOut().then(
           () => {
+            this.as.navigateToPath();
             return fromAuthActions.userLogoutSuccess();
           },
           (rej) => {

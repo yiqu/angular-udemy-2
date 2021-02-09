@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { VerifiedUser } from "src/app/shared/models/user.model";
-import { AppUser, AuthState } from "./auth.state";
+import { AppUser, AuthState, ErrorInfo } from "./auth.state";
 
 const defaultProfileImg: string = "assets/user/default-user5.png";
 const loggedInImg: string = "assets/user/loggedin.png";
@@ -30,3 +30,16 @@ export const getTopNavUserLogo = createSelector(
     return defaultProfileImg;
   }
 )
+
+export const getError = createSelector(
+  selectAuthState,
+  (state: AuthState): ErrorInfo => {
+    return {
+      error: state.loginError,
+      errorMsg: state.loginErrorMsg,
+      regError: state.registerError,
+      regErrMsg: state.registerErrMsg
+    }
+  }
+)
+

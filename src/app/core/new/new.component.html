@@ -1,0 +1,13 @@
+<div fxLayoutGap="20px" fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="center center" class="title">
+    Let's get started!
+  </div>
+  <ng-container *ngIf="(this.as.currentUser$ | async) as user">
+    Welcome {{user?.email}}
+  </ng-container>
+  <p>
+    Health Manager makes exercise motivating and fun with a fun experience that lets you interact with
+    pals inside and outside of class, right from your phone. Whether you want to lose weight,
+    tone it up or just sweat, find a better you with friends or solo, with Health Manager – fitness on your time.
+  </p>
+</div>

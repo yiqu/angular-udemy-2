@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-core-progress',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./progress.component.css']
 })
 export class ProgressComponent implements OnInit {
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 }

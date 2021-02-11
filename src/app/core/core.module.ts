@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { MaterialModuleBundle } from '../shared/material-bundle.module';
-import { TrainingModule } from '../training/training.module';
 import { CompletedTrainingComponent } from './completed/completed.component';
 import { CoreComponent } from './core.component';
+import { NewTrainingComponent } from './new/new.component';
 import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
@@ -15,7 +16,7 @@ import { ProgressComponent } from './progress/progress.component';
     ReactiveFormsModule,
     CommonModule,
     FlexLayoutModule,
-    TrainingModule
+    RouterModule
   ],
 
   exports: [
@@ -25,7 +26,8 @@ import { ProgressComponent } from './progress/progress.component';
   declarations: [
     CoreComponent,
     CompletedTrainingComponent,
-    ProgressComponent
+    ProgressComponent,
+    NewTrainingComponent
   ],
 
   providers: [],

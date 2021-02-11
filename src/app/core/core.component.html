@@ -1,6 +1,12 @@
-<div class="container">
-  <ng-container *ngIf="(this.as.currentUser$ | async) as user">
-    Welcome {{user?.email}}
-  </ng-container>
-  <app-core-training></app-core-training>
+<div class="container py-3" fxLayoutGap="20px" fxLayout="column">
+
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let tab of tabs"
+       [active]="activeTab == tab"
+       [routerLink]="[tab.id]"
+       [routerLinkActive]="'active-tab'">
+        {{tab.name}}
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>

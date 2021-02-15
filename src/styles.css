@@ -51,3 +51,15 @@ mat-list-item mat-icon {
 .full-w {
   width: 100%;
 }
+
+/**
+Used to sticky button rows, etc
+**/
+.sticky-topp {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 3;
+  padding: 10px;
+  padding-left: 0px;
+}

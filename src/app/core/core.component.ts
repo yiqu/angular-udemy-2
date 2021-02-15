@@ -32,8 +32,11 @@ export class CoreComponent implements OnInit, OnDestroy {
       map((res) => this.getUrlLastSegment(res)),
       map((path) => this.calculateTabIndex(path)),
       takeUntil(this.compDest$)
+    ).subscribe(
+      (res: number) => {
+        this.selectTab(res)
+      }
     )
-    .subscribe((res: number) => this.selectTab(res))
   }
 
   getUrlLastSegment(res: Event | string): string | undefined {

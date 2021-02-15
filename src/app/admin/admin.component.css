@@ -1,0 +1,12 @@
+.title {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-parent {
+  max-width: 35rem;
+}

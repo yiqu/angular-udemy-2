@@ -1,0 +1,56 @@
+<div class="container pb-3" fxLayout="column" fxLayoutGap="20px">
+  <div class="sticky-topp">
+    <div fxLayout="row" fxLayoutAlign="center center" class="title">
+      Admin Panel
+    </div>
+  </div>
+
+  <ng-container *ngIf="mainFg">
+    <form [formGroup]="mainFg" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="onFormSubmit()">
+      <div formArrayName="exercises" class="form-parent">
+        <div>
+          <button mat-flat-button color="primary" (click)="onAddAnother()" type="button">Add another</button>
+          <button mat-flat-button color="primary" type="submit">Save</button>
+        </div>
+        <div *ngFor="let exer of exercisesFa.controls; index as i">
+          <div>
+            #{{i+1}}
+          </div>
+          <div [formGroupName]="i">
+            <mat-form-field class="mb-2">
+              <mat-label>Exercises Name</mat-label>
+              <input type="text" matInput [formControlName]="'name'" placeholder="Exercises name">
+              <mat-error
+                *ngIf="this.exercisesFaAny['controls'][i]['controls']['name']['errors'] &&
+                this.exercisesFaAny['controls'][i]['controls']['name']['errors']['required']">
+                  Name is required.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mb-2">
+              <mat-label>Total Sets</mat-label>
+              <mat-select [formControlName]="'sets'">
+                <mat-option *ngFor="let opt of setOptions" [value]="opt">
+                  {{opt}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mb-2">
+              <mat-label>Time Per Set (in seconds)</mat-label>
+              <mat-select [formControlName]="'timePerSet'">
+                <mat-option *ngFor="let opt of timeOptions" [value]="opt">
+                  {{opt}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+  </ng-container>
+</div>

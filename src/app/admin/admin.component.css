@@ -3,10 +3,9 @@
   font-weight: 700;
 }
 
-mat-form-field {
-  width: 100%;
-}
 
-.form-parent {
-  max-width: 35rem;
+.sticky-topp .title {
+  padding-left: 0px;
+  height: 4rem;
+  border-bottom: 1px solid #ccc;
 }

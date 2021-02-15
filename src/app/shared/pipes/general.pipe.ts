@@ -54,3 +54,30 @@ export class ValueCountPipe implements PipeTransform {
     return 0;
   }
 }
+
+@Pipe({
+  name: 'iconDisplay',
+  pure: true
+})
+export class ButtonIconDisplayPipe implements PipeTransform {
+
+  transform(value: string): string {
+    let result = "done";
+    const v = value?.trim().toLowerCase();
+    switch(v) {
+      case "add another": {
+        result = "add";
+        break;
+      }
+      case "save": {
+        result = "save";
+        break;
+      }
+      case "delete all": {
+        result = "delete";
+        break;
+      }
+    }
+    return result;
+  }
+}

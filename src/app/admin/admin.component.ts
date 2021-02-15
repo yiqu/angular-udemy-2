@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { createFormControl2 } from '../shared/general.utils';
+import { AdminService } from './admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,49 +11,19 @@ import { createFormControl2 } from '../shared/general.utils';
 })
 export class AdminComponent implements OnInit {
 
-  public mainFg: FormGroup;
-  public setOptions: number[] = [3, 5 , 7, 10];
-  public timeOptions: number[] = [10, 20, 30, 40, 50, 60];
+  constructor(public as: AdminService) {
 
-  get exercisesFa(): FormArray {
-    return this.mainFg.get('exercises') as FormArray;
-  }
-
-  get exercisesFaAny(): any {
-    return this.mainFg.get('exercises');
-  }
-
-  constructor(private fb: FormBuilder) {
-    this.mainFg = this.createMainFg();
   }
 
   ngOnInit() {
-    console.log(this.mainFg)
-    this.mainFg.valueChanges.subscribe((res) => console.log(this.mainFg));
   }
 
-  createMainFg(): FormGroup {
-    return this.fb.group({
-      exercises: this.fb.array([
-        this.createExerciseFg()
-      ])
-    });
+  onPanelBtnClick(sel: any) {
+    console.log("clicked", sel)
   }
 
-  createExerciseFg(): FormGroup {
-    return this.fb.group({
-      name: createFormControl2(null, false, [Validators.required]),
-      sets: createFormControl2(3, false),
-      timePerSet: createFormControl2(30, false)
-    });
+  onPanelMenuClick(sel: any) {
+    console.log("clicked", sel)
   }
 
-  onAddAnother() {
-    console.log(this.exercisesFa.length)
-    this.exercisesFa.push(this.createExerciseFg());
-  }
-
-  onFormSubmit() {
-    console.log("saving")
-  }
 }

@@ -5,7 +5,7 @@ import { DateDisplayPipe } from './time-utils.pipe';
 import { UserDisplayPipe } from './user.pipe';
 import { CapitalizeFirstLetterPipe } from './letters.pipe';
 import { TableColumnDisplayPipe, TableDataDisplayPipe } from './table.pipe';
-import { CreatedStatusToCssClassPipe, IssueOpenStatusPipe, OpenStatusToCssClassPipe, ValueCountPipe } from './general.pipe';
+import { ButtonIconDisplayPipe, CreatedStatusToCssClassPipe, IssueOpenStatusPipe, OpenStatusToCssClassPipe, ValueCountPipe } from './general.pipe';
 
 @NgModule({
   imports: [],
@@ -21,7 +21,8 @@ import { CreatedStatusToCssClassPipe, IssueOpenStatusPipe, OpenStatusToCssClassP
     OpenStatusToCssClassPipe,
     CreatedStatusToCssClassPipe,
     IssueOpenStatusPipe,
-    ValueCountPipe
+    ValueCountPipe,
+    ButtonIconDisplayPipe
   ],
 
   declarations: [
@@ -35,7 +36,8 @@ import { CreatedStatusToCssClassPipe, IssueOpenStatusPipe, OpenStatusToCssClassP
     OpenStatusToCssClassPipe,
     CreatedStatusToCssClassPipe,
     IssueOpenStatusPipe,
-    ValueCountPipe
+    ValueCountPipe,
+    ButtonIconDisplayPipe
   ],
 
   providers: [

@@ -1,0 +1,62 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <ng-container *ngIf="mainFg">
+    <form [formGroup]="mainFg" fxLayoutGap="10px" (ngSubmit)="onFormSubmit()"
+      [ngStyle.lt-md]="{'width': '100%'}">
+      <div formArrayName="exercises">
+
+        <div *ngFor="let exer of exercisesFa.controls; index as i" class="exer">
+          <div ngClass.gt-xs="arr-count">
+            Exercise #{{i+1}}
+          </div>
+          <div [formGroupName]="i" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+            <mat-form-field class="">
+              <mat-label>Exercises Name</mat-label>
+              <input type="text" matInput [formControlName]="'name'" placeholder="Exercises name">
+              <mat-error
+                *ngIf="this.exercisesFaAny['controls'][i]['controls']['name']['errors'] &&
+                this.exercisesFaAny['controls'][i]['controls']['name']['errors']['required']">
+                  Name is required.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="">
+              <mat-label>Total Sets</mat-label>
+              <mat-select [formControlName]="'sets'">
+                <mat-option *ngFor="let opt of setOptions" [value]="opt">
+                  {{opt}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-slide-toggle color="primary" class="" [formControlName]="'setUnitTypeIsTime'">Use time</mat-slide-toggle>
+
+            <ng-container [ngSwitch]="this.exercisesFaAny['controls'][i]['controls']['setUnitTypeIsTime'].value">
+
+              <mat-form-field class="" *ngSwitchCase="true">
+                <mat-label>Time Per Set (in seconds)</mat-label>
+                <mat-select [formControlName]="'countPerSet'">
+                  <mat-option *ngFor="let opt of timeOptions" [value]="opt">
+                    {{opt}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="" *ngSwitchCase="false">
+                <mat-label>Reps Per Set</mat-label>
+                <mat-select [formControlName]="'countPerSet'">
+                  <mat-option *ngFor="let opt of timeOptions" [value]="opt">
+                    {{opt}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </ng-container>
+
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </ng-container>
+</div>
+

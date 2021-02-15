@@ -1,0 +1,26 @@
+<div class="row mb-3 justify-content-center">
+  <p class="col-12 text-center">Welcome to the admin panel. You can add, edit or delete exercises.</p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-2" ngClass.lt-md="mb-3">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button mat-fab color="primary" (click)="onActionClick('add')" class="mat-elevation-z0">
+        <mat-icon>add</mat-icon>
+      </button>
+      <div>
+        New Exercise
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-2">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button mat-fab color="accent" (click)="onActionClick('edit')" class="mat-elevation-z0">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <div>
+        Edit Exercises
+      </div>
+    </div>
+  </div>
+</div>

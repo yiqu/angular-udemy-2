@@ -1,0 +1,13 @@
+.arr-count {
+  width: 35rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+form .exer {
+  border: 1px solid #eee;
+  border-radius: 35px;
+  padding: 20px;
+}

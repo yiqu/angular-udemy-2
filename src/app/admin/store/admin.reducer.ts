@@ -16,6 +16,15 @@ export const adminStateReducer = createReducer(
     }
   }),
 
+  on(fromAdminActions.onAddAnotherExer, (state, {exerUnitType}) => {
+    return {
+      ...state,
+      newExerType: {
+        name: exerUnitType
+      }
+    }
+  }),
+
 
 )
 

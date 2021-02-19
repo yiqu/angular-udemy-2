@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { createFormControl2 } from 'src/app/shared/general.utils';
 import { AdminService } from '../admin.service';
+import { AdminNewExerSubMenu, NewExerUnitType } from '../store/admin.state';
 
 @Component({
   selector: 'app-admin-new',
@@ -36,8 +37,16 @@ export class NewExerComponent implements OnInit, OnDestroy {
       takeUntil(this.compDest$)
     ).subscribe((res) => {
       console.log(this.mainFg.value);
-
     });
+
+    this.as.newlyAddedExerType$.pipe(
+      takeUntil(this.compDest$)
+    ).subscribe((res: NewExerUnitType | undefined) => {
+      console.log(res)
+      if (res && res.name) {
+        this.exercisesFa.push(this.createExerciseFg(res.name));
+      }
+    })
   }
 
   createMainFg(): FormGroup {
@@ -48,12 +57,13 @@ export class NewExerComponent implements OnInit, OnDestroy {
     });
   }
 
-  createExerciseFg(): FormGroup {
+  createExerciseFg(unitType?: AdminNewExerSubMenu): FormGroup {
+    const type = unitType === "Time Based" ? true : false;
     return this.fb.group({
       name: createFormControl2(null, false, [Validators.required]),
       sets: createFormControl2(3, false),
       countPerSet: createFormControl2(30, false),
-      setUnitTypeIsTime: createFormControl2(true, false),
+      setUnitTypeIsTime: createFormControl2(type, false),
     });
   }
 
@@ -67,6 +77,7 @@ export class NewExerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.as.resetNewExer();
     this.compDest$.next();
     this.compDest$.complete();
   }

@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { AdminNewExerSubMenu } from './admin.state';
 
 const ADMIN_PAGE_NAVIGATION: string = "[Admin/UI] Admin page navigation";
 const ADD_NEW_EXER: string = "[Admin/UI] Add a new exer";
@@ -14,5 +15,5 @@ export const onAdminPageNavigation = createAction(
 
 export const onAddAnotherExer = createAction(
   ADD_NEW_EXER,
-  props<{exerUnitType: string}>()
+  props<{exerUnitType: AdminNewExerSubMenu | undefined}>()
 );

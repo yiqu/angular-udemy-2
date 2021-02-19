@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createFormControl2 } from '../shared/general.utils';
 import { AdminService } from './admin.service';
+import { AdminNewExerSubMenu, PanelButtonType } from './store/admin.state';
 
 @Component({
   selector: 'app-admin',
@@ -18,12 +19,12 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
-  onPanelBtnClick(sel: any) {
+  onPanelBtnClick(sel: PanelButtonType) {
     console.log("clicked", sel)
   }
 
-  onPanelMenuClick(sel: any) {
-    console.log("clicked", sel)
+  onPanelMenuClick(sel: AdminNewExerSubMenu) {
+    this.as.addNewExer(sel);
   }
 
 }

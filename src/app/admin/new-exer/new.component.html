@@ -4,7 +4,7 @@
       [ngStyle.lt-md]="{'width': '100%'}">
       <div formArrayName="exercises">
 
-        <div *ngFor="let exer of exercisesFa.controls; index as i" class="exer">
+        <div *ngFor="let exer of exercisesFa.controls; index as i" class="exer mb-3">
           <div ngClass.gt-xs="arr-count">
             Exercise #{{i+1}}
           </div>

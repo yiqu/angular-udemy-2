@@ -1,5 +1,6 @@
 export interface AdminState {
   currentActionPage: string | null;
+  newExerType?: NewExerUnitType;
   formErrorState?: boolean;
 }
 
@@ -7,5 +8,11 @@ export interface AdminState {
 export interface PanelButtonType {
   btnName: string;
   btnMenu?: boolean;
-  btnMenuItems?: string[];
+  btnMenuItems?: AdminNewExerSubMenu[];
+}
+
+export type AdminNewExerSubMenu = "Time Based" | "Rep Based";
+
+export interface NewExerUnitType {
+  name: AdminNewExerSubMenu | undefined
 }

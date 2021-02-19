@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { AdminState, PanelButtonType } from "./admin.state";
+import { AdminNewExerSubMenu, AdminState, NewExerUnitType, PanelButtonType } from "./admin.state";
 
 export const selectAdminState = createFeatureSelector<AdminState>("admin");
 
@@ -19,8 +19,8 @@ export const getAdminPanelButtons = createSelector(
         btnName: "Add another",
         btnMenu: true,
         btnMenuItems: [
-          "Time based",
-          "Rep based"
+          "Time Based",
+          "Rep Based"
         ]
       });
       buttons.push({
@@ -32,5 +32,12 @@ export const getAdminPanelButtons = createSelector(
       })
     }
     return buttons;
+  }
+);
+
+export const getNewlyAddedExerType = createSelector(
+  selectAdminState,
+  (state: AdminState): NewExerUnitType | undefined => {
+    return state.newExerType;
   }
 );

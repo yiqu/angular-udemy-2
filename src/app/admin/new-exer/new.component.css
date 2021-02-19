@@ -1,5 +1,8 @@
 .arr-count {
   width: 35rem;
+  background-color: #eee;
+  border-radius: 15px;
+  padding: 10px;
 }
 
 mat-form-field {

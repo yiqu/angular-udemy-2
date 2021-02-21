@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { createFormControl2 } from 'src/app/shared/general.utils';
 import { AdminService } from '../admin.service';
 import { AdminNewExerSubMenu, NewExerUnitType } from '../store/admin.state';
@@ -32,21 +32,27 @@ export class NewExerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.mainFg)
     this.mainFg.valueChanges.pipe(
       takeUntil(this.compDest$)
     ).subscribe((res) => {
-      console.log(this.mainFg.value);
     });
 
     this.as.newlyAddedExerType$.pipe(
       takeUntil(this.compDest$)
     ).subscribe((res: NewExerUnitType | undefined) => {
-      console.log(res)
       if (res && res.name) {
         this.exercisesFa.push(this.createExerciseFg(res.name));
       }
-    })
+    });
+
+    this.as.onNewExerSaveClick$.pipe(
+      takeUntil(this.compDest$),
+      filter((res: number | undefined) => {
+        return !!res;
+      })
+    ).subscribe((res) => {
+      this.onFormSubmit();
+    });
   }
 
   createMainFg(): FormGroup {
@@ -73,11 +79,18 @@ export class NewExerComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmit() {
-    console.log("saving")
+    this.checkFormValid(this.mainFg.valid);
+    console.log(this.mainFg.value)
+  }
+
+  checkFormValid(valid: boolean) {
+    this.as.onSetFormValidStatus(valid);
   }
 
   ngOnDestroy() {
     this.as.resetNewExer();
+    this.as.onSetFormValidStatus(true);
+    this.as.resetNewExerSaveClick();
     this.compDest$.next();
     this.compDest$.complete();
   }

@@ -25,6 +25,20 @@ export const adminStateReducer = createReducer(
     }
   }),
 
+  on(fromAdminActions.onSaveNewExerBtnClick, (state, {timeStamp}) => {
+    return {
+      ...state,
+      saveNewExerBtnClickTimeStamp: timeStamp
+    }
+  }),
+
+  on(fromAdminActions.setFormValidStatus, (state, {status}) => {
+    return {
+      ...state,
+      formErrorState: status
+    }
+  })
+
 
 )
 

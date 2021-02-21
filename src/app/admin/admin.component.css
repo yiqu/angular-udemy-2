@@ -3,9 +3,13 @@
   font-weight: 700;
 }
 
-
 .sticky-topp .title {
   padding-left: 0px;
   height: 4rem;
   border-bottom: 1px solid #ccc;
+}
+
+.sticky-topp .status-msg {
+  font-size: 14px;
+  color: #c45757;
 }

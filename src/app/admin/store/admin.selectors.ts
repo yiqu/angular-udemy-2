@@ -41,3 +41,24 @@ export const getNewlyAddedExerType = createSelector(
     return state.newExerType;
   }
 );
+
+export const getSaveExerBtnClicked = createSelector(
+  selectAdminState,
+  (state: AdminState): number | undefined => {
+    return state.saveNewExerBtnClickTimeStamp;
+  }
+);
+
+export const getFormErrorState = createSelector(
+  selectAdminState,
+  getCurrentPage,
+  (state: AdminState, page: string | null): boolean | undefined => {
+    if (page === "new") {
+      if (state.formErrorState == undefined) {
+        return true;
+      }
+      return state.formErrorState;
+    }
+    return true;
+  }
+);

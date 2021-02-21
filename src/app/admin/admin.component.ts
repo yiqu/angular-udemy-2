@@ -20,7 +20,9 @@ export class AdminComponent implements OnInit {
   }
 
   onPanelBtnClick(sel: PanelButtonType) {
-    console.log("clicked", sel)
+    if (sel.btnName === "Save") {
+      this.as.onNewExerSaveClick();
+    }
   }
 
   onPanelMenuClick(sel: AdminNewExerSubMenu) {

@@ -5,6 +5,9 @@
         <a [routerLink]="['/', 'admin']">
           Admin Panel
         </a>
+        <ng-container *ngIf="!(this.as.exerFormStatus$ | async)">
+          <span class="status-msg ml-3">Please fix the errors before saving*</span>
+        </ng-container>
       </div>
       <div>
         <ng-container *ngIf="(this.as.adminPanelButtons$ | async) as btns">

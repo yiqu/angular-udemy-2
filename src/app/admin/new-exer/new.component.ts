@@ -46,10 +46,10 @@ export class NewExerComponent implements OnInit, OnDestroy {
     });
 
     this.as.onNewExerSaveClick$.pipe(
-      takeUntil(this.compDest$),
       filter((res: number | undefined) => {
         return !!res;
-      })
+      }),
+      takeUntil(this.compDest$)
     ).subscribe((res) => {
       this.onFormSubmit();
     });
@@ -89,8 +89,6 @@ export class NewExerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.as.resetNewExer();
-    this.as.onSetFormValidStatus(true);
-    this.as.resetNewExerSaveClick();
     this.compDest$.next();
     this.compDest$.complete();
   }

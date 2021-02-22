@@ -1,7 +1,7 @@
 export interface AdminState {
   currentActionPage: string | null;
   newExerType?: NewExerUnitType;
-  formErrorState?: boolean;
+  formValidState?: boolean;
   saveNewExerBtnClickTimeStamp?: number;
 }
 

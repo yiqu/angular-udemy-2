@@ -37,16 +37,12 @@ export class AdminService {
     this.store.dispatch(fromAdminActions.onSaveNewExerBtnClick({timeStamp: ts}));
   }
 
-  resetNewExerSaveClick() {
-    this.store.dispatch(fromAdminActions.onSaveNewExerBtnClick({timeStamp: undefined}));
-  }
-
   onSetFormValidStatus(status: boolean) {
     this.store.dispatch(fromAdminActions.setFormValidStatus({status}));
   }
 
   resetNewExer() {
-    this.addNewExer(undefined);
+    this.store.dispatch(fromAdminActions.resetNewExerOptions());
   }
 
 }

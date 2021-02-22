@@ -54,10 +54,10 @@ export const getFormErrorState = createSelector(
   getCurrentPage,
   (state: AdminState, page: string | null): boolean | undefined => {
     if (page === "new") {
-      if (state.formErrorState == undefined) {
+      if (state.formValidState == undefined) {
         return true;
       }
-      return state.formErrorState;
+      return state.formValidState;
     }
     return true;
   }

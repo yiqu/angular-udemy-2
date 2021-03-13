@@ -5,7 +5,7 @@
       <div formArrayName="exercises">
 
         <div *ngFor="let exer of exercisesFa.controls; index as i" class="exer mb-3">
-          <div ngClass.gt-xs="arr-count">
+          <div ngClass.gt-xs="arr-count text-center">
             Exercise #{{i+1}}
           </div>
           <div [formGroupName]="i" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">

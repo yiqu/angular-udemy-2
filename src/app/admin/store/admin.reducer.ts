@@ -3,7 +3,8 @@ import * as fromAdminActions from './admin.actions';
 import { AdminState } from './admin.state';
 
 export const inititalState: AdminState = {
-  currentActionPage: null
+  currentActionPage: null,
+  loading: false
 }
 
 export const adminStateReducer = createReducer(
@@ -46,7 +47,33 @@ export const adminStateReducer = createReducer(
       newExerType: undefined,
       formValidState: true
     }
-  })
+  }),
+
+  on(fromAdminActions.saveAllExerStart, (state, {exers}) => {
+    return {
+      ...state,
+      exersBeingAdded: [...exers],
+      loading: true
+    }
+  }),
+
+  on(fromAdminActions.saveAllExerSuccess, (state) => {
+    return {
+      ...state,
+      loading: false,
+      errMsg: undefined,
+      error: false
+    }
+  }),
+
+  on(fromAdminActions.saveAllExerFailure, (state, {errMsg}) => {
+    return {
+      ...state,
+      loading: false,
+      errMsg: errMsg,
+      error: true
+    }
+  }),
 
 
 )

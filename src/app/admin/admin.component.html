@@ -1,4 +1,4 @@
-<div class="container pb-3" fxLayout="column" fxLayoutGap="20px">
+<div class="container pb-3" fxLayout="column" fxLayoutGap="10px">
   <div class="sticky-topp">
     <div fxLayout="row" fxLayoutAlign="space-between center" class="title mat-elevation-z0">
       <div>
@@ -37,6 +37,11 @@
         </ng-container>
       </div>
     </div>
+  </div>
+  <div class="loading-bar">
+    <ng-container *ngIf="(this.as.isLoading$ | async)">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-container>
   </div>
   <router-outlet></router-outlet>
 </div>

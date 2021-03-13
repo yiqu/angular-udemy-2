@@ -62,3 +62,10 @@ export const getFormErrorState = createSelector(
     return true;
   }
 );
+
+export const getIsLoadingState = createSelector(
+  selectAdminState,
+  (state: AdminState): boolean => {
+    return state.loading;
+  }
+);

@@ -13,3 +13,8 @@
   font-size: 14px;
   color: #c45757;
 }
+
+.loading-bar {
+  margin: 0;
+  height: 7px;
+}

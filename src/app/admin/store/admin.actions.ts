@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AdminNewExerSubMenu } from './admin.state';
+import { AdminNewExerSubMenu, Exercise } from './admin.state';
 
 const ADMIN_PAGE_NAVIGATION: string = "[Admin/UI] Admin page navigation";
 const ADD_NEW_EXER: string = "[Admin/UI] Add a new exer select click";
@@ -8,6 +8,8 @@ const SET_FORM_VALID_STATUS: string = "[Admin/UI] Set form valid status";
 const RESET_NEW_EXER_OPTIONS = "[Admin/UI] Reset all options in new exer";
 
 const SAVE_ALL_EXER_START: string = "[Admin/API] Save all exer start";
+const SAVE_ALL_EXER_SUCCESS: string = "[Admin/API] Save all exer success";
+const SAVE_ALL_EXER_FAILURE: string = "[Admin/API] Save all exer failed";
 
 const DELETE_ALL_EXER_START: string = "[Admin/API] delete all exer start";
 
@@ -33,4 +35,19 @@ export const setFormValidStatus = createAction(
 
 export const resetNewExerOptions = createAction(
   RESET_NEW_EXER_OPTIONS,
+)
+
+export const saveAllExerStart = createAction(
+  SAVE_ALL_EXER_START,
+  props<{exers: Exercise[]}>()
+)
+
+export const saveAllExerSuccess = createAction(
+  SAVE_ALL_EXER_SUCCESS,
+
+)
+
+export const saveAllExerFailure = createAction(
+  SAVE_ALL_EXER_FAILURE,
+  props<{errMsg: string}>()
 )

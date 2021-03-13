@@ -6,6 +6,7 @@ import { createFormControl2 } from 'src/app/shared/general.utils';
 import { AdminService } from '../admin.service';
 import { AdminNewExerSubMenu, NewExerUnitType } from '../store/admin.state';
 
+
 @Component({
   selector: 'app-admin-new',
   templateUrl: 'new.component.html',
@@ -58,7 +59,7 @@ export class NewExerComponent implements OnInit, OnDestroy {
   createMainFg(): FormGroup {
     return this.fb.group({
       exercises: this.fb.array([
-        this.createExerciseFg()
+        this.createExerciseFg("Time Based")
       ])
     });
   }
@@ -74,13 +75,15 @@ export class NewExerComponent implements OnInit, OnDestroy {
   }
 
   onAddAnother() {
-    console.log(this.exercisesFa.length)
     this.exercisesFa.push(this.createExerciseFg());
   }
 
   onFormSubmit() {
     this.checkFormValid(this.mainFg.valid);
-    console.log(this.mainFg.value)
+    console.log(this.mainFg.value);
+    if (this.mainFg.valid) {
+      this.as.onSaveExers(this.mainFg.value.exercises);
+    }
   }
 
   checkFormValid(valid: boolean) {

@@ -29,7 +29,12 @@ import { appEffects } from './store/global/app.effects';
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot(fromAppReducers.appReducers),
+    StoreModule.forRoot(fromAppReducers.appReducers, {
+      runtimeChecks: {
+        strictActionTypeUniqueness: true,
+        strictStateSerializability: true
+      }
+    }),
     EffectsModule.forRoot(appEffects),
     StoreDevtoolsModule.instrument({
       maxAge: 45,

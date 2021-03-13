@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { AppState } from '../store/global/app.reducer';
 import * as fromAdminActions from './store/admin.actions';
 import * as fromAdminSelectors from './store/admin.selectors';
-import { AdminNewExerSubMenu, NewExerUnitType, PanelButtonType } from './store/admin.state';
+import { AdminNewExerSubMenu, Exercise, NewExerUnitType, PanelButtonType } from './store/admin.state';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class AdminService {
   public exerFormStatus$: Observable<boolean | undefined> = this.store.select(fromAdminSelectors.getFormErrorState).pipe(
     filter((status) => status != undefined)
   );
+  public isLoading$: Observable<boolean> = this.store.select(fromAdminSelectors.getIsLoadingState);
 
   constructor(private store: Store<AppState>) {
 
@@ -43,6 +44,10 @@ export class AdminService {
 
   resetNewExer() {
     this.store.dispatch(fromAdminActions.resetNewExerOptions());
+  }
+
+  onSaveExers(exers: Exercise[]) {
+    this.store.dispatch(fromAdminActions.saveAllExerStart({exers}));
   }
 
 }

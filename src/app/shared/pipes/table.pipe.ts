@@ -14,11 +14,27 @@ export class TableColumnDisplayPipe implements PipeTransform {
 
     switch(value) {
       case "name": {
-        res = "Name";
+        res = "Exercise Name";
         break;
       }
-      case "example": {
-        res = "Example";
+      case "id": {
+        res = "Exercise ID";
+        break;
+      }
+      case "sets": {
+        res = "Sets";
+        break;
+      }
+      case "countPerSet": {
+        res = "Rep / Time (Per Set)";
+        break;
+      }
+      case "setUnitTypeIsTime": {
+        res = "Time Based";
+        break;
+      }
+      case "options": {
+        res = "Actions";
         break;
       }
     }
@@ -36,15 +52,20 @@ export class TableDataDisplayPipe implements PipeTransform {
   constructor(private dp: DateDisplayPipe) {
   }
 
-  transform(value: any, colId: string): any {
+  transform(value: any, colId: string, isTimeBased?: boolean): any {
     let res: any = value;
 
     switch(colId) {
-      case "time": {
-        res = this.dp.transform(res, "HMS");
+      case "countPerSet": {
+        res = isTimeBased ? (res + ' seconds') : (res + ' reps');
+        break;
+      }
+      case "setUnitTypeIsTime": {
+        res = res ? 'Yes' : 'No';
         break;
       }
     }
+
     return res;
   }
 

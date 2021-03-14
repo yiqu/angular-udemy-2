@@ -8,7 +8,8 @@ import { AdminService } from '../admin.service';
 })
 export class EditExerComponent implements OnInit {
 
-  columns: string[] = ['id', 'name',  'sets', 'countPerSet', 'setUnitTypeIsTime'];
+  columns: string[] = ['id', 'sets', 'countPerSet', 'setUnitTypeIsTime'];
+  optionBtns: string[] = ['edit', 'delete'];
 
   constructor(public as: AdminService) {
     this.as.setCurrentPageState("edit");

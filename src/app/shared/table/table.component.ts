@@ -2,6 +2,8 @@ import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Exercise } from 'src/app/admin/store/admin.state';
+import { DialogConfirmService } from '../services/confirm.service';
 
 @Component({
   selector: 'app-shared-table',
@@ -12,17 +14,28 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input()
-  columns?: string[];
+  columns: string[] = [];
 
   @Input()
-  columnsData?: any[];
+  columnsData: any[] = [];
+
+  @Input()
+  displayBorder?: boolean;
+
+  @Input()
+  hasOptions?: boolean;
+
+  @Input()
+  optionButtons: string[] = [];
 
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   @ViewChild(MatSort) sort: MatSort | null = null;
 
-  constructor() {
+  cols: string[] = [];
+
+  constructor(private cs: DialogConfirmService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.columnsData);
   }
@@ -31,8 +44,13 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges() {
-    console.log(this.columns, this.columnsData)
+    this.cols = [...this.columns];
+    if (this.hasOptions) {
+      this.cols = this.addOptionsColumn(this.cols);
+    }
     this.dataSource = new MatTableDataSource(this.columnsData);
+
+    console.log(this.cols, this.columnsData);
   }
 
   ngAfterViewInit() {
@@ -50,4 +68,23 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  addOptionsColumn(cols: string[]): string[] {
+    return [...cols, 'options'];
+  }
+
+  onActionBtnClick(btn: string, data: Exercise) {
+    if (btn === 'edit') {
+      console.log("edit", data)
+    } else if (btn === 'delete') {
+      this.cs.openConfirmDialog("delete").subscribe(
+        (res) => {
+          if (res) {
+            console.log("delete", data)
+          }
+        }
+      );
+    }
+  }
+
 }

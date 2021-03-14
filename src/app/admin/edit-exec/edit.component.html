@@ -5,9 +5,10 @@
     </div>
   </ng-container>
   <ng-template #tableData>
-    <div class="row">
+    <div class="row mb-3">
       <div class="col">
-        <app-shared-table [columns]="columns" [columnsData]="$any(this.as.allExers$ | async)"></app-shared-table>
+        <app-shared-table [columns]="columns" [columnsData]="$any(this.as.allExers$ | async)"
+          [hasOptions]="true" [optionButtons]="optionBtns"></app-shared-table>
       </div>
     </div>
   </ng-template>

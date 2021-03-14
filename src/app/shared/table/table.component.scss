@@ -3,9 +3,19 @@ table {
 }
 
 mat-form-field {
-  width: 100%;
+  width: 25rem;
 }
 
 .table-parent {
   overflow: auto;
+}
+
+.table-row-bg {
+  background-color: #cccccc2b;
+}
+
+.border {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 10px;
 }

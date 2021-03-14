@@ -20,6 +20,7 @@ export class AdminService {
     filter((status) => status != undefined)
   );
   public isLoading$: Observable<boolean> = this.store.select(fromAdminSelectors.getIsLoadingState);
+  public allExers$: Observable<Exercise[]> = this.store.select(fromAdminSelectors.getAllExers);
 
   constructor(private store: Store<AppState>) {
 
@@ -48,6 +49,10 @@ export class AdminService {
 
   onSaveExers(exers: Exercise[]) {
     this.store.dispatch(fromAdminActions.saveAllExerStart({exers}));
+  }
+
+  getAllExers() {
+    this.store.dispatch(fromAdminActions.getAllExerStart());
   }
 
 }

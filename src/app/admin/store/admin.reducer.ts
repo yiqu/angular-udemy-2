@@ -4,7 +4,8 @@ import { AdminState } from './admin.state';
 
 export const inititalState: AdminState = {
   currentActionPage: null,
-  loading: false
+  loading: false,
+  allExers: []
 }
 
 export const adminStateReducer = createReducer(
@@ -67,6 +68,32 @@ export const adminStateReducer = createReducer(
   }),
 
   on(fromAdminActions.saveAllExerFailure, (state, {errMsg}) => {
+    return {
+      ...state,
+      loading: false,
+      errMsg: errMsg,
+      error: true
+    }
+  }),
+
+  on(fromAdminActions.getAllExerStart, (state) => {
+    return {
+      ...state,
+      loading: true
+    }
+  }),
+
+  on(fromAdminActions.getAllExerSuccess, (state, {exers}) => {
+    return {
+      ...state,
+      loading: false,
+      errMsg: undefined,
+      error: false,
+      allExers: exers
+    }
+  }),
+
+  on(fromAdminActions.getAllExerFailure, (state, {errMsg}) => {
     return {
       ...state,
       loading: false,

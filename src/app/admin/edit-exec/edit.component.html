@@ -1,1 +1,14 @@
-Edit
+<div class="">
+  <ng-container *ngIf="(this.as.isLoading$ | async); else tableData">
+    <div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+      <mat-spinner mode="indeterminate"></mat-spinner>
+    </div>
+  </ng-container>
+  <ng-template #tableData>
+    <div class="row">
+      <div class="col">
+        <app-shared-table [columns]="columns" [columnsData]="$any(this.as.allExers$ | async)"></app-shared-table>
+      </div>
+    </div>
+  </ng-template>
+</div>

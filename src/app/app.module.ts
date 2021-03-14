@@ -32,7 +32,7 @@ import { appEffects } from './store/global/app.effects';
     StoreModule.forRoot(fromAppReducers.appReducers, {
       runtimeChecks: {
         strictActionTypeUniqueness: true,
-        strictStateSerializability: true
+        //strictStateSerializability: true
       }
     }),
     EffectsModule.forRoot(appEffects),

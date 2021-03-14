@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModuleBundle } from '../shared/material-bundle.module';
 import { PipeBundleModule } from '../shared/pipes/pipe-bundle.module';
+import { SharedComponentsModule } from '../shared/shared-components.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { EditExerComponent } from './edit-exec/edit.component';
@@ -23,7 +24,8 @@ import { adminStateReducer } from './store/admin.reducer';
     FormsModule,
     StoreModule.forFeature("admin", adminStateReducer),
     EffectsModule.forFeature(adminEffects),
-    PipeBundleModule
+    PipeBundleModule,
+    SharedComponentsModule
   ],
 
   exports: [],

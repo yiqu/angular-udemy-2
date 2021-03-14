@@ -7,6 +7,7 @@ export interface AdminState {
   exersBeingAdded?: Exercise[];
   error?: boolean;
   errMsg?: string;
+  allExers: Exercise[];
 }
 
 
@@ -25,6 +26,7 @@ export interface NewExerUnitType {
 export interface Exercise {
   name: string;
   sets: number;
-  countPerSet: number ;
+  countPerSet: number;
   setUnitTypeIsTime: boolean;
+  id?: string;
 }

@@ -36,5 +36,24 @@ export class FirebaseApiService {
     return batch.commit();
   }
 
+  getExercises(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    const ref = this.availableExerList;
+    return ref.get();
+  }
+
+
+  convertCollectionDocData<T>(res: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>): T[] {
+    let result: T[] = [];
+    if (res && res.size > 0) {
+      res.forEach((res) => {
+        result.push({
+          ...res.data(),
+          id: res.id
+        } as unknown as T)
+      });
+    }
+    return result;
+  }
+
 
 }

@@ -38,11 +38,7 @@
       </div>
     </div>
   </div>
-  <div class="loading-bar">
-    <ng-container *ngIf="(this.as.isLoading$ | async)">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </ng-container>
-  </div>
+
   <router-outlet></router-outlet>
 </div>
 <mat-menu #menu="matMenu">

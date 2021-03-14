@@ -11,6 +11,10 @@ const SAVE_ALL_EXER_START: string = "[Admin/API] Save all exer start";
 const SAVE_ALL_EXER_SUCCESS: string = "[Admin/API] Save all exer success";
 const SAVE_ALL_EXER_FAILURE: string = "[Admin/API] Save all exer failed";
 
+const GET_ALL_EXER_START: string = "[Admin/API] Get all exer start";
+const GET_ALL_EXER_SUCCESS: string = "[Admin/API] Get all exer success";
+const GET_ALL_EXER_FAILURE: string = "[Admin/API] Get all exer failed";
+
 const DELETE_ALL_EXER_START: string = "[Admin/API] delete all exer start";
 
 export const onAdminPageNavigation = createAction(
@@ -49,5 +53,19 @@ export const saveAllExerSuccess = createAction(
 
 export const saveAllExerFailure = createAction(
   SAVE_ALL_EXER_FAILURE,
+  props<{errMsg: string}>()
+)
+
+export const getAllExerStart = createAction(
+  GET_ALL_EXER_START
+)
+
+export const getAllExerSuccess = createAction(
+  GET_ALL_EXER_SUCCESS,
+  props<{exers: Exercise[]}>()
+)
+
+export const getAllExerFailure = createAction(
+  GET_ALL_EXER_FAILURE,
   props<{errMsg: string}>()
 )

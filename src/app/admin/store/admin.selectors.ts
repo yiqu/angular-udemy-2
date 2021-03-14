@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { AdminNewExerSubMenu, AdminState, NewExerUnitType, PanelButtonType } from "./admin.state";
+import { AdminNewExerSubMenu, AdminState, Exercise, NewExerUnitType, PanelButtonType } from "./admin.state";
 
 export const selectAdminState = createFeatureSelector<AdminState>("admin");
 
@@ -28,7 +28,7 @@ export const getAdminPanelButtons = createSelector(
       })
     } else if (state === "edit") {
       buttons.push({
-        btnName: "Delete"
+        btnName: "Delete all"
       })
     }
     return buttons;
@@ -67,5 +67,12 @@ export const getIsLoadingState = createSelector(
   selectAdminState,
   (state: AdminState): boolean => {
     return state.loading;
+  }
+);
+
+export const getAllExers = createSelector(
+  selectAdminState,
+  (state: AdminState): Exercise[] => {
+    return state.allExers;
   }
 );

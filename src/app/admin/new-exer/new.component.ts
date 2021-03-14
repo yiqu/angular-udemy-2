@@ -10,7 +10,7 @@ import { AdminNewExerSubMenu, NewExerUnitType } from '../store/admin.state';
 @Component({
   selector: 'app-admin-new',
   templateUrl: 'new.component.html',
-  styleUrls: ['./new.component.css']
+  styleUrls: ['./new.component.css', '../admin.component.css']
 })
 export class NewExerComponent implements OnInit, OnDestroy {
 

@@ -1,4 +1,7 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DialogConfirmComponent } from 'src/app/shared/dialog/dialog.component';
+import { TableActionButtonData } from 'src/app/shared/models/general.model';
+import { DialogConfirmService } from 'src/app/shared/services/confirm.service';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -8,15 +11,35 @@ import { AdminService } from '../admin.service';
 })
 export class EditExerComponent implements OnInit {
 
-  columns: string[] = ['id', 'sets', 'countPerSet', 'setUnitTypeIsTime'];
+  columns: string[] = ['name', 'sets', 'countPerSet', 'setUnitTypeIsTime'];
   optionBtns: string[] = ['edit', 'delete'];
 
-  constructor(public as: AdminService) {
+  constructor(public as: AdminService, public cs: DialogConfirmService) {
     this.as.setCurrentPageState("edit");
   }
 
   ngOnInit() {
     this.as.getAllExers();
+  }
+
+  onActionBtnClick(btnData: TableActionButtonData) {
+    if (btnData.btnAction === 'edit') {
+      this.as.editExercise(btnData.data).subscribe(
+        (res) => {
+          if (res) {
+            console.log("save it", res)
+          }
+        }
+      )
+    } else if (btnData.btnAction === 'delete') {
+      this.cs.openConfirmDialog("delete").subscribe(
+        (res) => {
+          if (res) {
+            console.log("delete", btnData.data)
+          }
+        }
+      );
+    }
   }
 
 }

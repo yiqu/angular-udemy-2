@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input,
+  OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exercise } from 'src/app/admin/store/admin.state';
+import { TableActionButtonData } from '../models/general.model';
 import { DialogConfirmService } from '../services/confirm.service';
 
 @Component({
@@ -27,6 +29,9 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input()
   optionButtons: string[] = [];
+
+  @Output()
+  actionBtnClick: EventEmitter<TableActionButtonData> = new EventEmitter<TableActionButtonData>();
 
   dataSource: MatTableDataSource<any>;
 
@@ -74,17 +79,10 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onActionBtnClick(btn: string, data: Exercise) {
-    if (btn === 'edit') {
-      console.log("edit", data)
-    } else if (btn === 'delete') {
-      this.cs.openConfirmDialog("delete").subscribe(
-        (res) => {
-          if (res) {
-            console.log("delete", data)
-          }
-        }
-      );
-    }
+    this.actionBtnClick.emit({
+      btnAction: btn,
+      data: data
+    });
   }
 
 }

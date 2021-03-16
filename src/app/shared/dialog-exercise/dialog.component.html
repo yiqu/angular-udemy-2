@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Edit {{data.name | capitalizeFirstLetter}}</h1>
+<hr>
+<div mat-dialog-content>
+  <div>
+    <div [formGroup]="exerFg" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <mat-form-field class="">
+        <mat-label>Exercises Name</mat-label>
+        <input type="text" matInput [formControlName]="'name'" placeholder="Exercises name">
+        <mat-error
+          *ngIf="this.exerFg['controls']['name']['errors']">
+            Name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="">
+        <mat-label>Total Sets</mat-label>
+        <mat-select [formControlName]="'sets'">
+          <mat-option *ngFor="let opt of setOptions" [value]="opt">
+            {{opt}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-slide-toggle color="primary" class="" [formControlName]="'setUnitTypeIsTime'">Use time</mat-slide-toggle>
+
+      <ng-container [ngSwitch]="this.exerFg['controls']['setUnitTypeIsTime'].value">
+
+        <mat-form-field class="" *ngSwitchCase="true">
+          <mat-label>Time Per Set (in seconds)</mat-label>
+          <mat-select [formControlName]="'countPerSet'">
+            <mat-option *ngFor="let opt of timeOptions" [value]="opt">
+              {{opt}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="" *ngSwitchCase="false">
+          <mat-label>Reps Per Set</mat-label>
+          <mat-select [formControlName]="'countPerSet'">
+            <mat-option *ngFor="let opt of timeOptions" [value]="opt">
+              {{opt}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </ng-container>
+
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="onNoClick()" cdkFocusInitial color="accent">Cancel</button>
+  <button mat-flat-button (click)="onYesClick()" [disabled]="this.exerFg.invalid" color="primary">Save</button>
+</div>

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
+import { DialogExerciseComponent } from '../shared/dialog-exercise/dialog.component';
 import { AppState } from '../store/global/app.reducer';
 import * as fromAdminActions from './store/admin.actions';
 import * as fromAdminSelectors from './store/admin.selectors';
@@ -22,7 +24,7 @@ export class AdminService {
   public isLoading$: Observable<boolean> = this.store.select(fromAdminSelectors.getIsLoadingState);
   public allExers$: Observable<Exercise[]> = this.store.select(fromAdminSelectors.getAllExers);
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, public dialog: MatDialog) {
 
   }
 
@@ -53,6 +55,16 @@ export class AdminService {
 
   getAllExers() {
     this.store.dispatch(fromAdminActions.getAllExerStart());
+  }
+
+  editExercise(exer: Exercise): Observable<any> {
+    const dialogRef = this.dialog.open(DialogExerciseComponent, {
+      minWidth: '30rem',
+      data: exer
+    });
+    return dialogRef.afterClosed().pipe(
+      take(1)
+    );
   }
 
 }

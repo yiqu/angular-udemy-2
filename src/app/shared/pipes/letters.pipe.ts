@@ -8,7 +8,7 @@ import memo from 'memo-decorator';
 export class CapitalizeFirstLetterPipe implements PipeTransform {
 
   @memo()
-  transform(value: string): any {
+  transform(value: string | undefined): any {
     if (value) {
       return this.capitalizeFirstLetter(value);
     }

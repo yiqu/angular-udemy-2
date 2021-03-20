@@ -8,6 +8,9 @@ import { DateDisplayPipe } from './time-utils.pipe';
 })
 export class TableColumnDisplayPipe implements PipeTransform {
 
+  constructor(private dp: DateDisplayPipe) {
+  }
+
   @memo()
   transform(value: string): any {
     let res: string = value;
@@ -31,6 +34,14 @@ export class TableColumnDisplayPipe implements PipeTransform {
       }
       case "setUnitTypeIsTime": {
         res = "Time Based";
+        break;
+      }
+      case "created": {
+        res = "Created";
+        break;
+      }
+      case "lastUpdated": {
+        res = "Updated";
         break;
       }
       case "options": {
@@ -57,11 +68,19 @@ export class TableDataDisplayPipe implements PipeTransform {
 
     switch(colId) {
       case "countPerSet": {
-        res = isTimeBased ? (res + ' seconds') : (res + ' reps');
+        res = isTimeBased ? (res + " seconds") : (res + " reps");
         break;
       }
       case "setUnitTypeIsTime": {
         res = res ? 'Yes' : 'No';
+        break;
+      }
+      case "created": {
+        res = "" + this.dp.transform(res, 'FROMNOW');
+        break;
+      }
+      case "lastUpdated": {
+        res = "" + this.dp.transform(res, 'FROMNOW');
         break;
       }
     }

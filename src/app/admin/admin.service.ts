@@ -57,6 +57,15 @@ export class AdminService {
     this.store.dispatch(fromAdminActions.getAllExerStart());
   }
 
+  updateExercise(exer: Exercise) {
+    this.store.dispatch(fromAdminActions.updateExerStart({exer: exer}));
+  }
+
+  deleteExercise(exers: Exercise[]) {
+    console.log(exers)
+    this.store.dispatch(fromAdminActions.deleteExerStart({exers}));
+  }
+
   editExercise(exer: Exercise): Observable<any> {
     const dialogRef = this.dialog.open(DialogExerciseComponent, {
       minWidth: '30rem',

@@ -8,6 +8,7 @@ export interface AdminState {
   error?: boolean;
   errMsg?: string;
   allExers: Exercise[];
+  exerBeingUpdated?: Exercise;
 }
 
 
@@ -29,4 +30,6 @@ export interface Exercise {
   countPerSet: number;
   setUnitTypeIsTime: boolean;
   id?: string;
+  created?: number;
+  lastUpdated?: number;
 }

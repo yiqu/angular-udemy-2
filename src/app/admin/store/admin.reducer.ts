@@ -102,10 +102,51 @@ export const adminStateReducer = createReducer(
     }
   }),
 
+  on(fromAdminActions.updateExerStart, (state, {exer}) => {
+    return {
+      ...state,
+      exerBeingUpdated: exer
+    }
+  }),
+
+  on(fromAdminActions.updateExerSuccess, (state, {exer}) => {
+    return {
+      ...state,
+      errMsg: undefined,
+      error: false,
+      exerBeingUpdated: exer
+    }
+  }),
+
+  on(fromAdminActions.updateExerFailed, (state, {errMsg}) => {
+    return {
+      ...state,
+      errMsg: errMsg,
+      error: true
+    }
+  }),
+
+  on(fromAdminActions.deleteExerStart, (state, {exers}) => {
+    return {
+      ...state
+    }
+  }),
+
+  on(fromAdminActions.deleteExerSuccess, (state, {exers}) => {
+    return {
+      ...state,
+      errMsg: undefined,
+      error: false
+    }
+  }),
+
+  on(fromAdminActions.deleteExerFailed, (state, {errMsg}) => {
+    return {
+      ...state,
+      errMsg: errMsg,
+      error: true
+    }
+  }),
+
 
 )
-
-
-export function iAdminStateReducer(state: AdminState | undefined, action: Action) {
-  return adminStateReducer(state, action);
-}

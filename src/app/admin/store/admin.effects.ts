@@ -20,7 +20,6 @@ export class AdminEffects {
     return this.actions$.pipe(
       ofType(fromAdminActions.saveAllExerStart),
       concatMap((res) => {
-
         return this.as.upsertExercises(res.exers).then(
           (result) => {
             this.sbs.openSnackBar("Successfully saved " +  res.exers.length + " exercises");
@@ -55,6 +54,67 @@ export class AdminEffects {
       })
     );
   });
+
+  updateSingleExer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAdminActions.updateExerStart),
+      exhaustMap((res) => {
+        const exer: Exercise = res.exer;
+        return this.as.updateExercise(exer).then(
+          (result) => {
+            this.sbs.openSnackBar("Successfully updated " +  exer.name + "!");
+            return fromAdminActions.updateExerSuccess({exer: exer});
+          },
+          (rej) => {
+            this.sbs.openSnackBar("Error occured!", 6000);
+            const msg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
+            console.log(rej)
+            return fromAdminActions.updateExerFailed({errMsg: msg});
+          }
+        )
+      })
+    );
+  });
+
+  reloadExercise$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAdminActions.updateExerSuccess, fromAdminActions.deleteExerSuccess),
+      map(() => {
+        return fromAdminActions.getAllExerStart();
+      })
+    );
+  });
+
+  navigateAfterCreatingNewExer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAdminActions.saveAllExerSuccess),
+      map(() => {
+        this.as.navigatePath(['/', 'admin']);
+      })
+    );
+  }, {dispatch: false});
+
+  deleteExercise$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAdminActions.deleteExerStart),
+      exhaustMap((res) => {
+        console.log(res.exers)
+        return this.as.deleteExercises(res.exers).then(
+          (result) => {
+            this.sbs.openSnackBar("Successfully deleted " +  res.exers.length + " exercises !");
+            return fromAdminActions.deleteExerSuccess({exers: res.exers});
+          },
+          (rej) => {
+            this.sbs.openSnackBar("Error occured!", 6000);
+            const msg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
+            console.log(rej)
+            return fromAdminActions.deleteExerFailed({errMsg: msg});
+          }
+        )
+      })
+    );
+  });
+
 
 }
 

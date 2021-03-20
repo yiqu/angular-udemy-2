@@ -15,7 +15,13 @@ const GET_ALL_EXER_START: string = "[Admin/API] Get all exer start";
 const GET_ALL_EXER_SUCCESS: string = "[Admin/API] Get all exer success";
 const GET_ALL_EXER_FAILURE: string = "[Admin/API] Get all exer failed";
 
-const DELETE_ALL_EXER_START: string = "[Admin/API] delete all exer start";
+const UPDATE_EXER_START: string = "[Admin/API] Update exer start";
+const UPDATE_EXER_SUCCESS: string = "[Admin/API] Update exer success";
+const UPDATE_EXER_FAILURE: string = "[Admin/API] Update exer failed";
+
+const DELETE_EXERS_START: string = "[Admin/API] Delete exers start";
+const DELETE_EXERS_SUCCESS: string = "[Admin/API] Delete exers success";
+const DELETE_EXERS_FAILED: string = "[Admin/API] Delete exers failed";
 
 export const onAdminPageNavigation = createAction(
   ADMIN_PAGE_NAVIGATION,
@@ -67,5 +73,35 @@ export const getAllExerSuccess = createAction(
 
 export const getAllExerFailure = createAction(
   GET_ALL_EXER_FAILURE,
+  props<{errMsg: string}>()
+)
+
+export const updateExerStart = createAction(
+  UPDATE_EXER_START,
+  props<{exer: Exercise}>()
+)
+
+export const updateExerSuccess = createAction(
+  UPDATE_EXER_SUCCESS,
+  props<{exer: Exercise}>()
+)
+
+export const updateExerFailed = createAction(
+  UPDATE_EXER_FAILURE,
+  props<{errMsg: string}>()
+)
+
+export const deleteExerStart = createAction(
+  DELETE_EXERS_START,
+  props<{exers: Exercise[]}>()
+)
+
+export const deleteExerSuccess = createAction(
+  DELETE_EXERS_SUCCESS,
+  props<{exers: Exercise[]}>()
+)
+
+export const deleteExerFailed = createAction(
+  DELETE_EXERS_FAILED,
   props<{errMsg: string}>()
 )

@@ -1,26 +1,40 @@
-<div class="row mb-3 justify-content-center">
-  <p class="col-12 text-center">Welcome to the admin panel. You can add, edit or delete exercises.</p>
+<div class="row my-3 justify-content-center">
+  <h3 class="col-12 text-center">Admin panel</h3>
+  <p class="text-muted">
+    Add and modify exercises.
+  </p>
 </div>
 
-<div class="row justify-content-center">
-  <div class="col-12 col-lg-2" ngClass.lt-md="mb-3">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <button mat-fab color="primary" (click)="onActionClick('add')" class="mat-elevation-z0">
-        <mat-icon>add</mat-icon>
-      </button>
-      <div>
-        New Exercise
-      </div>
+<div class="exer-options">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <p fxLayout="row" fxLayoutAlign="center center">
+        You can add, edit or delete exercises.
+      </p>
     </div>
   </div>
-  <div class="col-12 col-lg-2">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <button mat-fab color="accent" (click)="onActionClick('edit')" class="mat-elevation-z0">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <div>
-        Edit Exercises
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-2" ngClass.lt-md="mb-3">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button mat-fab color="primary" (click)="onActionClick('add')" class="mat-elevation-z0">
+          <mat-icon>add</mat-icon>
+        </button>
+        <div class="mt-2">
+          New Exercise
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-2">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button mat-fab color="accent" (click)="onActionClick('edit')" class="mat-elevation-z0">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <div class="mt-2">
+          Edit Exercises
+        </div>
       </div>
     </div>
   </div>
 </div>
+

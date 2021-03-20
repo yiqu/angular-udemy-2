@@ -11,7 +11,7 @@ import { AdminService } from '../admin.service';
 })
 export class EditExerComponent implements OnInit {
 
-  columns: string[] = ['name', 'sets', 'countPerSet', 'setUnitTypeIsTime'];
+  columns: string[] = ['name', 'sets', 'countPerSet', 'setUnitTypeIsTime', 'created', 'lastUpdated'];
   optionBtns: string[] = ['edit', 'delete'];
 
   constructor(public as: AdminService, public cs: DialogConfirmService) {
@@ -26,8 +26,9 @@ export class EditExerComponent implements OnInit {
     if (btnData.btnAction === 'edit') {
       this.as.editExercise(btnData.data).subscribe(
         (res) => {
-          if (res) {
+          if (res && btnData.data) {
             console.log("save it", res)
+            this.as.updateExercise(res);
           }
         }
       )
@@ -36,10 +37,14 @@ export class EditExerComponent implements OnInit {
         (res) => {
           if (res) {
             console.log("delete", btnData.data)
+            if (res && btnData.data) {
+              const exers = [btnData.data];
+              this.as.deleteExercise(exers);
+            }
           }
         }
       );
     }
-  }
 
+  }
 }

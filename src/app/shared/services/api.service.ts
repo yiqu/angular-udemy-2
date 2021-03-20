@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { EMPTY } from 'rxjs';
 import { Exercise } from 'src/app/admin/store/admin.state';
 
 
@@ -12,9 +14,9 @@ export class FirebaseApiService {
   readonly db: firebase.firestore.Firestore = firebase.firestore();
   readonly availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
     = this.db.collection("health").doc("availableExers");
-  readonly availableExerList = this.availableExers.collection('list');
+  readonly availableExerCollection = this.availableExers.collection('list');
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   /**
@@ -24,9 +26,16 @@ export class FirebaseApiService {
    */
   upsertExercises(exers: Exercise[]): Promise<void> {
     const batch = this.db.batch();
+    const time: number = new Date().getTime();
     exers.forEach((ex) => {
-      const ref = this.availableExerList.doc(ex.name); // name of exercise as doc. name
-      batch.set(ref, ex);
+      const ref: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
+        this.availableExerCollection.doc();
+
+      batch.set(ref, {
+        ...ex,
+        created: time,
+        lastUpdated: time
+      });
     });
 
     batch.update(this.availableExers, {
@@ -37,8 +46,43 @@ export class FirebaseApiService {
   }
 
   getExercises(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    const ref = this.availableExerList;
+    const ref = this.availableExerCollection;
     return ref.get();
+  }
+
+  updateExercise(exer: Exercise): Promise<void> {
+    if (exer.id) {
+      const ref = this.availableExerCollection.doc(exer.id);
+      const time: number = new Date().getTime();
+      return ref.update({
+        ...exer,
+        lastUpdated: time
+      });
+    }
+    return Promise.resolve();
+  }
+
+  deleteExercise(exer: Exercise): Promise<void> {
+    if (exer.id) {
+      const ref = this.availableExerCollection.doc(exer.id);
+      return ref.delete();
+    }
+    return Promise.resolve();
+  }
+
+  deleteExercises(exers: Exercise[]): Promise<void> {
+    const batch = this.db.batch();
+    exers.forEach((ex) => {
+      console.log(ex.id)
+      const ref = this.availableExerCollection.doc(ex.id);
+      batch.delete(ref);
+    });
+
+    batch.update(this.availableExers, {
+      lastUpdated: new Date().getTime()
+    });
+
+    return batch.commit();
   }
 
 
@@ -53,6 +97,10 @@ export class FirebaseApiService {
       });
     }
     return result;
+  }
+
+  navigatePath(path: string[]): void {
+    this.router.navigate([...path]);
   }
 
 

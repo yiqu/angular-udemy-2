@@ -17,7 +17,7 @@ import { AppUser, FirebaseAppUser } from "./auth.state";
 export function makeAuthstateObservable(auth: firebase.auth.Auth): Observable<FirebaseAppUser> {
   const authState = new Observable((observer: Observer<FirebaseAppUser>) => {
     auth.onAuthStateChanged(
-      (user?: firebase.User | null) => {
+      (user: firebase.User | null) => {
         if (user) {
           return observer.next(user);
         }
@@ -37,6 +37,9 @@ export class AuthEffects {
   constructor(public actions$: Actions, public as: AuthService) {
   }
 
+  /**
+   * Will just listen for user state when it's created
+   */
   userFromFirebaseAuthState$ = createEffect(() => {
     return makeAuthstateObservable(firebase.auth()).pipe(
       map((user: FirebaseAppUser) => {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { createFormControl2 } from '../../shared/general.utils';
 
 @Component({
   selector: 'app-core-new',
@@ -8,8 +10,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class NewTrainingComponent implements OnInit {
 
-  constructor(public as: AuthService) {
+  exerSelectFc: FormControl;
 
+  constructor(public as: AuthService) {
+    this.exerSelectFc = createFormControl2(null, false);
   }
 
   ngOnInit() {

@@ -1,22 +1,38 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { EMPTY } from 'rxjs';
 import { Exercise } from 'src/app/admin/store/admin.state';
-
+import { AppState } from 'src/app/store/global/app.reducer';
+import * as fromAuthSelectors from '../../store/auth/auth.selectors';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseApiService {
+  // health (collection) -> users (doc) -> userName (collection) -> availableExers (doc) -> exers (collection)
 
+  private currentUserEmail: string = "NO_LOGIN_USER";
   readonly db: firebase.firestore.Firestore = firebase.firestore();
-  readonly availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
-    = this.db.collection("health").doc("availableExers");
-  readonly availableExerCollection = this.availableExers.collection('list');
+  private availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+    = this.db.collection("health").doc('users').collection(this.currentUserEmail).doc('availableExers');
+  private availableExerCollection = this.availableExers.collection('list');
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private as: AuthService) {
+    this.as.currentUser$.subscribe(
+      (res) => {
+        if (res && res.email) {
+          this.currentUserEmail = res?.email;
+        } else {
+          this.currentUserEmail = "NO_LOGIN_USER";
+        }
+        this.availableExers = this.db.collection("health").doc('users').collection(this.currentUserEmail).doc('availableExers');
+        this.availableExerCollection = this.availableExers.collection('list');
+      }
+    );
   }
 
   /**
@@ -38,7 +54,7 @@ export class FirebaseApiService {
       });
     });
 
-    batch.update(this.availableExers, {
+    batch.set(this.availableExers, {
       lastUpdated: new Date().getTime()
     });
 
@@ -46,6 +62,7 @@ export class FirebaseApiService {
   }
 
   getExercises(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    console.log(this.currentUserEmail)
     const ref = this.availableExerCollection;
     return ref.get();
   }

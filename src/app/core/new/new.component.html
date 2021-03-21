@@ -3,11 +3,24 @@
     Let's get started!
   </div>
   <ng-container *ngIf="(this.as.currentUser$ | async) as user">
-    Welcome {{user?.email}}
+    <p class="font-weight-bold">
+      Hello {{user?.email}}!
+    </p>
   </ng-container>
   <p>
     Health Manager makes exercise motivating and fun with a fun experience that lets you interact with
-    pals inside and outside of class, right from your phone. Whether you want to lose weight,
+    pals inside and outside of class. Whether you want to lose weight,
     tone it up or just sweat, find a better you with friends or solo, with Health Manager – fitness on your time.
   </p>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field>
+      <mat-label>Exercise</mat-label>
+      <mat-select [formControl]="exerSelectFc">
+        <mat-option [value]="null">None</mat-option>
+        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option> -->
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>

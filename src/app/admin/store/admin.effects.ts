@@ -89,7 +89,7 @@ export class AdminEffects {
     return this.actions$.pipe(
       ofType(fromAdminActions.saveAllExerSuccess),
       map(() => {
-        this.as.navigatePath(['/', 'admin']);
+        this.as.navigatePath(['/', 'my-trainings']);
       })
     );
   }, {dispatch: false});
@@ -98,7 +98,6 @@ export class AdminEffects {
     return this.actions$.pipe(
       ofType(fromAdminActions.deleteExerStart),
       exhaustMap((res) => {
-        console.log(res.exers)
         return this.as.deleteExercises(res.exers).then(
           (result) => {
             this.sbs.openSnackBar("Successfully deleted " +  res.exers.length + " exercises !");

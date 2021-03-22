@@ -54,8 +54,6 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
       this.cols = this.addOptionsColumn(this.cols);
     }
     this.dataSource = new MatTableDataSource(this.columnsData);
-
-    console.log(this.cols, this.columnsData);
   }
 
   ngAfterViewInit() {

@@ -27,7 +27,6 @@ export class EditExerComponent implements OnInit {
       this.as.editExercise(btnData.data).subscribe(
         (res) => {
           if (res && btnData.data) {
-            console.log("save it", res)
             this.as.updateExercise(res);
           }
         }
@@ -36,7 +35,6 @@ export class EditExerComponent implements OnInit {
       this.cs.openConfirmDialog("delete").subscribe(
         (res) => {
           if (res) {
-            console.log("delete", btnData.data)
             if (res && btnData.data) {
               const exers = [btnData.data];
               this.as.deleteExercise(exers);

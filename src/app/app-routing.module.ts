@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: "admin",
+    path: "my-trainings",
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   { path: '**', component: NotFoundComponent}

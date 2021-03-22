@@ -76,6 +76,10 @@ export class TopNavComponent implements OnInit, OnDestroy, AfterViewInit {
     this.as.onSignout();
   }
 
+  navigateTo(id: string) {
+    this.router.navigate(['/', id]);
+  }
+
 
   ngOnDestroy() {
     this.compDest$.next();

@@ -80,7 +80,6 @@ export class NewExerComponent implements OnInit, OnDestroy {
 
   onFormSubmit() {
     this.checkFormValid(this.mainFg.valid);
-    console.log(this.mainFg.value);
     if (this.mainFg.valid) {
       this.as.onSaveExers(this.mainFg.value.exercises);
     }

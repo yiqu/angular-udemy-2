@@ -66,7 +66,6 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   onRegister() {
     if (this.signupFg.valid) {
-      console.log(this.getAllValues());
       const val = this.getAllValues();
       this.as.onSignUp(val.name, val.password);
     }

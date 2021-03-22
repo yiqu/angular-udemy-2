@@ -62,7 +62,6 @@ export class AdminService {
   }
 
   deleteExercise(exers: Exercise[]) {
-    console.log(exers)
     this.store.dispatch(fromAdminActions.deleteExerStart({exers}));
   }
 

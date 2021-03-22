@@ -9,30 +9,51 @@ import { AppState } from 'src/app/store/global/app.reducer';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
 import { AuthService } from './auth.service';
 
+const NO_LOGIN_USER: string = 'NO_LOGIN_USER';
+
+/**
+ * Firebase API Service
+ *
+ * User Exercise Storage Structure:
+ * health (collection) -> users (doc) -> userName (collection) -> availableExers (doc) -> exers (collection) -> exerId (doc)
+ *
+ *
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseApiService {
-  // health (collection) -> users (doc) -> userName (collection) -> availableExers (doc) -> exers (collection)
 
-  private currentUserEmail: string = "NO_LOGIN_USER";
+
+  private currentUserEmail: string = NO_LOGIN_USER;
   readonly db: firebase.firestore.Firestore = firebase.firestore();
-  private availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
-    = this.db.collection("health").doc('users').collection(this.currentUserEmail).doc('availableExers');
-  private availableExerCollection = this.availableExers.collection('list');
+  private availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  private availableExerCollection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
 
   constructor(private router: Router, private route: ActivatedRoute, private as: AuthService) {
+
+    this.availableExers = this.getAvailableExerDoc(this.currentUserEmail);
+    this.availableExerCollection = this.availableExers.collection('list');
+
     this.as.currentUser$.subscribe(
       (res) => {
         if (res && res.email) {
-          this.currentUserEmail = res?.email;
+          this.currentUserEmail = res.email;
         } else {
-          this.currentUserEmail = "NO_LOGIN_USER";
+          this.currentUserEmail = NO_LOGIN_USER;
         }
-        this.availableExers = this.db.collection("health").doc('users').collection(this.currentUserEmail).doc('availableExers');
+        this.availableExers = this.getAvailableExerDoc(this.currentUserEmail);
         this.availableExerCollection = this.availableExers.collection('list');
       }
     );
+  }
+
+  /**
+   * Get the Available Exercise document for a user
+   * @param userEmail
+   */
+  getAvailableExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
+    return this.db.collection("health").doc('users').collection(userEmail).doc('availableExers');
   }
 
   /**
@@ -62,7 +83,6 @@ export class FirebaseApiService {
   }
 
   getExercises(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    console.log(this.currentUserEmail)
     const ref = this.availableExerCollection;
     return ref.get();
   }
@@ -90,7 +110,6 @@ export class FirebaseApiService {
   deleteExercises(exers: Exercise[]): Promise<void> {
     const batch = this.db.batch();
     exers.forEach((ex) => {
-      console.log(ex.id)
       const ref = this.availableExerCollection.doc(ex.id);
       batch.delete(ref);
     });

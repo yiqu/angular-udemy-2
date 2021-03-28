@@ -1,4 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="center center">
+  <div class="title mb-3 full-w" fxLayout="row" fxLayoutAlign="start center">
+    Add New Exercises
+  </div>
   <ng-container *ngIf="mainFg">
     <form [formGroup]="mainFg" fxLayoutGap="10px" (ngSubmit)="onFormSubmit()"
       [ngStyle.lt-md]="{'width': '100%'}">

@@ -9,6 +9,7 @@ import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { from, Observable, Observer, of } from "rxjs";
 import { AuthService } from "src/app/shared/services/auth.service";
 import { AppUser, FirebaseAppUser } from "./auth.state";
+import * as fromCoreExerActions from '../../core/store/core.actions';
 
 /**
  * Convert Firebase's Auth to an Observable
@@ -57,6 +58,15 @@ export class AuthEffects {
         return of(fromAuthActions.userLoginFailed({name:"", errorMsg: e}));
       })
     )
+  });
+
+  loadAllExercisesAfterUserStateChange$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.userStateChanged),
+      map((res) => {
+        return fromCoreExerActions.getAllExerStart()
+      })
+    );
   });
 
   registerNewUserEmailPassword$ = createEffect(() => {

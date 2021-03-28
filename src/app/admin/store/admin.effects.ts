@@ -8,7 +8,7 @@ import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { FirebaseApiService } from "src/app/shared/services/api.service";
 import { ToasterService } from "src/app/shared/services/toaster.service";
 import { Exercise } from "./admin.state";
-
+import * as fromCoreExerActions from '../../core/store/core.actions';
 
 @Injectable()
 export class AdminEffects {
@@ -93,6 +93,18 @@ export class AdminEffects {
       })
     );
   }, {dispatch: false});
+
+  reloadAllCoreExercises$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(...[fromAdminActions.updateExerSuccess, fromAdminActions.deleteExerSuccess,
+        fromAdminActions.saveAllExerSuccess]),
+      switchMap(() => {
+        return [
+          fromCoreExerActions.getAllExerStart()
+        ]
+      })
+    );
+  });
 
   deleteExercise$ = createEffect(() => {
     return this.actions$.pipe(

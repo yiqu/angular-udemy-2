@@ -12,15 +12,35 @@
     pals inside and outside of class. Whether you want to lose weight,
     tone it up or just sweat, find a better you with friends or solo, with Health Manager – fitness on your time.
   </p>
-  <div fxLayout="row" fxLayoutAlign="center center">
-    <mat-form-field>
-      <mat-label>Exercise</mat-label>
-      <mat-select [formControl]="exerSelectFc">
-        <mat-option [value]="null">None</mat-option>
-        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
-        </mat-option> -->
-      </mat-select>
-    </mat-form-field>
+  <p class="font-weight-bold">
+    Select an exercise:
+  </p>
+  <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="start center"
+    fxLayoutGap="10px">
+    <ng-container *ngIf="((this.cs.isApiLoading$ | async) === true); else exerOpt">
+      <div>
+        Loading excercises...
+      </div>
+    </ng-container>
+
+    <ng-template #exerOpt>
+      <mat-form-field>
+        <mat-label>Exercise</mat-label>
+        <mat-select [formControl]="exerSelectFc" [disabled]="!!(this.cs.isApiLoading$ | async)">
+          <mat-optgroup [label]="'Available'">
+            <mat-option *ngFor="let exer of (this.cs.availableExers$ | async)" [value]="exer">
+              {{exer.name}}
+            </mat-option>
+          </mat-optgroup>
+
+          <mat-optgroup [label]="'New'">
+            <mat-option [value]="{}">
+              Create new
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
+
   </div>
 </div>

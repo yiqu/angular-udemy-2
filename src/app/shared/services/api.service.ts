@@ -52,7 +52,7 @@ export class FirebaseApiService {
    * Get the Available Exercise document for a user
    * @param userEmail
    */
-  getAvailableExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
+  private getAvailableExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
     return this.db.collection("health").doc('users').collection(userEmail).doc('availableExers');
   }
 

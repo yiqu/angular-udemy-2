@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Exercise } from 'src/app/admin/store/admin.state';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { createFormControl2 } from '../../shared/general.utils';
@@ -11,9 +13,11 @@ import { CoreExerciseService } from '../core.service';
   templateUrl: 'new.component.html',
   styleUrls: ['./new.component.scss']
 })
-export class NewTrainingComponent implements OnInit {
+export class NewTrainingComponent implements OnInit, OnDestroy {
 
   exerSelectFc: FormControl;
+
+  compDest$: Subject<any> = new Subject<any>();
 
   constructor(public as: AuthService, public cs: CoreExerciseService, private router: Router,
     private route: ActivatedRoute) {
@@ -21,15 +25,21 @@ export class NewTrainingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exerSelectFc.valueChanges.subscribe(
+    this.exerSelectFc.valueChanges.pipe(
+      takeUntil(this.compDest$)
+    ).subscribe(
       (res: Exercise) => {
         if (res && res.name) {
           console.log(res)
         } else {
-          // Go to add new exer
           this.router.navigate(['/', 'my-trainings', 'new-exer']);
         }
       }
-    )
+    );
+  }
+
+  ngOnDestroy() {
+    this.compDest$.next();
+    this.compDest$.complete();
   }
 }

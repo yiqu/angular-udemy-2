@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ReactiveComponentModule } from '@ngrx/component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModuleBundle } from '../shared/material-bundle.module';
@@ -23,7 +24,8 @@ import { exerEntityReducer } from './store/core.reducer';
     FlexLayoutModule,
     StoreModule.forFeature("exerciseCore", exerEntityReducer),
     EffectsModule.forFeature(coreExerEffects),
-    RouterModule
+    RouterModule,
+    ReactiveComponentModule
   ],
 
   exports: [

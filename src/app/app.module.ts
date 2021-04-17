@@ -20,6 +20,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import * as  fromAppReducers  from './store/global/app.reducer';
 import { appEffects } from './store/global/app.effects';
+import { ReactiveComponentModule } from '@ngrx/component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { appEffects } from './store/global/app.effects';
     TopNavModule,
     SideNavModule,
     FooterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveComponentModule
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

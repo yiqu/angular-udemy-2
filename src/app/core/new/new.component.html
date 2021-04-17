@@ -1,20 +1,24 @@
-<div fxLayoutGap="20px" fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="center center" class="title">
-    Let's get started!
-  </div>
-  <ng-container *ngIf="(this.as.currentUser$ | async) as user">
-    <p class="font-weight-bold">
-      Hello {{user?.email}}!
-    </p>
+<div fxLayout="column">
+  <ng-container *ngrxLet="(this.as.currentUser$) as user">
+    <div fxLayout="row" fxLayoutAlign="start center" class="title mb-3">
+      <span class="mr-1">Hello</span>
+        <ng-container *ngIf="user !== null">
+          <span class="mr-1">
+            {{user ? user.email : 'guest'}},
+          </span>
+        </ng-container>
+      <span>
+        let's get started!
+      </span>
+    </div>
   </ng-container>
+
   <p>
-    Health Manager makes exercise motivating and fun with a fun experience that lets you interact with
-    pals inside and outside of class. Whether you want to lose weight,
-    tone it up or just sweat, find a better you with friends or solo, with Health Manager – fitness on your time.
+    Health Manager makes exercise motivating and fun. Create your own exercise activities and keep track of your progress all in one place!
   </p>
-  <p class="font-weight-bold">
+  <div class="title mb-2">
     Select an exercise:
-  </p>
+  </div>
   <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="start center"
     fxLayoutGap="10px">
     <ng-container *ngIf="((this.cs.isApiLoading$ | async) === true); else exerOpt">
@@ -24,12 +28,15 @@
     </ng-container>
 
     <ng-template #exerOpt>
-      <mat-form-field>
+      <mat-form-field class="exer-input">
         <mat-label>Exercise</mat-label>
-        <mat-select [formControl]="exerSelectFc" [disabled]="!!(this.cs.isApiLoading$ | async)">
+        <mat-select [formControl]="exerSelectFc">
           <mat-optgroup [label]="'Available'">
             <mat-option *ngFor="let exer of (this.cs.availableExers$ | async)" [value]="exer">
-              {{exer.name}}
+              {{exer.name}} <i [class]="'mx-2 ' + (exer.setUnitTypeIsTime ? 'fas fa-clock': 'fas fa-clipboard-check')"></i>
+              <span> {{ exer.countPerSet }} </span>
+              <span>{{ exer.setUnitTypeIsTime ? 'sec' : 'count' }}</span>
+              <span> ({{exer.sets}}) </span>
             </mat-option>
           </mat-optgroup>
 

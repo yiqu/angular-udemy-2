@@ -7,13 +7,16 @@ import { VerifiedUser } from '../models/user.model';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
 import { Router } from '@angular/router';
 import { AppUser, ErrorInfo } from 'src/app/store/auth/auth.state';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  currentUser$: Observable<AppUser> = this.store.select(fromAuthSelectors.getCurrentUser);
+  currentUser$: Observable<AppUser> = this.store.select(fromAuthSelectors.getCurrentUser).pipe(
+    filter((user: AppUser) =>  user !== null)
+  );
   currentUserLogo$: Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
   authError$: Observable<ErrorInfo> = this.store.select(fromAuthSelectors.getError);
 

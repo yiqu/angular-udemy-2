@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Exercise } from 'src/app/admin/store/admin.state';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { createFormControl2 } from '../../shared/general.utils';
@@ -30,7 +30,10 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     ).subscribe(
       (res: Exercise) => {
         if (res && res.name) {
-          console.log(res)
+          if (res.id) {
+            this.cs.selectExerciseToStart(res.id);
+            this.router.navigate(['/', 'home', 'progress', res.id]);
+          }
         } else {
           this.router.navigate(['/', 'my-trainings', 'new-exer']);
         }

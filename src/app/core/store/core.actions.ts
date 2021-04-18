@@ -7,6 +7,8 @@ const GET_ALL_EXER_START: string = "[Exercise/API] Load all user's exercises sta
 const GET_ALL_EXER_SUCCESS: string = "[Exercise/API] Load all user's exercises success";
 const GET_ALL_EXER_FAILED: string = "[Exercise/API] Load all user's exercises failed";
 
+const SELECT_EXER_TO_START: string = "[Exercise/UI] Start exercise to start";
+
 export const getAllExerStart = createAction(
   GET_ALL_EXER_START
 )
@@ -19,4 +21,9 @@ export const getAllExerSuccess = createAction(
 export const getAllExerFailed = createAction(
   GET_ALL_EXER_FAILED,
   props<{errMsg: string}>()
+)
+
+export const selectExerciseToStart = createAction(
+  SELECT_EXER_TO_START,
+  props<{exerId: string}>()
 )

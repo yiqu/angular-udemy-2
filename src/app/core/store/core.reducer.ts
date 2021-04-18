@@ -63,8 +63,7 @@ export const exerciseEntityReducer = createReducer(
       errMsg,
       apiLoading: false
     })
-  })
-
+  }),
 
 )
 

@@ -41,17 +41,18 @@ export class CoreComponent implements OnInit, OnDestroy {
 
   getUrlLastSegment(res: Event | string): string | undefined {
     let fullUrl: string | undefined = "";
+
     if (res instanceof NavigationEnd) {
-      fullUrl = res.url.split("/").pop();
+      fullUrl = res.url;
     } else {
-      fullUrl = (res as string).split("/").pop();
+      fullUrl = (res as string);
     }
     return fullUrl;
   }
 
   calculateTabIndex(path?: string): number {
     const result: number = this.tabs.findIndex((tab) => {
-      return tab.id === path;
+      return path?.includes('/home/'+tab.id);
     });
     return result;
   }

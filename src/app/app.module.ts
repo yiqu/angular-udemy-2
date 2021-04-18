@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 import * as  fromAppReducers  from './store/global/app.reducer';
 import { appEffects } from './store/global/app.effects';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { metaReducers } from './store/meta/meta.reducer';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ReactiveComponentModule } from '@ngrx/component';
       runtimeChecks: {
         strictActionTypeUniqueness: true,
         //strictStateSerializability: true
-      }
+      },
+      metaReducers: metaReducers
     }),
     EffectsModule.forRoot(appEffects),
     StoreDevtoolsModule.instrument({

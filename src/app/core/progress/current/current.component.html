@@ -1,0 +1,7 @@
+<div>
+  <ng-container *ngIf="(this.cs.selectedExerToStart$ | async) as exerToStart">
+    <div>
+      {{ exerToStart?.name }}
+    </div>
+  </ng-container>
+</div>

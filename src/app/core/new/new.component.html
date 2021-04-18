@@ -33,10 +33,11 @@
         <mat-select [formControl]="exerSelectFc">
           <mat-optgroup [label]="'Available'">
             <mat-option *ngFor="let exer of (this.cs.availableExers$ | async)" [value]="exer">
-              {{exer.name}} <i [class]="'mx-2 ' + (exer.setUnitTypeIsTime ? 'fas fa-clock': 'fas fa-clipboard-check')"></i>
+              {{exer.name}}
+              <span> ({{exer.sets}}) </span>
               <span> {{ exer.countPerSet }} </span>
               <span>{{ exer.setUnitTypeIsTime ? 'sec' : 'count' }}</span>
-              <span> ({{exer.sets}}) </span>
+              <i [class]="'mx-2 ' + (exer.setUnitTypeIsTime ? 'fas fa-clock': 'fas fa-clipboard-check')"></i>
             </mat-option>
           </mat-optgroup>
 

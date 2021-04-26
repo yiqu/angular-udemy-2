@@ -5,6 +5,7 @@ import { Exercise } from '../admin/store/admin.state';
 import { AppState } from '../store/global/app.reducer';
 import * as fromCoreExerSelectors from './store/core.selectors';
 import * as fromCoreActions from './store/core.actions';
+import { SelectedExerciseSummary } from './store/core.states';
 
 
 @Injectable({
@@ -12,9 +13,10 @@ import * as fromCoreActions from './store/core.actions';
 })
 export class CoreExerciseService {
 
+  public isApiFirstLoading$: Observable<boolean> = this.store.select(fromCoreExerSelectors.getFirstApiLoadingStatus);
   public isApiLoading$: Observable<boolean> = this.store.select(fromCoreExerSelectors.getApiLoadingStatus);
   public availableExers$: Observable<Exercise[]> = this.store.select(fromCoreExerSelectors.selectAvailableExers);
-  public selectedExerToStart$: Observable<Exercise | undefined> = this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
+  public selectedExerToStart$: Observable<SelectedExerciseSummary | undefined> = this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
 
   constructor(private store: Store<AppState>) {
   }

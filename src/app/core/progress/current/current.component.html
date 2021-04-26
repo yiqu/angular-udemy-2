@@ -1,7 +1,45 @@
-<div>
-  <ng-container *ngIf="(this.cs.selectedExerToStart$ | async) as exerToStart">
-    <div>
-      {{ exerToStart?.name }}
+<ng-container *ngIf="(this.cs.isApiLoading$ | async) === (false); else loading">
+  <ng-container *ngIf="(this.cs.selectedExerToStart$ | async) as exerToStart; else noExerciseExist">
+    <div class="row">
+      <div class="col-12">
+        <div class="title">
+          {{ exerToStart?.name }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        Exercise Summary
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div>
+          {{ exerToStart?.typeDescription }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <i class="fa fa-tasks"></i> {{ exerToStart?.details?.setCount }} sets
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <i [class]="'fa ' + (exerToStart?.details?.time ? 'fa-hourglass' : 'fa-check-square-o')"></i>
+        <span>{{ exerToStart?.details?.duration }}</span>
+        <span>{{exerToStart?.details?.time ? ' seconds per set' : ' reps per set'}}</span>
+      </div>
     </div>
   </ng-container>
-</div>
+
+
+</ng-container>
+
+<ng-template #loading>
+  <app-shared-loading-spinner></app-shared-loading-spinner>
+</ng-template>
+
+<ng-template #noExerciseExist>
+  Selected exercise does not exist...
+</ng-template>

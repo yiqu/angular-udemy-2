@@ -21,7 +21,7 @@
   </div>
   <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="start center"
     fxLayoutGap="10px">
-    <ng-container *ngIf="((this.cs.isApiLoading$ | async) === true); else exerOpt">
+    <ng-container *ngIf="((this.cs.isApiFirstLoading$ | async) === true); else exerOpt">
       <div>
         Loading excercises...
       </div>

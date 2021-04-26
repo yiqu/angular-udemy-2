@@ -7,6 +7,7 @@ import { ReactiveComponentModule } from '@ngrx/component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModuleBundle } from '../shared/material-bundle.module';
+import { SharedComponentsModule } from '../shared/shared-components.module';
 import { CompletedTrainingComponent } from './completed/completed.component';
 import { CoreComponent } from './core.component';
 import { NewTrainingComponent } from './new/new.component';
@@ -30,7 +31,8 @@ import { exerciseReducer } from './store/current.reducer';
     StoreModule.forFeature("exercise", exerciseReducer),
     EffectsModule.forFeature(coreExerEffects),
     RouterModule,
-    ReactiveComponentModule
+    ReactiveComponentModule,
+    SharedComponentsModule
   ],
 
   exports: [

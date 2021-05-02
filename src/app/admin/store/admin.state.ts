@@ -1,3 +1,5 @@
+import { ExerciseStatus } from "src/app/core/store/core.states";
+
 export interface AdminState {
   currentActionPage: string | null;
   newExerType?: NewExerUnitType;
@@ -32,4 +34,8 @@ export interface Exercise {
   id?: string;
   created?: number;
   lastUpdated?: number;
+  progressStatus?: ExerciseStatus;
+  progressLastUpdated?: number;
+  inProgressId?: string;
+  inCompletedId?: string;
 }

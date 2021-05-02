@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { EMPTY } from 'rxjs';
 import { Exercise } from 'src/app/admin/store/admin.state';
+import { ExerciseStatus } from 'src/app/core/store/core.states';
 import { AppState } from 'src/app/store/global/app.reducer';
 import * as fromAuthSelectors from '../../store/auth/auth.selectors';
 import { AuthService } from './auth.service';
@@ -27,13 +28,18 @@ export class FirebaseApiService {
 
   private currentUserEmail: string = NO_LOGIN_USER;
   readonly db: firebase.firestore.Firestore = firebase.firestore();
-  private availableExers: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
-  private availableExerCollection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+  private availableExers!: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  private availableExerCollection!: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+
+  private userInProgressExers!: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  public userInProgressCollection!: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+
+  private userCompletedExers!: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  public userCompletedCollection!: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
 
   constructor(private router: Router, private route: ActivatedRoute, private as: AuthService) {
 
-    this.availableExers = this.getAvailableExerDoc(this.currentUserEmail);
-    this.availableExerCollection = this.availableExers.collection('list');
+    this.assignUserExerciseFirebase();
 
     this.as.currentUser$.subscribe(
       (res) => {
@@ -42,8 +48,7 @@ export class FirebaseApiService {
         } else {
           this.currentUserEmail = NO_LOGIN_USER;
         }
-        this.availableExers = this.getAvailableExerDoc(this.currentUserEmail);
-        this.availableExerCollection = this.availableExers.collection('list');
+        this.assignUserExerciseFirebase();
       }
     );
   }
@@ -54,6 +59,25 @@ export class FirebaseApiService {
    */
   private getAvailableExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
     return this.db.collection("health").doc('users').collection(userEmail).doc('availableExers');
+  }
+
+  private getUserInProgressExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
+    return this.db.collection("health").doc('users').collection(userEmail).doc('exerInProgress');
+  }
+
+  private getUserCompletedExerDoc(userEmail: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
+    return this.db.collection("health").doc('users').collection(userEmail).doc('exerCompleted');
+  }
+
+  assignUserExerciseFirebase() {
+    this.availableExers = this.getAvailableExerDoc(this.currentUserEmail);
+    this.availableExerCollection = this.availableExers.collection('list');
+
+    this.userInProgressExers = this.getUserInProgressExerDoc(this.currentUserEmail);
+    this.userInProgressCollection = this.userInProgressExers.collection('list');
+
+    this.userCompletedExers = this.getUserCompletedExerDoc(this.currentUserEmail);
+    this.userCompletedCollection = this.userCompletedExers.collection('list');
   }
 
   /**
@@ -137,6 +161,28 @@ export class FirebaseApiService {
 
   navigatePath(path: string[]): void {
     this.router.navigate([...path]);
+  }
+
+  saveExerciseWithState(exer: Exercise, status: ExerciseStatus, date: number, id?: string): Promise<void> {
+    if (id && exer) {
+      let saveRef;
+      const exerToSave: Exercise = {
+        ...exer,
+        progressStatus: status,
+        progressLastUpdated: date
+      }
+      if (status === "Started") {
+        saveRef = this.userInProgressCollection.doc(id);
+      } else if (status === "Completed") {
+        saveRef = this.userCompletedCollection.doc(id);
+      }
+
+      if (saveRef) {
+        return saveRef.set(exerToSave);
+      }
+    }
+
+    return Promise.resolve();
   }
 
 

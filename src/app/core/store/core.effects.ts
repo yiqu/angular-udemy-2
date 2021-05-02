@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect, OnInitEffects } from '@ngrx/effects';
-import { switchMap } from "rxjs/operators";
+import { mergeMap, switchMap } from "rxjs/operators";
 import { FirebaseApiService } from "src/app/shared/services/api.service";
 import { ToasterService } from "src/app/shared/services/toaster.service";
 import * as fromCoreExerActions from './core.actions';
 import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { Exercise } from "src/app/admin/store/admin.state";
+import { ExerciseStatus } from "./core.states";
 
 @Injectable()
 export class CoreExerEffects {
@@ -26,6 +27,37 @@ export class CoreExerEffects {
           (rej) => {
             const msg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
             return fromCoreExerActions.getAllExerFailed({errMsg: msg});
+          }
+        )
+      })
+    );
+  });
+
+  saveExerWithStatus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromCoreExerActions.saveExerciseAndStatusStart),
+      mergeMap((res) => {
+        console.log(res)
+        const exer: Exercise = {...res.data};
+        const date: number = res.date;
+        const status: ExerciseStatus = res.status;
+        let saveRef, id;
+        if (status === "Started") {
+          saveRef = this.fs.userInProgressCollection.doc();
+          id = saveRef.id;
+          exer.inProgressId = id;
+        } else if (status === "Completed") {
+          saveRef = this.fs.userCompletedCollection.doc();
+          id = saveRef.id;
+          exer.inCompletedId = id;
+        }
+        return this.fs.saveExerciseWithState(exer, status, date, id).then(
+          (res) => {
+            return fromCoreExerActions.saveExerciseAndStatusSuccess({data: exer});
+          },
+          (rej) => {
+            const msg = fromFirebaseUtils.getFirebaseErrorMsg(rej);
+            return fromCoreExerActions.saveExerciseAndStatusFailure({errMsg: msg});
           }
         )
       })

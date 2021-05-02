@@ -33,7 +33,7 @@ export const inititalState: ExerEntityState = adapter.getInitialState({
   exerLastFetchedTime: 0,
   currentExercise: undefined,
   error: false,
-  errMsg: undefined
+  errMsg: undefined,
 });
 
 

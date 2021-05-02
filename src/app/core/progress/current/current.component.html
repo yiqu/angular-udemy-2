@@ -1,36 +1,40 @@
 <ng-container *ngIf="(this.cs.isApiLoading$ | async) === (false); else loading">
   <ng-container *ngIf="(this.cs.selectedExerToStart$ | async) as exerToStart; else noExerciseExist">
-    <div class="row">
+    <div class="row mb-3 font-color text-center">
       <div class="col-12">
         <div class="title">
           {{ exerToStart?.name }}
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        Exercise Summary
+
+    <div class="border text-center">
+      <div class="row mb-1">
+        <div class="col-12">
+          <div>
+            {{ exerToStart?.typeDescription }}
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div>
-          {{ exerToStart?.typeDescription }}
+      <div class="row mb-1 font-weight-bold">
+        <div class="col-12">
+          <i class="fa fa-tasks mr-2"></i> {{ exerToStart?.details?.setCount }} sets
+        </div>
+      </div>
+      <div class="row mb-1 font-weight-bold">
+        <div class="col-12">
+          <i [class]="'mr-2 fa ' + (exerToStart?.details?.time ? 'fa-hourglass' : 'fa-check-square-o')"></i>
+          <span>{{ exerToStart?.details?.duration }}</span>
+          <span>{{exerToStart?.details?.time ? ' seconds per set' : ' reps per set'}}</span>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <i class="fa fa-tasks"></i> {{ exerToStart?.details?.setCount }} sets
-      </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="mt-3">
+      <button mat-flat-button color="primary" (click)="onStart(exerToStart?.exercise)">Start!</button>
+      <button mat-flat-button color="warn" (click)="onCancel()">Go back</button>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <i [class]="'fa ' + (exerToStart?.details?.time ? 'fa-hourglass' : 'fa-check-square-o')"></i>
-        <span>{{ exerToStart?.details?.duration }}</span>
-        <span>{{exerToStart?.details?.time ? ' seconds per set' : ' reps per set'}}</span>
-      </div>
-    </div>
+
   </ng-container>
 
 

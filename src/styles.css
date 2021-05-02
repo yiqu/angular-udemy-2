@@ -12,6 +12,20 @@ body {
   font-family: 'Lato', sans-serif !important;
 }
 
+.font-color {
+color: #4d5156;
+}
+
+.border {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+button.mat-flat-button {
+  width: 6rem;
+}
+
 .mfont {
   font-family: 'Lato', sans-serif;
 }

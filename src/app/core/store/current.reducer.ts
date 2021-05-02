@@ -3,7 +3,9 @@ import { ExerciseState } from "./core.states";
 import * as fromCoreActions from './core.actions';
 
 const initialState: ExerciseState = {
-  selectedExerciseIdToStart: undefined
+  selectedExerciseIdToStart: undefined,
+  exerciseInProgress: undefined,
+  exerciseInProgressSaveCompleted: undefined
 }
 
 export const exerciseReducer = createReducer(
@@ -12,7 +14,24 @@ export const exerciseReducer = createReducer(
   on(fromCoreActions.selectExerciseToStart, (state, {exerId}) => {
     return {
       ...state,
-      selectedExerciseIdToStart: exerId
+      selectedExerciseIdToStart: exerId,
+      exerciseInProgressSaveCompleted: false
     }
-  })
+  }),
+
+  on(fromCoreActions.saveExerciseAndStatusStart, (state, {data}) => {
+    return{
+      ...state,
+      exerciseInProgress: data,
+      exerciseInProgressSaveCompleted: false
+    }
+  }),
+
+  on(fromCoreActions.saveExerciseAndStatusSuccess, (state, {data}) => {
+    return{
+      ...state,
+      exerciseInProgress: data,
+      exerciseInProgressSaveCompleted: true
+    }
+  }),
 )

@@ -5,7 +5,8 @@ import { Exercise } from '../admin/store/admin.state';
 import { AppState } from '../store/global/app.reducer';
 import * as fromCoreExerSelectors from './store/core.selectors';
 import * as fromCoreActions from './store/core.actions';
-import { SelectedExerciseSummary } from './store/core.states';
+import { ExerciseStatus, SelectedExerciseSummary } from './store/core.states';
+import { FirebaseApiService } from '../shared/services/api.service';
 
 
 @Injectable({
@@ -18,11 +19,17 @@ export class CoreExerciseService {
   public availableExers$: Observable<Exercise[]> = this.store.select(fromCoreExerSelectors.selectAvailableExers);
   public selectedExerToStart$: Observable<SelectedExerciseSummary | undefined> = this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
 
-  constructor(private store: Store<AppState>) {
+
+  constructor(private store: Store<AppState>, private as: FirebaseApiService) {
   }
 
   selectExerciseToStart(id: string) {
     this.store.dispatch(fromCoreActions.selectExerciseToStart({exerId: id}));
+  }
+
+  saveExericseWithStatus(exer: Exercise, status: ExerciseStatus) {
+    const date = new Date().getTime();
+    this.store.dispatch(fromCoreActions.saveExerciseAndStatusStart({data: exer, status, date}));
   }
 
 }

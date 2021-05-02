@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Exercise } from 'src/app/admin/store/admin.state';
 import { CoreExerciseService } from '../../core.service';
 
 @Component({
@@ -12,6 +13,16 @@ export class ProgressCurrentComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onStart(exercise: Exercise | undefined) {
+    if (exercise) {
+      this.cs.saveExericseWithStatus(exercise, "Started");
+    }
+  }
+
+  onCancel() {
+
   }
 
 }

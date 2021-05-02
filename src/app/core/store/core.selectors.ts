@@ -64,7 +64,7 @@ export const getSelectedExerciseToStartById = createSelector(
 
     if (state && Object.keys(state).length > 0 && id) {
       const selectedExer: Exercise | undefined = state[id];
-      const name: string = 'Great choice! You have selected ' +  selectedExer?.name + '!';
+      const name: string = selectedExer?.name + '';
       const typeDescription = 'This is a ' + (selectedExer?.setUnitTypeIsTime ? 'timed' : 'repetition count') + ' exercise.';
       const details = {
         setCount: selectedExer?.sets,
@@ -74,7 +74,8 @@ export const getSelectedExerciseToStartById = createSelector(
       return {
         name,
         typeDescription,
-        details
+        details,
+        exercise: selectedExer
       };
     }
     return undefined;

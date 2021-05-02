@@ -40,7 +40,7 @@ export class AdminEffects {
     return this.actions$.pipe(
       ofType(fromAdminActions.getAllExerStart),
       switchMap(() => {
-        return this.as.getExercises().then(
+        return this.as.getExercises("All").then(
           (res) => {
             const dataResult = this.as.convertCollectionDocData<Exercise>(res);
             return fromAdminActions.getAllExerSuccess({exers: dataResult});
@@ -100,7 +100,7 @@ export class AdminEffects {
         fromAdminActions.saveAllExerSuccess]),
       switchMap(() => {
         return [
-          fromCoreExerActions.getAllExerStart()
+          fromCoreExerActions.getExerByTypeStart({status: "All"})
         ]
       })
     );

@@ -64,7 +64,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(fromAuthActions.userStateChanged),
       map((res) => {
-        return fromCoreExerActions.getAllExerStart()
+        return fromCoreExerActions.getExerByTypeStart({status: "All"})
       })
     );
   });

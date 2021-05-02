@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Exercise } from 'src/app/admin/store/admin.state';
 import { CoreExerciseService } from '../../core.service';
 
@@ -9,7 +10,7 @@ import { CoreExerciseService } from '../../core.service';
 })
 export class ProgressCurrentComponent implements OnInit {
 
-  constructor(public cs: CoreExerciseService) {
+  constructor(public cs: CoreExerciseService, private router: Router) {
   }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class ProgressCurrentComponent implements OnInit {
   }
 
   onCancel() {
-
+    this.router.navigate(['/', 'home', 'new']);
   }
 
 }

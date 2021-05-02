@@ -4,9 +4,9 @@ import { Exercise } from 'src/app/admin/store/admin.state';
 import { ExerciseStatus } from './core.states';
 
 
-const GET_ALL_EXER_START: string = "[Exercise/API] Load all user's exercises start";
-const GET_ALL_EXER_SUCCESS: string = "[Exercise/API] Load all user's exercises success";
-const GET_ALL_EXER_FAILED: string = "[Exercise/API] Load all user's exercises failed";
+const GET_ALL_EXER_START: string = "[Exercise/API] Load all user's exercises by type start";
+const GET_ALL_EXER_SUCCESS: string = "[Exercise/API] Load all user's exercises by type success";
+const GET_ALL_EXER_FAILED: string = "[Exercise/API] Load all user's exercises by type failed";
 
 const SAVE_EXER_START: string = "[Exercise/API] Save exercise and status start";
 const SAVE_EXER_SUCCESS: string = "[Exercise/API] Save exercise and status success";
@@ -14,16 +14,17 @@ const SAVE_EXER_FAILED: string = "[Exercise/API] Save exercise and status failed
 
 const SELECT_EXER_TO_START: string = "[Exercise/UI] Start exercise to start";
 
-export const getAllExerStart = createAction(
-  GET_ALL_EXER_START
+export const getExerByTypeStart = createAction(
+  GET_ALL_EXER_START,
+  props<{status:  ExerciseStatus}>()
 )
 
-export const getAllExerSuccess = createAction(
+export const getExerByTypeSuccess = createAction(
   GET_ALL_EXER_SUCCESS,
-  props<{data: Exercise[], fetchTime: number}>()
+  props<{data: Exercise[], fetchTime: number, status:  ExerciseStatus}>()
 )
 
-export const getAllExerFailed = createAction(
+export const getExerByTypeFailed = createAction(
   GET_ALL_EXER_FAILED,
   props<{errMsg: string}>()
 )

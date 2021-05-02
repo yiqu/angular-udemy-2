@@ -2,6 +2,7 @@ import { EntityState, createEntityAdapter, Update, EntityAdapter } from '@ngrx/e
 import { createReducer, on, Action } from '@ngrx/store';
 import { Exercise } from 'src/app/admin/store/admin.state';
 import * as fromCoreActions from './core.actions';
+import { ExerciseStatus } from './core.states';
 
 
 export interface ExerEntityState extends EntityState<Exercise> {
@@ -11,6 +12,8 @@ export interface ExerEntityState extends EntityState<Exercise> {
   currentExercise?: Exercise;
   error: boolean;
   errMsg?: string;
+  exerciseByStatusTab: Exercise[]; // for In Progress or Completed table display
+  exerciseByStatusType?: ExerciseStatus;
 }
 
 export function selectId(i: Exercise) {
@@ -34,13 +37,15 @@ export const inititalState: ExerEntityState = adapter.getInitialState({
   currentExercise: undefined,
   error: false,
   errMsg: undefined,
+  exerciseByStatusTab: [],
+  exerciseByStatusType: undefined
 });
 
 
 export const exerciseEntityReducer = createReducer(
   inititalState,
 
-  on(fromCoreActions.getAllExerStart, (state) => {
+  on(fromCoreActions.getExerByTypeStart, (state) => {
     return {
       ...state,
       apiLoading: true,
@@ -48,15 +53,25 @@ export const exerciseEntityReducer = createReducer(
     }
   }),
 
-  on(fromCoreActions.getAllExerSuccess, (state, {data, fetchTime}) => {
+  on(fromCoreActions.getExerByTypeSuccess, (state, {data, fetchTime, status}) => {
+    if (status !== "All") {
+      return {
+        ...state,
+        apiLoading: false,
+        exerLastFetchedTime: fetchTime,
+        exerciseByStatusTab: data,
+        exerciseByStatusType: status
+      }
+    }
     return adapter.setAll(data, {
       ...state,
       exerLastFetchedTime: fetchTime,
-      apiLoading: false
+      apiLoading: false,
+      exerciseByStatusType: status
     })
   }),
 
-  on(fromCoreActions.getAllExerFailed, (state, {errMsg}) => {
+  on(fromCoreActions.getExerByTypeFailed, (state, {errMsg}) => {
     return adapter.removeAll({
       ...state,
       error: false,

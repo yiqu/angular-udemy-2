@@ -18,4 +18,4 @@ export interface SelectedExerciseSummary {
 }
 
 
-export type ExerciseStatus = "Started" | "Completed";
+export type ExerciseStatus = "Started" | "Completed" | "All";

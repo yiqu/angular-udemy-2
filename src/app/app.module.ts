@@ -34,7 +34,9 @@ import { metaReducers } from './store/meta/meta.reducer';
     StoreModule.forRoot(fromAppReducers.appReducers, {
       runtimeChecks: {
         strictActionTypeUniqueness: true,
-        //strictStateSerializability: true
+        //strictStateSerializability: true,
+        strictStateImmutability: true,
+        strictActionImmutability: true
       },
       metaReducers: metaReducers
     }),

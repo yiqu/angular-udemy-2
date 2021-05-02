@@ -3,7 +3,7 @@ import { Exercise } from "src/app/admin/store/admin.state";
 import { ExerEntityState } from "./core.reducer";
 import * as fromCoreReducer from './core.reducer';
 import { Dictionary } from "@ngrx/entity";
-import { ExerciseState, SelectedExerciseSummary } from "./core.states";
+import { ExerciseState, ExerciseStatus, SelectedExerciseSummary } from "./core.states";
 
 
 export const selectCoreExerFeatureState = createFeatureSelector<ExerEntityState>("exerciseCore");
@@ -79,5 +79,32 @@ export const getSelectedExerciseToStartById = createSelector(
       };
     }
     return undefined;
+  }
+);
+
+export const getCurrentTypeByStatusTab = createSelector(
+  selectCoreExerFeatureState,
+  (state): ExerciseStatus | undefined => {
+    return state.exerciseByStatusType;
+  }
+);
+
+export const getCurrentExercisesByStatusTab = createSelector(
+  selectCoreExerFeatureState,
+  (state): Exercise[] => {
+    return state.exerciseByStatusTab;
+  }
+);
+
+export const getCurrentExercisesByStatusTabTableData = createSelector(
+  getCurrentExercisesByStatusTab,
+  (state) => {
+    const columnIds: string[] = ['progressStatus', 'name', 'sets', 'countPerSet', 'setUnitTypeIsTime',
+      'progressLastUpdated'];
+    const dataSource = state;
+    return {
+      columnIds,
+      dataSource
+    }
   }
 );

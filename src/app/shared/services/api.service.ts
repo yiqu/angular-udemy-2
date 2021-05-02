@@ -106,8 +106,22 @@ export class FirebaseApiService {
     return batch.commit();
   }
 
-  getExercises(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    const ref = this.availableExerCollection;
+  getExercises(exerStatus: ExerciseStatus): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    let ref = this.availableExerCollection;
+    switch (exerStatus) {
+      case "All" : {
+        ref = this.availableExerCollection;
+        break;
+      }
+      case "Started" : {
+        ref = this.userInProgressCollection;
+        break;
+      }
+      case "Completed" : {
+        ref = this.userCompletedCollection;
+        break;
+      }
+    }
     return ref.get();
   }
 

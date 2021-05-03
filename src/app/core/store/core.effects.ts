@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect, OnInitEffects } from '@ngrx/effects';
-import { concatMap, mergeMap, switchMap, withLatestFrom, combineLatest } from "rxjs/operators";
+import { concatMap, mergeMap, switchMap, withLatestFrom, combineLatest, tap } from "rxjs/operators";
 import { FirebaseApiService } from "src/app/shared/services/api.service";
 import { ToasterService } from "src/app/shared/services/toaster.service";
 import * as fromCoreExerActions from './core.actions';
@@ -13,7 +13,8 @@ import { AuthService } from "src/app/shared/services/auth.service";
 export class CoreExerEffects {
 
   constructor(public actions$: Actions, public ts: ToasterService,
-    private fs: FirebaseApiService, private as: AuthService) {
+    private fs: FirebaseApiService, private as: AuthService,
+    private sbs: ToasterService) {
   }
 
   loadAllExercises$ = createEffect(() => {
@@ -66,6 +67,16 @@ export class CoreExerEffects {
       })
     );
   });
+
+  apiFailure$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(...[fromCoreExerActions.saveExerciseAndStatusFailure,
+        fromCoreExerActions.getExerByTypeFailed]),
+      tap((res) => {
+        this.sbs.openSnackBar("Error occured! " + res.errMsg, 6000);
+      })
+    );
+  }, {dispatch: false});
 
 }
 

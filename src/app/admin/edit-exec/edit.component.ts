@@ -1,4 +1,5 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSortable } from '@angular/material/sort';
 import { DialogConfirmComponent } from 'src/app/shared/dialog/dialog.component';
 import { TableActionButtonData } from 'src/app/shared/models/general.model';
 import { DialogConfirmService } from 'src/app/shared/services/confirm.service';
@@ -13,6 +14,11 @@ export class EditExerComponent implements OnInit {
 
   columns: string[] = ['name', 'sets', 'countPerSet', 'setUnitTypeIsTime', 'created', 'lastUpdated'];
   optionBtns: string[] = ['edit', 'delete'];
+  initSort: MatSortable = {
+    id: "lastUpdated",
+    start: "desc",
+    disableClear: false
+  };
 
   constructor(public as: AdminService, public cs: DialogConfirmService) {
     this.as.setCurrentPageState("edit");

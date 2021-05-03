@@ -8,7 +8,8 @@
     <ng-container *ngIf="(this.cs.currentExercisesByStatusTabTableData$ | async) as tableData">
       <div class="table-parent mb-5">
         <app-shared-table [columns]="tableData.columnIds" [columnsData]="tableData.dataSource"
-        [hasOptions]="true" [optionButtons]="['Try again']" (actionBtnClick)="onActionBtnClick($event)"></app-shared-table>
+        [hasOptions]="true" [optionButtons]="['Try again']" (actionBtnClick)="onActionBtnClick($event)"
+        [initSort]="tableData.initSort"></app-shared-table>
       </div>
     </ng-container>
   </ng-template>

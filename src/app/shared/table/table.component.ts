@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input,
   OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exercise } from 'src/app/admin/store/admin.state';
 import { TableActionButtonData } from '../models/general.model';
@@ -30,6 +30,9 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   optionButtons: string[] = [];
 
+  @Input()
+  initSort?: MatSortable;
+
   @Output()
   actionBtnClick: EventEmitter<TableActionButtonData> = new EventEmitter<TableActionButtonData>();
 
@@ -39,6 +42,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | null = null;
 
   cols: string[] = [];
+  initLocalSortDone: boolean = false;
 
   constructor(private cs: DialogConfirmService) {
     // Assign the data to the data source for the table to render
@@ -54,12 +58,17 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
       this.cols = this.addOptionsColumn(this.cols);
     }
     this.dataSource = new MatTableDataSource(this.columnsData);
+
   }
 
   ngAfterViewInit() {
     if (this.dataSource) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      setTimeout(() => {
+        this.setInitLocalSort();
+      }, 100)
+
     }
   }
 
@@ -81,6 +90,13 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
       btnAction: btn,
       data: data
     });
+  }
+
+  setInitLocalSort() {
+    if (this.initSort) {
+      this.sort?.sort(this.initSort as MatSortable);
+    }
+    this.initLocalSortDone = true;
   }
 
 }

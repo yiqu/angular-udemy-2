@@ -4,6 +4,7 @@ import { ExerEntityState } from "./core.reducer";
 import * as fromCoreReducer from './core.reducer';
 import { Dictionary } from "@ngrx/entity";
 import { ExerciseState, ExerciseStatus, SelectedExerciseSummary } from "./core.states";
+import { MatSortable } from "@angular/material/sort";
 
 
 export const selectCoreExerFeatureState = createFeatureSelector<ExerEntityState>("exerciseCore");
@@ -104,7 +105,11 @@ export const getCurrentExercisesByStatusTabTableData = createSelector(
     const dataSource = state;
     return {
       columnIds,
-      dataSource
+      dataSource,
+      initSort: {
+        id: 'progressLastUpdated',
+        start: 'desc'
+      } as MatSortable
     }
   }
 );

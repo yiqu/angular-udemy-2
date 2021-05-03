@@ -48,6 +48,14 @@ export class TableColumnDisplayPipe implements PipeTransform {
         res = "Actions";
         break;
       }
+      case "progressStatus": {
+        res = "Progress";
+        break;
+      }
+      case "progressLastUpdated": {
+        res = "Progress Last Updated";
+        break;
+      }
     }
     return res;
   }
@@ -75,11 +83,9 @@ export class TableDataDisplayPipe implements PipeTransform {
         res = res ? 'Yes' : 'No';
         break;
       }
-      case "created": {
-        res = "" + this.dp.transform(res, 'FROMNOW');
-        break;
-      }
-      case "lastUpdated": {
+      case "created":
+      case "lastUpdated":
+      case "progressLastUpdated": {
         res = "" + this.dp.transform(res, 'FROMNOW');
         break;
       }

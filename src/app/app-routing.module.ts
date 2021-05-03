@@ -9,6 +9,7 @@ import { ProgressCurrentComponent } from './core/progress/current/current.compon
 import { ProgressComponent } from './core/progress/progress.component';
 import { NetworkAwarePreloadStrategy } from './preload-strat';
 import { UserPresentGuard } from './shared/guards/auth/user.guard';
+import { CurrentUserResolver } from './shared/resolvers/user.resolver';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -22,15 +23,18 @@ const routes: Routes = [
         { path: ':exerId', component: ProgressCurrentComponent },
       ]
     },
-    { path: 'completed', component: CompletedTrainingComponent }
-  ]},
+    { path: 'completed', component: CompletedTrainingComponent }],
+    resolve: { currentUser: CurrentUserResolver }
+  },
   {
     path: "auth",
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    resolve: { currentUser: CurrentUserResolver }
   },
   {
     path: "my-trainings",
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    resolve: { currentUser: CurrentUserResolver }
   },
   { path: '**', component: NotFoundComponent}
 ];

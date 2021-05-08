@@ -14,9 +14,9 @@
     <div mat-subheader class="sub-header" [class]="isFirst?'':'mt-3'">{{hl.header.display}}</div>
     <ng-container *ngFor="let hlc of hl.links">
       <a class="fs-13" mat-line [routerLink]="hlc.url" (click)="onNavItemClick()">
-        <mat-list-item [routerLinkActive]="'link-active'">
+        <mat-list-item [routerLinkActive]="'link-active'" [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon mat-list-icon>{{hlc.iconName}}</mat-icon>
-          <div class="fs-13" mat-line>{{hlc.display}}</div>
+          <div class="fs-13" mat-line>{{hlc.display | titlecase}}</div>
         </mat-list-item>
       </a>
     </ng-container>

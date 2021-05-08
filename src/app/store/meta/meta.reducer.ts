@@ -29,7 +29,7 @@ export function logNgRxActions(reducer: ActionReducer<any>): ActionReducer<any> 
 
 export const stateToSyncToLocalStorage = [
   {
-    exercise: ['selectedExerciseIdToStart']
+    exercise: ['recentSelectedExerciseIdToStart']
   }
 ]
 

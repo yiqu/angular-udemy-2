@@ -18,7 +18,6 @@ export class ProgressCurrentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.select(fromRouterSelectors.selectRouteParam('exerId')).subscribe((res) => console.log(res))
   }
 
   onStart(exercise: Exercise | undefined) {

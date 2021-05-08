@@ -5,7 +5,7 @@ export interface CoreState {
 }
 
 export interface ExerciseState {
-  selectedExerciseIdToStart?: string;
+  recentSelectedExerciseIdToStart?: string;
   exerciseInProgress?: Exercise;
   exerciseInProgressSaveCompleted?: boolean;
 }

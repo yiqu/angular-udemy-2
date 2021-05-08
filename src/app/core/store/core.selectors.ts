@@ -51,12 +51,23 @@ export const getExerciseById2 = (id: string) => createSelector(
   }
 );
 
-// export const getSelectedExerciseToStartId = createSelector(
-//   selectExerFeatureState,
-//   (state): string | undefined => {
-//     return state.selectedExerciseIdToStart;
-//   }
-// );
+export const getLastSelectedExerId = createSelector(
+  selectExerFeatureState,
+  (state): string | undefined => {
+    return state.recentSelectedExerciseIdToStart;
+  }
+);
+
+export const getLastSelectedExer = createSelector(
+  selectAvailableExerEntities,
+  getLastSelectedExerId,
+  (state, id: string | undefined): Exercise | undefined => {
+    if (state && Object.keys(state).length > 0 && id) {
+      return state[id];
+    }
+    return undefined;
+  }
+)
 
 export const getSelectedExerciseToStartById = createSelector(
   selectAvailableExerEntities,

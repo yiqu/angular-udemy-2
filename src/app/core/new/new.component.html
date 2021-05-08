@@ -51,4 +51,11 @@
     </ng-template>
 
   </div>
+
+  <ng-container *ngIf="(this.cs.lastSelectedExercise$ | async) as recentExer">
+    <div class="recent text-muted">
+      Your last exercise was
+      <a [routerLink]="['../', 'progress', recentExer?.id]">{{recentExer?.name}}</a>.
+    </div>
+  </ng-container>
 </div>

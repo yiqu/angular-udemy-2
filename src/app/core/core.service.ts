@@ -19,6 +19,8 @@ export class CoreExerciseService {
   public selectedExerToStart$: Observable<SelectedExerciseSummary | undefined> =
     this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
   public currentExercisesByStatusTabTableData$ = this.store.select(fromCoreExerSelectors.getCurrentExercisesByStatusTabTableData);
+  public lastSelectedExercise$: Observable<Exercise | undefined> = this.store.select(fromCoreExerSelectors.getLastSelectedExer);
+
 
   constructor(private store: Store<AppState>, private as: FirebaseApiService) {
   }

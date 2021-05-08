@@ -5,7 +5,7 @@ import * as fromCoreReducer from './core.reducer';
 import { Dictionary } from "@ngrx/entity";
 import { ExerciseState, ExerciseStatus, SelectedExerciseSummary } from "./core.states";
 import { MatSortable } from "@angular/material/sort";
-
+import * as fromRouterSelectors from '../../store/global/router-store.selectors';
 
 export const selectCoreExerFeatureState = createFeatureSelector<ExerEntityState>("exerciseCore");
 export const selectExerFeatureState = createFeatureSelector<ExerciseState>("exercise");
@@ -51,20 +51,25 @@ export const getExerciseById2 = (id: string) => createSelector(
   }
 );
 
-export const getSelectedExerciseToStartId = createSelector(
-  selectExerFeatureState,
-  (state): string | undefined => {
-    return state.selectedExerciseIdToStart;
-  }
-);
+// export const getSelectedExerciseToStartId = createSelector(
+//   selectExerFeatureState,
+//   (state): string | undefined => {
+//     return state.selectedExerciseIdToStart;
+//   }
+// );
 
 export const getSelectedExerciseToStartById = createSelector(
   selectAvailableExerEntities,
-  getSelectedExerciseToStartId,
+  //getSelectedExerciseToStartId,
+  fromRouterSelectors.selectRouteParam('exerId'),
   (state: Dictionary<Exercise>, id: string | undefined): SelectedExerciseSummary | undefined => {
 
     if (state && Object.keys(state).length > 0 && id) {
       const selectedExer: Exercise | undefined = state[id];
+      if (!selectedExer) {
+        return undefined;
+      }
+
       const name: string = selectedExer?.name + '';
       const typeDescription = 'This is a ' + (selectedExer?.setUnitTypeIsTime ? 'timed' : 'repetition count') + ' exercise.';
       const details = {

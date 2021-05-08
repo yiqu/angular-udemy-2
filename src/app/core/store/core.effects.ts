@@ -8,6 +8,7 @@ import * as fromFirebaseUtils from '../../shared/firebase.utils';
 import { Exercise } from "src/app/admin/store/admin.state";
 import { ExerciseStatus } from "./core.states";
 import { AuthService } from "src/app/shared/services/auth.service";
+import { AppUser } from "src/app/store/auth/auth.state";
 
 @Injectable()
 export class CoreExerEffects {
@@ -20,13 +21,15 @@ export class CoreExerEffects {
   loadAllExercises$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromCoreExerActions.getExerByTypeStart),
-      combineLatest(this.as.currentUser$),
-      mergeMap(([exerStatus, currentUser]) => {
-        return this.fs.getExercises(exerStatus.status).then(
+      withLatestFrom(this.as.currentUser$),
+      mergeMap((exerStatus) => {
+        const user: AppUser = exerStatus[1];
+
+        return this.fs.getExercises(exerStatus[0].status).then(
           (res) => {
-            const dataResult = this.fs.convertCollectionDocData<Exercise>(res);
+            const dataResult = this.fs.convertCollectionDocData<Exercise>(res, 'id');
             return fromCoreExerActions.getExerByTypeSuccess({data: dataResult, fetchTime: new Date().getTime(),
-              status: exerStatus.status});
+              status: exerStatus[0].status});
           },
           (rej) => {
             const msg = fromFirebaseUtils.getFirebaseErrorMsg(rej);

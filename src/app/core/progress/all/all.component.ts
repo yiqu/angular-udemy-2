@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TableActionButtonData } from 'src/app/shared/models/general.model';
 import { CoreExerciseService } from '../../core.service';
@@ -12,7 +13,7 @@ export class ProgressAllComponent implements OnInit, OnDestroy {
 
   compDest$: Subject<void> = new Subject<void>();
 
-  constructor(public cs: CoreExerciseService) {
+  constructor(public cs: CoreExerciseService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -20,7 +21,14 @@ export class ProgressAllComponent implements OnInit, OnDestroy {
   }
 
   onActionBtnClick(event: TableActionButtonData) {
-    console.log(event)
+    switch (event.btnAction) {
+      case "Try again": {
+        if (event.data) {
+          this.router.navigate(['../', event.data.id], {relativeTo: this.route});
+        }
+        break;
+      }
+    }
   }
 
   ngOnDestroy() {

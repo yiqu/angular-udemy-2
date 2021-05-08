@@ -8,6 +8,10 @@ mat-form-field {
 
 .table-parent {
   overflow: auto;
+
+  .none {
+    display: none;
+  }
 }
 
 .table-row-bg {

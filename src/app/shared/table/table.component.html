@@ -6,7 +6,7 @@
   </mat-form-field>
 
   <div class="mat-elevation-z0">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort [ngClass]="{'none':!initLocalSortDone}">
 
       <ng-container *ngFor="let col of cols; even as isEven">
         <ng-container [matColumnDef]="col">

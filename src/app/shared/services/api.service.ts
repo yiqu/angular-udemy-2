@@ -160,17 +160,26 @@ export class FirebaseApiService {
   }
 
 
-  convertCollectionDocData<T>(res: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>): T[] {
-    let result: T[] = [];
-    if (res && res.size > 0) {
-      res.forEach((res) => {
-        result.push({
-          ...res.data(),
-          id: res.id
-        } as unknown as T)
-      });
-    }
-    return result;
+  /**
+   * Convert firebase response to Array<T>
+   * @param res firebase response
+   * @param idIdentiferName the actual id identifier to set as the id property. Use this when the "id" property
+   *         is part of the data stored in the db. If this does not exist, use the Firebase id key (key of the array)
+   *
+   * @returns
+   */
+  convertCollectionDocData<T>(res: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>,
+    idIdentifierName = 'id'): T[] {
+      let result: T[] = [];
+      if (res && res.size > 0) {
+        res.forEach((res) => {
+          result.push({
+            ...res.data(),
+            id: res.get(idIdentifierName) ? res.get(idIdentifierName) : res.id // use a property in the db as the id
+          } as unknown as T)
+        });
+      }
+      return result;
   }
 
   navigatePath(path: string[]): void {

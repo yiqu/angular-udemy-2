@@ -16,7 +16,8 @@ export class CoreExerciseService {
   public isApiFirstLoading$: Observable<boolean> = this.store.select(fromCoreExerSelectors.getFirstApiLoadingStatus);
   public isApiLoading$: Observable<boolean> = this.store.select(fromCoreExerSelectors.getApiLoadingStatus);
   public availableExers$: Observable<Exercise[]> = this.store.select(fromCoreExerSelectors.selectAvailableExers);
-  public selectedExerToStart$: Observable<SelectedExerciseSummary | undefined> = this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
+  public selectedExerToStart$: Observable<SelectedExerciseSummary | undefined> =
+    this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
   public currentExercisesByStatusTabTableData$ = this.store.select(fromCoreExerSelectors.getCurrentExercisesByStatusTabTableData);
 
   constructor(private store: Store<AppState>, private as: FirebaseApiService) {

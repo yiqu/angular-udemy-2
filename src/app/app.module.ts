@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleBundle } from './shared/material-bundle.module';
@@ -45,6 +45,7 @@ import { metaReducers } from './store/meta/meta.reducer';
       maxAge: 45,
       logOnly: environment.production
     }),
+    StoreRouterConnectingModule.forRoot(),
     BrowserAnimationsModule,
     MaterialModuleBundle,
     NotFoundComponentModule,

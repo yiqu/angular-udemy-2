@@ -63,12 +63,11 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
       setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.setInitLocalSort();
-      }, 100)
-
+      }, 100);
     }
   }
 

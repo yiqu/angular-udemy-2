@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Exercise } from 'src/app/admin/store/admin.state';
+import { AppState } from 'src/app/store/global/app.reducer';
 import { CoreExerciseService } from '../../core.service';
+import * as fromRouterSelectors from '../../../store/global/router-store.selectors';
+
 
 @Component({
   selector: 'app-core-progress-current',
@@ -10,10 +14,11 @@ import { CoreExerciseService } from '../../core.service';
 })
 export class ProgressCurrentComponent implements OnInit {
 
-  constructor(public cs: CoreExerciseService, private router: Router) {
+  constructor(public cs: CoreExerciseService, private router: Router, private store: Store<AppState>) {
   }
 
   ngOnInit() {
+    this.store.select(fromRouterSelectors.selectRouteParam('exerId')).subscribe((res) => console.log(res))
   }
 
   onStart(exercise: Exercise | undefined) {

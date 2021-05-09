@@ -13,6 +13,7 @@ const SAVE_EXER_SUCCESS: string = "[Exercise/API] Save exercise and status succe
 const SAVE_EXER_FAILED: string = "[Exercise/API] Save exercise and status failed";
 
 const SELECT_EXER_TO_START: string = "[Exercise/UI] Start exercise to start";
+const SELECTED_EXER_GIVEUP: string = "[Exercise/UI] Current exercise gave up";
 
 export const getExerByTypeStart = createAction(
   GET_ALL_EXER_START,
@@ -47,4 +48,9 @@ export const saveExerciseAndStatusSuccess = createAction(
 export const saveExerciseAndStatusFailure = createAction(
   SAVE_EXER_FAILED,
   props<{errMsg: string}>()
+)
+
+export const selectExerciseGaveup = createAction(
+  SELECTED_EXER_GIVEUP,
+  props<{data: Exercise}>()
 )

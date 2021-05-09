@@ -1,6 +1,10 @@
 <ng-container *ngIf="(this.cs.isApiLoading$ | async) === (false); else loading">
   <ng-container *ngIf="(this.cs.selectedExerToStart$ | async) as exerToStart; else noExerciseExist">
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+    <div
+      [fxLayout]="exerInProgress ? 'column' : 'column'"
+      [fxLayout.gt-sm]="exerInProgress ? 'row' : 'column'"
+      [fxLayoutAlign]="exerInProgress ? 'center center' : 'center center'"
+      fxLayoutGap="15px">
 
       <div class="font-color">
         <div class="title">
@@ -8,25 +12,45 @@
         </div>
       </div>
 
-      <div class="border text-center" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="15px">
-        <div class="font-color">
+      <div [ngClass]="{'border':!exerInProgress, 'text-muted':exerInProgress}"
+        [fxLayout]="exerInProgress ? 'column' : 'column'"
+        [fxLayout.gt-sm]="exerInProgress ? 'row' : 'column'"
+        [fxLayoutAlign]="exerInProgress ? 'start center' : 'center start'"
+        fxLayoutGap="15px">
+
+        <div class="font-color" *ngIf="!exerInProgress">
           {{ exerToStart?.typeDescription }}
         </div>
-        <div class="font-weight-bold">
-          <i class="fa fa-tasks mr-2"></i> {{ exerToStart?.details?.setCount }} sets
+
+        <div
+          [fxLayout]="exerInProgress ? 'row' : 'column'"
+          [fxLayout.gt-sm]="exerInProgress ? 'row' : 'column'"
+          [fxLayoutAlign]="exerInProgress ? 'space-between center' : 'center start'"
+          [fxLayoutGap]="exerInProgress ? '15px' : '15px'">
+          <div class="font-weight-bold">
+            <i class="fa fa-tasks mr-2"></i> {{ exerToStart?.details?.setCount }} sets
+          </div>
+          <div class="font-weight-bold">
+            <i [class]="'mr-2 fa ' + (exerToStart?.details?.time ? 'fa-hourglass' : 'fa-check-circle')"></i>
+            <span>{{ exerToStart?.details?.duration }}</span>
+            <span>{{ exerToStart?.details?.time ? ' seconds per set' : ' reps per set' }}</span>
+          </div>
         </div>
-        <div class="font-weight-bold">
-          <i [class]="'mr-2 fa ' + (exerToStart?.details?.time ? 'fa-hourglass' : 'fa-check-circle')"></i>
-          <span>{{ exerToStart?.details?.duration }}</span>
-          <span>{{ exerToStart?.details?.time ? ' seconds per set' : ' reps per set' }}</span>
-        </div>
+
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="mt-3">
-        <button mat-flat-button color="primary" (click)="onStart(exerToStart?.exercise)">Start!</button>
-        <button mat-flat-button color="warn" (click)="onCancel()">Back to home</button>
+      <div fxLayout="row"
+        [fxLayoutAlign]="exerInProgress ? 'start center' : 'center center'"
+        fxLayoutGap="10px">
+        <ng-container *ngIf="!exerInProgress">
+          <button mat-flat-button color="primary" (click)="onStart(exerToStart?.exercise)">Start!</button>
+          <button mat-flat-button color="warn" (click)="onCancel()">Back to home</button>
+        </ng-container>
       </div>
     </div>
+
+    <app-core-progress-counter *ngIf="exerInProgress" (actionClick)="onActionClick($event)"
+      [exercise]="(this.cs.exerciseInProgress$ | async)"></app-core-progress-counter>
 
   </ng-container>
 </ng-container>

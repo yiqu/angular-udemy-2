@@ -19,8 +19,8 @@ export const exerciseReducer = createReducer(
     }
   }),
 
-  on(fromCoreActions.saveExerciseAndStatusStart, (state, {data}) => {
-    return{
+  on(fromCoreActions.saveExerciseAndStatusStart, (state, {data, status, date}) => {
+    return {
       ...state,
       exerciseInProgress: data,
       exerciseInProgressSaveCompleted: false
@@ -28,10 +28,18 @@ export const exerciseReducer = createReducer(
   }),
 
   on(fromCoreActions.saveExerciseAndStatusSuccess, (state, {data}) => {
-    return{
+    return {
       ...state,
       exerciseInProgress: data,
       exerciseInProgressSaveCompleted: true
     }
   }),
+
+  on(fromCoreActions.selectExerciseGaveup, (state, {data}) => {
+    return {
+      ...state,
+      exerciseInProgress: undefined
+    }
+  })
+
 )

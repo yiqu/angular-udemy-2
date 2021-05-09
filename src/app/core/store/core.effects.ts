@@ -44,7 +44,6 @@ export class CoreExerEffects {
     return this.actions$.pipe(
       ofType(fromCoreExerActions.saveExerciseAndStatusStart),
       mergeMap((res) => {
-        console.log(res)
         const exer: Exercise = {...res.data};
         const date: number = res.date;
         const status: ExerciseStatus = res.status;

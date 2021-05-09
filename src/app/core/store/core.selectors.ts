@@ -129,3 +129,10 @@ export const getCurrentExercisesByStatusTabTableData = createSelector(
     }
   }
 );
+
+export const getExerciseInProgress = createSelector(
+  selectExerFeatureState,
+  (state): Exercise | undefined => {
+    return state.exerciseInProgress;
+  }
+);

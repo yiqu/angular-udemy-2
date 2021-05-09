@@ -12,6 +12,7 @@ import { CompletedTrainingComponent } from './completed/completed.component';
 import { CoreComponent } from './core.component';
 import { NewTrainingComponent } from './new/new.component';
 import { ProgressAllComponent } from './progress/all/all.component';
+import { ExerciseCounterComponent } from './progress/current/counter/counter.component';
 import { ProgressCurrentComponent } from './progress/current/current.component';
 import { ProgressLandingComponent } from './progress/landing/landing.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -36,7 +37,6 @@ import { exerciseReducer } from './store/current.reducer';
   ],
 
   exports: [
-    CoreComponent
   ],
 
   declarations: [
@@ -46,7 +46,8 @@ import { exerciseReducer } from './store/current.reducer';
     NewTrainingComponent,
     ProgressAllComponent,
     ProgressCurrentComponent,
-    ProgressLandingComponent
+    ProgressLandingComponent,
+    ExerciseCounterComponent
   ],
 
   providers: [],

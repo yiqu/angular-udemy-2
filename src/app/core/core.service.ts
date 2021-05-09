@@ -20,7 +20,7 @@ export class CoreExerciseService {
     this.store.select(fromCoreExerSelectors.getSelectedExerciseToStartById);
   public currentExercisesByStatusTabTableData$ = this.store.select(fromCoreExerSelectors.getCurrentExercisesByStatusTabTableData);
   public lastSelectedExercise$: Observable<Exercise | undefined> = this.store.select(fromCoreExerSelectors.getLastSelectedExer);
-
+  public exerciseInProgress$: Observable<Exercise | undefined> = this.store.select(fromCoreExerSelectors.getExerciseInProgress);
 
   constructor(private store: Store<AppState>, private as: FirebaseApiService) {
   }

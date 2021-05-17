@@ -24,6 +24,7 @@ export class ProgressAllComponent implements OnInit, OnDestroy {
     switch (event.btnAction) {
       case "Try again": {
         if (event.data) {
+          // this.cs.selectExerciseToStart(event.data.id);
           this.router.navigate(['../', event.data.id], {relativeTo: this.route});
         }
         break;

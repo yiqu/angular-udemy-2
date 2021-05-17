@@ -1,7 +1,46 @@
-<div class="actions"
-  fxLayout="column"
-  fxLayoutAlign="center center"
-  fxLayoutGap="15px">
-  <button mat-flat-button color="primary" (click)="onPause()">Pause</button>
-  <button mat-flat-button color="warn" (click)="onGiveup()">Give up</button>
-</div>
+<ng-container *ngIf="this.exercise">
+  <ng-container *ngIf="exerciseCompleted; else inProgress">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" class="mt-5">
+      <h2 class="text-success">
+        Exercise {{exercise?.name}} completed.
+      </h2>
+      <div>
+        <button mat-flat-button color="primary" (click)="onGiveup()">Go back home</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #inProgress>
+    <div class="actions" class="mt-5" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <div>
+        <h2>
+          Set {{ currentSet }} / {{ exercise.sets }}
+        </h2>
+      </div>
+      <div>
+        <mat-progress-spinner
+          class="example-margin" [color]="timerColor" [mode]="'determinate'" [diameter]="200"
+          [value]="currentTime" >
+        </mat-progress-spinner>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="center center" class="time-text" fxLayoutGap="15px" class="mb-5">
+        <div>
+          {{timeLeftText}}
+        </div>
+        <ng-container *ngIf="setFinished">
+          <button mat-flat-button color="primary" (click)="onStartSet()">
+            Start set #{{currentSet}}
+          </button>
+        </ng-container>
+      </div>
+
+
+      <button *ngIf="!setFinished" mat-flat-button [color]="isPaused ? 'primary':'accent'" (click)="onPause()">
+        {{isPaused ? 'Resume' : 'Pause'}}
+      </button>
+      <button mat-flat-button color="warn" (click)="onGiveup()">Give up</button>
+    </div>
+  </ng-template>
+
+</ng-container>

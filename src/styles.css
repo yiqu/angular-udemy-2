@@ -12,6 +12,10 @@ body {
   font-family: 'Lato', sans-serif !important;
 }
 
+h1, h2, h3 {
+  font-family: 'Lato', sans-serif;
+}
+
 .font-color {
 color: #4d5156;
 }

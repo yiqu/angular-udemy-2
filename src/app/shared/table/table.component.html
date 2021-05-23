@@ -1,7 +1,7 @@
 <div *ngIf="cols && cols.length > 0 && columnsData && columnsData.length > 0"
     class="table-parent" [ngClass]="{'border': displayBorder}">
   <mat-form-field>
-    <mat-label>Filter exercises ...</mat-label>
+    <mat-label>Filter exercises ({{this.columnsData.length}}) ...</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Start typing..." #input>
   </mat-form-field>
 

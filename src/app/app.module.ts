@@ -22,6 +22,7 @@ import * as  fromAppReducers  from './store/global/app.reducer';
 import { appEffects } from './store/global/app.effects';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { metaReducers } from './store/meta/meta.reducer';
+import { CanDeactivateGuard } from './shared/guards/core/can-deactivate.guard';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { metaReducers } from './store/meta/meta.reducer';
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    CanDeactivateGuard
   ],
 
   bootstrap: [AppComponent]

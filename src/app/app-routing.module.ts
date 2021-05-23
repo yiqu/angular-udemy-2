@@ -9,6 +9,7 @@ import { ProgressCurrentComponent } from './core/progress/current/current.compon
 import { ProgressComponent } from './core/progress/progress.component';
 import { NetworkAwarePreloadStrategy } from './preload-strat';
 import { UserPresentGuard } from './shared/guards/auth/user.guard';
+import { CanDeactivateGuard } from './shared/guards/core/can-deactivate.guard';
 import { CurrentUserResolver } from './shared/resolvers/user.resolver';
 
 const routes: Routes = [
@@ -20,7 +21,7 @@ const routes: Routes = [
       children: [
         { path: '', redirectTo: "all", pathMatch: "full" },
         { path: 'all', component: ProgressAllComponent },
-        { path: ':exerId', component: ProgressCurrentComponent },
+        { path: ':exerId', component: ProgressCurrentComponent, canDeactivate: [CanDeactivateGuard] },
       ]
     },
     { path: 'completed', component: CompletedTrainingComponent }],

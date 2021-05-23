@@ -16,10 +16,10 @@ export class ToasterService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  openSnackBar(msg: string, time: number = 3000) {
+  openSnackBar(msg: string, time: number = 3000, xPosition: MatSnackBarHorizontalPosition = 'start') {
     this._snackBar.open(msg, 'Close', {
       duration: time,
-      horizontalPosition: this.horizontalPosition,
+      horizontalPosition: xPosition,
       verticalPosition: this.verticalPosition,
     });
   }

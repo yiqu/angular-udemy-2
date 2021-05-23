@@ -6,6 +6,9 @@ import { AppState } from 'src/app/store/global/app.reducer';
 import { CoreExerciseService } from '../../core.service';
 import * as fromRouterSelectors from '../../../store/global/router-store.selectors';
 import { ACTION_GIVEUP } from './counter/counter.component';
+import { DialogConfirmService } from 'src/app/shared/services/confirm.service';
+import { take } from 'rxjs/operators';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
 
 
 @Component({
@@ -17,7 +20,8 @@ export class ProgressCurrentComponent implements OnInit, OnDestroy {
 
   exerInProgress: boolean = false;
 
-  constructor(public cs: CoreExerciseService, private router: Router, private store: Store<AppState>) {
+  constructor(public cs: CoreExerciseService, private router: Router, private store: Store<AppState>,
+    public ts: ToasterService) {
   }
 
   ngOnInit() {
@@ -38,6 +42,14 @@ export class ProgressCurrentComponent implements OnInit, OnDestroy {
     if (action === ACTION_GIVEUP) {
       this.exerInProgress = false;
     }
+  }
+
+  canDeactivate(): boolean {
+    if (this.exerInProgress) {
+      this.ts.openSnackBar("Exercise currently in progress.", 5000, 'center');
+      return false;
+    }
+    return true;
   }
 
   ngOnDestroy() {

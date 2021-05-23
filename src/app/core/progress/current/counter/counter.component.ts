@@ -86,7 +86,7 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
     const almostThere = currentPercent > 0.7;
     const dontGiveup = currentPercent > 0.85;
     if (timeLeft === 0) {
-      result = "Good job, set finished!";
+      result = "Good job, finished current set!";
     } else if (dontGiveup) {
       result += ' ( dont\'t give up now! )';
     } else if (almostThere) {

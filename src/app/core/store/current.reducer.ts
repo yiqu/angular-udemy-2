@@ -35,6 +35,14 @@ export const exerciseReducer = createReducer(
     }
   }),
 
+  on(fromCoreActions.saveExerciseAndStatusFailure, (state, {errMsg}) => {
+    return {
+      ...state,
+      exerciseInProgress: undefined,
+      exerciseInProgressSaveCompleted: false
+    }
+  }),
+
   on(fromCoreActions.selectExerciseGaveup, (state, {data}) => {
     return {
       ...state,

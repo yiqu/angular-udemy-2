@@ -53,7 +53,6 @@ export class ProgressCurrentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
   }
 
 }

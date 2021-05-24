@@ -38,4 +38,9 @@ export class CoreExerciseService {
     this.store.dispatch(fromCoreActions.getExerByTypeStart({status}));
   }
 
+  removeExerInProgressAfterComplete(exer: Exercise, status: ExerciseStatus) {
+    const date = new Date().getTime();
+    this.store.dispatch(fromCoreActions.removeExerciseByStatusStart({data: exer, status, date}))
+  }
+
 }

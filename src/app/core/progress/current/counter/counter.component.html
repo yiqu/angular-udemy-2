@@ -24,18 +24,22 @@
         </mat-progress-spinner>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="center center" class="time-text" fxLayoutGap="15px" class="mb-5">
-        <div>
+      <div fxLayout="column" fxLayoutAlign="center center" class="time-text mb-5" fxLayoutGap="15px">
+        <div class="font-weight-bold">
+          <ng-container *ngIf="isPaused">
+            <span class="mr-3">
+              *Paused*
+            </span>
+          </ng-container>
           {{timeLeftText}}
         </div>
-        <ng-container *ngIf="setFinished">
-          <button mat-flat-button color="primary" (click)="onStartSet()">
-            Start set #{{currentSet}}
-          </button>
-        </ng-container>
       </div>
 
-
+      <ng-container *ngIf="setFinished">
+        <button mat-flat-button color="primary" (click)="onStartSet()">
+          Start set #{{currentSet}}
+        </button>
+      </ng-container>
       <button *ngIf="!setFinished" mat-flat-button [color]="isPaused ? 'primary':'accent'" (click)="onPause()">
         {{isPaused ? 'Resume' : 'Pause'}}
       </button>

@@ -15,6 +15,10 @@ const SAVE_EXER_FAILED: string = "[Exercise/API] Save exercise and status failed
 const SELECT_EXER_TO_START: string = "[Exercise/UI] Start exercise to start";
 const SELECTED_EXER_GIVEUP: string = "[Exercise/UI] Current exercise gave up";
 
+const REMOVE_EXER_BY_STATUS_START: string = "[Exercise/API] Remove exercise by status start";
+const REMOVE_EXER_BY_STATUS_SUCCESS: string = "[Exercise/API] Remove exercise by status success";
+const REMOVE_EXER_BY_STATUS_FAILED: string = "[Exercise/API] Remove exercise by status failed";
+
 export const getExerByTypeStart = createAction(
   GET_ALL_EXER_START,
   props<{status:  ExerciseStatus}>()
@@ -42,7 +46,7 @@ export const saveExerciseAndStatusStart = createAction(
 
 export const saveExerciseAndStatusSuccess = createAction(
   SAVE_EXER_SUCCESS,
-  props<{data: Exercise}>()
+  props<{data: Exercise, status: ExerciseStatus}>()
 )
 
 export const saveExerciseAndStatusFailure = createAction(
@@ -53,4 +57,23 @@ export const saveExerciseAndStatusFailure = createAction(
 export const selectExerciseGaveup = createAction(
   SELECTED_EXER_GIVEUP,
   props<{data: Exercise}>()
+)
+
+export const removeExerciseByStatusStart = createAction(
+  REMOVE_EXER_BY_STATUS_START,
+  props<{data: Exercise, status: ExerciseStatus, date: number}>()
+)
+
+export const removeExerciseByStatusSuccess = createAction(
+  REMOVE_EXER_BY_STATUS_SUCCESS,
+  props<{data: Exercise}>()
+)
+
+export const removeExerciseByStatusFailure = createAction(
+  REMOVE_EXER_BY_STATUS_FAILED,
+  props<{errMsg: string}>()
+)
+
+export const noAction = createAction(
+  "No Action"
 )

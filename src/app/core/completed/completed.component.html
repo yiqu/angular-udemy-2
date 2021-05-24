@@ -1,1 +1,16 @@
-Completed
+<div fxLayout="column" fxLayoutAlign="center center">
+  <ng-container *ngIf="(this.cs.isApiLoading$ | async); else tableData">
+    <div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+      <mat-spinner mode="indeterminate"></mat-spinner>
+    </div>
+  </ng-container>
+  <ng-template #tableData>
+    <ng-container *ngIf="(this.cs.currentExercisesByStatusTabTableData$ | async) as tableData">
+      <div class="table-parent mb-5">
+        <app-shared-table [columns]="tableData.columnIds" [columnsData]="tableData.dataSource"
+          [initSort]="tableData.initSort">
+        </app-shared-table>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

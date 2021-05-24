@@ -208,5 +208,21 @@ export class FirebaseApiService {
     return Promise.resolve();
   }
 
+  removeExerciseByStatus(status: ExerciseStatus, id: string): Promise<void> {
+    if (id) {
+      let saveRef = undefined;
+      if (status === "Started") {
+        saveRef = this.userInProgressCollection.doc(id);
+      } else if (status === "Completed") {
+        saveRef = this.userCompletedCollection.doc(id);
+      }
+
+      if (saveRef) {
+        return saveRef.delete();
+      }
+    }
+    return Promise.resolve();
+  }
+
 
 }

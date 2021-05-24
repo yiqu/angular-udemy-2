@@ -3,6 +3,7 @@ import { Subject, throwError } from 'rxjs';
 import { interval, Observable, timer } from 'rxjs';
 import { map, tap, take, takeUntil } from 'rxjs/operators';
 import { Exercise } from 'src/app/admin/store/admin.state';
+import { CoreExerciseService } from 'src/app/core/core.service';
 
 export const ACTION_GIVEUP = 'Giveup';
 
@@ -33,7 +34,7 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
 
   isPaused: boolean = false;
 
-  constructor() {
+  constructor(public cs: CoreExerciseService) {
   }
 
   ngOnInit() {
@@ -104,16 +105,21 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
     return NaN;
   }
 
+  /**
+   * Executed when Timer is 0 or paused
+   */
   currentSetFinished() {
-    if (!this.timeLeft) {
+    if (!this.timeLeft) { // done
       this.timerColor = 'primary';
       this.setFinished = true;
       this.currentSet = this.getNextSet(this.currentSet, this.exercise!.sets);
+      // Exercise completed
       if (!this.currentSet) {
         this.exerciseCompleted = true;
+        this.cs.saveExericseWithStatus(this.exercise!, "Completed");
       }
-    } else {
-
+    } else { // paused
+      console.log("in else")
     }
   }
 

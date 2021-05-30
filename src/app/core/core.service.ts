@@ -43,4 +43,8 @@ export class CoreExerciseService {
     this.store.dispatch(fromCoreActions.removeExerciseByStatusStart({data: exer, status, date}))
   }
 
+  setExerciseInProgress(exer: Exercise) {
+    this.store.dispatch(fromCoreActions.setExerciseInProgress({ data: exer }));
+  }
+
 }

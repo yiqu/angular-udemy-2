@@ -14,6 +14,7 @@ const SAVE_EXER_FAILED: string = "[Exercise/API] Save exercise and status failed
 
 const SELECT_EXER_TO_START: string = "[Exercise/UI] Start exercise to start";
 const SELECTED_EXER_GIVEUP: string = "[Exercise/UI] Current exercise gave up";
+const SET_EXER_IN_PROGRESS: string = "[Exercise/UI] Set exercise in progress";
 
 const REMOVE_EXER_BY_STATUS_START: string = "[Exercise/API] Remove exercise by status start";
 const REMOVE_EXER_BY_STATUS_SUCCESS: string = "[Exercise/API] Remove exercise by status success";
@@ -76,4 +77,9 @@ export const removeExerciseByStatusFailure = createAction(
 
 export const noAction = createAction(
   "No Action"
+)
+
+export const setExerciseInProgress = createAction(
+  SET_EXER_IN_PROGRESS,
+  props<{data: Exercise}>()
 )

@@ -48,6 +48,13 @@ export const exerciseReducer = createReducer(
       ...state,
       exerciseInProgress: undefined
     }
-  })
+  }),
+
+  on(fromCoreActions.setExerciseInProgress, (state, {data}) => {
+    return {
+      ...state,
+      exerciseInProgress: data,
+    }
+  }),
 
 )

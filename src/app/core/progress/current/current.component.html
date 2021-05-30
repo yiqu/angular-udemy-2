@@ -10,6 +10,10 @@
         <div class="title">
           {{ exerToStart?.name }}
         </div>
+        <div *ngIf="exerToStart.exercise?.inProgressId && !exerInProgress" [title]="exerToStart.exercise?.inProgressId"
+          class="font-italic">
+          ( resuming )
+        </div>
       </div>
 
       <div [ngClass]="{'border':!exerInProgress, 'text-muted':exerInProgress}"

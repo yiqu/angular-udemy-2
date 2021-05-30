@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, throwError } from 'rxjs';
 import { interval, Observable, timer } from 'rxjs';
 import { map, tap, take, takeUntil } from 'rxjs/operators';
@@ -34,7 +35,7 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
 
   isPaused: boolean = false;
 
-  constructor(public cs: CoreExerciseService) {
+  constructor(public cs: CoreExerciseService, private router: Router) {
   }
 
   ngOnInit() {
@@ -81,11 +82,13 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
   }
 
   getTimeLeftText(timeLeft: number, total: number): string {
-    let result = timeLeft + ' seconds remaining';
-    const currentPercent = (total - timeLeft) / total;
+    const unit: string = this.exercise?.setUnitTypeIsTime ? "seconds" : "reps";
+    let result: string = timeLeft + " " + unit + ' remaining';
+    const currentPercent: number = (total - timeLeft) / total;
     const halfWay: boolean = currentPercent > 0.5;
     const almostThere = currentPercent > 0.7;
     const dontGiveup = currentPercent > 0.85;
+
     if (timeLeft === 0) {
       result = "Good job, finished current set!";
     } else if (dontGiveup) {
@@ -119,7 +122,7 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
         this.cs.saveExericseWithStatus(this.exercise!, "Completed");
       }
     } else { // paused
-      console.log("in else")
+      console.log("paused exercise")
     }
   }
 
@@ -147,8 +150,11 @@ export class ExerciseCounterComponent implements OnInit, OnDestroy {
     }
   }
 
-  onGiveup() {
+  onGiveup(done?: boolean) {
     this.actionClick.emit(ACTION_GIVEUP);
+    if (done) {
+      this.router.navigate(['/', 'home', 'completed']);
+    }
   }
 
   ngOnDestroy() {

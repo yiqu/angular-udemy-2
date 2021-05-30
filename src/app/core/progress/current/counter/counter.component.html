@@ -5,7 +5,7 @@
         Exercise {{exercise?.name}} completed.
       </h2>
       <div>
-        <button mat-flat-button color="primary" (click)="onGiveup()">Go back home</button>
+        <button mat-flat-button color="primary" (click)="onGiveup(true)">Go back home</button>
       </div>
     </div>
   </ng-container>
@@ -43,7 +43,7 @@
       <button *ngIf="!setFinished" mat-flat-button [color]="isPaused ? 'primary':'accent'" (click)="onPause()">
         {{isPaused ? 'Resume' : 'Pause'}}
       </button>
-      <button mat-flat-button color="warn" (click)="onGiveup()">Give up</button>
+      <button mat-flat-button color="warn" (click)="onGiveup(false)">Give up</button>
     </div>
   </ng-template>
 

@@ -71,16 +71,21 @@ export const getLastSelectedExer = createSelector(
 
 export const getSelectedExerciseToStartById = createSelector(
   selectAvailableExerEntities,
-  //getSelectedExerciseToStartId,
   fromRouterSelectors.selectRouteParam('exerId'),
-  (state: Dictionary<Exercise>, id: string | undefined): SelectedExerciseSummary | undefined => {
+  fromRouterSelectors.selectQueryParam('inProgressId'),
+  (state: Dictionary<Exercise>, id?: string, inProgressId?: string): SelectedExerciseSummary | undefined => {
 
     if (state && Object.keys(state).length > 0 && id) {
-      const selectedExer: Exercise | undefined = state[id];
+      let selectedExer: Exercise | undefined = state[id];
       if (!selectedExer) {
         return undefined;
       }
-
+      if (inProgressId) {
+        selectedExer = {
+          ...selectedExer,
+          inProgressId
+        }
+      }
       const name: string = selectedExer?.name + '';
       const typeDescription = 'This is a ' + (selectedExer?.setUnitTypeIsTime ? 'timed' : 'repetition count') + ' exercise.';
       const details = {

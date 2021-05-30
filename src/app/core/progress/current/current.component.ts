@@ -29,8 +29,15 @@ export class ProgressCurrentComponent implements OnInit, OnDestroy {
 
   onStart(exercise: Exercise | undefined) {
     if (exercise) {
-      this.cs.saveExericseWithStatus(exercise, "Started");
       this.exerInProgress = true;
+
+      // brand new exercise starting
+      if (!exercise.inProgressId) {
+        this.cs.saveExericseWithStatus(exercise, "Started");
+      // resuming an existing exercise
+      } else {
+        this.cs.setExerciseInProgress(exercise);
+      }
     }
   }
 

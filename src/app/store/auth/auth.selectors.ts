@@ -43,3 +43,16 @@ export const getError = createSelector(
   }
 )
 
+export const getUserResetLoginEmail = createSelector(
+  selectAuthState,
+  (state: AuthState): string | undefined => {
+    return state.resetLoginEmail;
+  }
+)
+
+export const getUserResetLoginLoading = createSelector(
+  selectAuthState,
+  (state: AuthState): boolean | undefined=> {
+    return state.resetLoginLoading;
+  }
+)

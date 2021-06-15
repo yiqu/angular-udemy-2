@@ -13,6 +13,10 @@ export interface AuthState {
   loginError?: boolean;
   loginErrorMsg?: string | undefined;
   redirectPathAfterLogin?: string;
+  resetLoginLoading?: boolean;
+  resetLoginEmail?: string;
+  resetLoginError?: boolean;
+  resetLoginErrMsg?: string;
 }
 
 export type AppUser = VerifiedUser | null | undefined;

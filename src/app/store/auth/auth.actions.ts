@@ -19,6 +19,10 @@ const USER_STATE_CHANGED: string = "[Auth/User State] User state changed";
 
 const RESET_AUTH_ERR: string = "[Auth/Reset Error] Reset Errors to null";
 
+const USER_RESET_LOGIN_START: string = "[Auth/Login] Login reset start";
+const USER_RESET_LOGIN_SUCCESS: string = "[Auth/Login] Login reset successful";
+const USER_RESET_LOGIN_FAILED: string = "[Auth/Login] Login reset failed";
+
 export const userLoginStart = createAction(
   USER_LOGIN_START,
   props<{name: string, password: string}>()
@@ -76,4 +80,17 @@ export const resetAuthError = createAction(
   RESET_AUTH_ERR
 )
 
+export const userResetLoginStart = createAction(
+  USER_RESET_LOGIN_START,
+  props<{email: string}>()
+);
 
+export const userResetLoginSuccess = createAction(
+  USER_RESET_LOGIN_SUCCESS,
+  props<{redirectPath?: string}>()
+);
+
+export const userResetLoginFailed = createAction(
+  USER_RESET_LOGIN_FAILED,
+  props<{email: string, errorMsg: string}>()
+);

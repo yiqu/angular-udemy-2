@@ -1,8 +1,8 @@
 <ng-container *ngIf="this.exercise">
   <ng-container *ngIf="exerciseCompleted; else inProgress">
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" class="mt-5">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="55px" class="mt-5">
       <h2 class="text-success">
-        Exercise {{exercise?.name}} completed.
+        Exercise {{exercise?.name}} Completed!
       </h2>
       <div>
         <button mat-flat-button color="primary" (click)="onGiveup(true)">Go back home</button>
@@ -12,10 +12,13 @@
 
   <ng-template #inProgress>
     <div class="actions" class="mt-5" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
-      <div>
-        <h2>
-          Set {{ currentSet }} / {{ exercise.sets }}
-        </h2>
+      <div fxLayout="column" fxLayoutAlign="center center" class="count-down">
+        <div>
+          Set
+        </div>
+        <div>
+          {{ currentSet }} / {{ exercise.sets }}
+        </div>
       </div>
       <div>
         <mat-progress-spinner

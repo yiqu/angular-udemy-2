@@ -29,9 +29,13 @@
 
   </form>
 
-  <section ngClass.xs="full-w">
-    <div fxLayout="row">
-      <div ngClass.xs="full-w" fxFlex.gt-xs="500px" fxLayoutAlign="end">
+  <section ngClass.xs="full-w" ngClass.gt-sm="action-btns">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <button mat-flat-button color="accent" (click)="onForgot()">Forgot password?</button>
+      </div>
+
+      <div>
         <button mat-flat-button color="primary" (click)="onSignin()">Login</button>
       </div>
     </div>

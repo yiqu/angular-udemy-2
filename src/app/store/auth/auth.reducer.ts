@@ -111,6 +111,32 @@ export const authStateReducer = createReducer(
     }
   }),
 
+  on(userActions.userResetLoginStart, (state, {email}) => {
+    return {
+      ...state,
+      resetLoginEmail: email,
+      resetLoginLoading: true
+    }
+  }),
+
+  on(userActions.userResetLoginSuccess, (state) => {
+    return {
+      ...state,
+      resetLoginLoading: false,
+      resetLoginError: false,
+      resetLoginErrMsg: undefined
+    }
+  }),
+
+  on(userActions.userResetLoginFailed, (state, {email, errorMsg}) => {
+    return {
+      ...state,
+      resetLoginEmail: email,
+      resetLoginLoading: false,
+      resetLoginError: true,
+      resetLoginErrMsg: errorMsg
+    }
+  }),
 )
 
 

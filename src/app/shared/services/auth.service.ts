@@ -15,10 +15,13 @@ import { filter } from 'rxjs/operators';
 export class AuthService {
 
   currentUser$: Observable<AppUser> = this.store.select(fromAuthSelectors.getCurrentUser).pipe(
-    filter((user: AppUser) =>  user !== null)
+    filter((user: AppUser) =>  {
+      return user !== null
+    })
   );
   currentUserLogo$: Observable<string> = this.store.select(fromAuthSelectors.getTopNavUserLogo);
   authError$: Observable<ErrorInfo> = this.store.select(fromAuthSelectors.getError);
+  userResetLoginLoading$: Observable<boolean | undefined> = this.store.select(fromAuthSelectors.getUserResetLoginLoading);
 
   constructor(private store: Store<AppState>, private router: Router) {
 
@@ -56,6 +59,10 @@ export class AuthService {
 
   resetAuthErrorState() {
     this.store.dispatch(fromAuthActions.resetAuthError());
+  }
+
+  sendUserLoginReset(email: string) {
+    this.store.dispatch(fromAuthActions.userResetLoginStart({email}));
   }
 
 }

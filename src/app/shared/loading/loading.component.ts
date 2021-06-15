@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-shared-loading-spinner',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading.component.scss']
 })
 export class SharedLoadingComponent implements OnInit {
+
+  @Input()
+  diamter: number = 45;
+
   constructor() { }
 
   ngOnInit() { }

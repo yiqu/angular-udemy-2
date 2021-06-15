@@ -9,6 +9,8 @@ import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS, MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ResetPasswordDialogComponent } from './reset-dialog/reset-password.component';
+import { SharedComponentsModule } from '../shared/shared-components.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
     ReactiveFormsModule,
     CommonModule,
     MatMomentDateModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedComponentsModule
   ],
 
   exports: [],
@@ -26,7 +29,8 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
   declarations: [
     AuthComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ResetPasswordDialogComponent
   ],
 
   providers: [
